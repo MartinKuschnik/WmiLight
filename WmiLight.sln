@@ -14,6 +14,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{F2E2B4
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{1E5BFE7B-DA04-4FED-8025-873524C76B83}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pics", "pics", "{582EB9E1-0602-4CA6-8BF1-3FA269370402}"
+	ProjectSection(SolutionItems) = preProject
+		doc\pics\debugger_preview.jpg = doc\pics\debugger_preview.jpg
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +37,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{582EB9E1-0602-4CA6-8BF1-3FA269370402} = {1E5BFE7B-DA04-4FED-8025-873524C76B83}
 	EndGlobalSection
 EndGlobal
