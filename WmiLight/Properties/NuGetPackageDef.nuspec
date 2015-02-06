@@ -12,4 +12,8 @@
     <description>A simple and light wmi framework.</description>
     <tags>WmiLight WMI Windows Management Instrumentation windows c#</tags>
   </metadata>
+    <files>
+      <file src="bin\$configuration$\WmiLight.dll" target="lib\net40\" />
+      <file src="bin\$configuration$\WmiLight.xml" target="lib\net40\" /> 
+    </files>
 </package>
