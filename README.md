@@ -6,9 +6,18 @@ It's a subset of the System.Management.Instrumentation namespace.
 
 ## In which case should you use WmiLight?
 The .Net framework implementation has one big problem.
-It leaks a little bit memory on each remote operation. 
-
+It leaks a little bit memory on each remote operation.
 Use this framework if your application is a service or runes a long time and you're sending a lot of remote queries.
+
+## Installation
+
+This project is being distributed as a sNuGet package, so open your Package Manager Console window and execute the following command.
+
+<a href="https://www.nuget.org/packages/WmiLight/" target="_blank">
+<img title="NuGet" src="https://github.com/MartinKuschnik/WmiLight/blob/master/doc/pics/install_nuget_package.JPG" alt="NuGet"/>
+</a>
+
+
 
 ## How to use?
 
@@ -37,3 +46,14 @@ using (WmiConnection conncetion = new WmiConnection(@"\\MACHINENAME\root\cimv2",
     }
 }
 ```
+
+## Other benefits:
+
+* easy usage
+
+* no distinction between local and remote queries
+
+* Debugger Preview 
+
+    ![Debugger_Preview](https://github.com/MartinKuschnik/WmiLight/blob/master/doc/pics/debugger_preview.jpg "Debugger Preview")
+
