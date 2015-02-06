@@ -19,6 +19,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pics", "pics", "{582EB9E1-0602-4CA6-8BF1-3FA269370402}"
 	ProjectSection(SolutionItems) = preProject
 		doc\pics\debugger_preview.jpg = doc\pics\debugger_preview.jpg
+		doc\pics\install_nuget_package.JPG = doc\pics\install_nuget_package.JPG
 	EndProjectSection
 EndProject
 Global
