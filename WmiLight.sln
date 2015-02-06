@@ -17,22 +17,16 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
-		PreRelease|Any CPU = PreRelease|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{B1A99D31-6E34-491D-A3F5-D1500BEDE614}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B1A99D31-6E34-491D-A3F5-D1500BEDE614}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B1A99D31-6E34-491D-A3F5-D1500BEDE614}.PreRelease|Any CPU.ActiveCfg = PreRelease|Any CPU
-		{B1A99D31-6E34-491D-A3F5-D1500BEDE614}.PreRelease|Any CPU.Build.0 = PreRelease|Any CPU
 		{B1A99D31-6E34-491D-A3F5-D1500BEDE614}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B1A99D31-6E34-491D-A3F5-D1500BEDE614}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B4B62BF4-AB12-4687-8D02-DA9B5EAEF128}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B4B62BF4-AB12-4687-8D02-DA9B5EAEF128}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B4B62BF4-AB12-4687-8D02-DA9B5EAEF128}.PreRelease|Any CPU.ActiveCfg = PreRelease|Any CPU
-		{B4B62BF4-AB12-4687-8D02-DA9B5EAEF128}.PreRelease|Any CPU.Build.0 = PreRelease|Any CPU
 		{B4B62BF4-AB12-4687-8D02-DA9B5EAEF128}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B4B62BF4-AB12-4687-8D02-DA9B5EAEF128}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -126,7 +126,6 @@
   -->
   <Target Name="AfterBuild" />
   <Target Name="AfterClean">
-    <Exec Command="RMDIR /s /q &quot;$(TargetDir)&quot;" />
   </Target>
   <PropertyGroup>
     <PostBuildEvent>
