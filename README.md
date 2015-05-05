@@ -11,7 +11,7 @@ Use this framework if your application is a service or runes a long time and you
 
 ## Installation
 
-This project is being distributed as a sNuGet package, so open your Package Manager Console window and execute the following command.
+This project is being distributed as a NuGet package, so open your Package Manager Console window and execute the following command:
 
 <a href="https://www.nuget.org/packages/WmiLight/" target="_blank">
 <img title="NuGet" src="https://github.com/MartinKuschnik/WmiLight/blob/master/doc/pics/install_nuget_package.JPG" alt="NuGet"/>
