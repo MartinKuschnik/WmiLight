@@ -1,18 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WmiLight", "WmiLight\WmiLight.csproj", "{B1A99D31-6E34-491D-A3F5-D1500BEDE614}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WmiLight.TestApp", "WmiLight.TestApp\WmiLight.TestApp.csproj", "{B4B62BF4-AB12-4687-8D02-DA9B5EAEF128}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{F2E2B4D3-5D35-4C98-9E2E-63D5E194EB7A}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{1E5BFE7B-DA04-4FED-8025-873524C76B83}"
 EndProject
@@ -20,6 +13,22 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pics", "pics", "{582EB9E1-0
 	ProjectSection(SolutionItems) = preProject
 		doc\pics\debugger_preview.jpg = doc\pics\debugger_preview.jpg
 		doc\pics\install_nuget_package.JPG = doc\pics\install_nuget_package.JPG
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AppVeyor", "AppVeyor", "{9D384F15-C8AE-47EF-8CA4-21402534CC4B}"
+	ProjectSection(SolutionItems) = preProject
+		AppVeyor\nuget.exe = AppVeyor\nuget.exe
+		AppVeyor\PackNuGetPackage.ps1 = AppVeyor\PackNuGetPackage.ps1
+		AppVeyor\UpdateBuildVersion.ps1 = AppVeyor\UpdateBuildVersion.ps1
+		AppVeyor\WmiLight.nuspec = AppVeyor\WmiLight.nuspec
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{00FA0660-8B93-4087-A693-BDB73D5A601C}"
+	ProjectSection(SolutionItems) = preProject
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		LICENSE = LICENSE
+		README.md = README.md
 	EndProjectSection
 EndProject
 Global
