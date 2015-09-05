@@ -1,4 +1,4 @@
-# WmiLight [![wmilight MyGet Build Status](https://www.myget.org/BuildSource/Badge/wmilight?identifier=ec18dcc7-d42a-4704-94cf-e7dc6d3a8a98)](https://www.myget.org/feed/wmilight/package/nuget/WmiLight)
+# WmiLight [![Build status](https://ci.appveyor.com/api/projects/status/9m2i007a2ylifuy3?svg=true)](https://ci.appveyor.com/project/martinkuschnik/wmilight)
 
 ## What is WmiLight?
 A simple and light wmi framework. It has only one function: sending WMI queries.
