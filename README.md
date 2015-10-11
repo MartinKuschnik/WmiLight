@@ -7,7 +7,7 @@ It's a subset of the System.Management.Instrumentation namespace.
 ## In which case should you use WmiLight?
 The .Net framework implementation has one big problem.
 It leaks a little bit memory on each remote operation.
-Use this framework if your application is a service or runes a long time and you're sending a lot of remote queries.
+Use this framework if your application is a service or runs a long time and you're sending a lot of remote queries.
 
 ## Installation
 
