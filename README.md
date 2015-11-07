@@ -23,9 +23,9 @@ This project is being distributed as a NuGet package, so open your Package Manag
 
 Query all running processes for the local machine:
 ```C#
-using (WmiConnection conncetion = new WmiConnection())
+using (WmiConnection con = new WmiConnection())
 {
-    foreach (WmiObject process in conncetion.CreateQuery("SELECT * FROM Win32_Process"))
+    foreach (WmiObject process in con.CreateQuery("SELECT * FROM Win32_Process"))
     {
         Console.WriteLine(process["Name"]);
     }
@@ -38,9 +38,9 @@ Query all partitions for a remote machine:
 var opt = new WmiConnectionOptions() { EnablePackageEncryption = true };
 var cred = new NetworkCredential("USERNAME", "PASSWORD", "DOMAIN");
 
-using (WmiConnection conncetion = new WmiConnection(@"\\MACHINENAME\root\cimv2", cred, opt))
+using (WmiConnection con = new WmiConnection(@"\\MACHINENAME\root\cimv2", cred, opt))
 {
-    foreach (WmiObject partition in conncetion.CreateQuery("SELECT * FROM Win32_DiskPartition"))
+    foreach (WmiObject partition in con.CreateQuery("SELECT * FROM Win32_DiskPartition"))
     {
         Console.WriteLine(partition["Name"]);
     }
