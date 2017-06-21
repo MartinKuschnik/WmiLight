@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthenticationProtocol.cs" />
+    <Compile Include="EnumeratorBehaviorOption.cs" />
     <Compile Include="Internal\DebuggerFakeField.cs" />
     <Compile Include="Internal\Attribute\ExceptionAttribute.cs" />
     <Compile Include="Internal\HResult.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="Wbem\Enumerations\WbemChangeMode.cs" />
     <Compile Include="Exceptions\WmiException.cs" />
     <Compile Include="WmiConnection.cs" />
+    <Compile Include="WmiConnectionExtensions.cs" />
     <Compile Include="WmiConnectionOptions.cs" />
     <Compile Include="Internal\NativeMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

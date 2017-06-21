@@ -6,7 +6,7 @@
     using System.Reflection;
     using System.Runtime.InteropServices;
     using WmiLight.Wbem;
-    
+
     #region Description
     /// <summary>
     /// Represents a connection to the WMI-provider of a computer.
@@ -136,9 +136,9 @@
         /// <param name="path">
         /// The object path of the correct WMI namespace.
         /// <para/>
-        /// For local access to the default namespace, use a simple object path: "root\default" or "\\.\root\default". 
+        /// For local access to the default namespace, use a simple object path: "root\default" or "\\.\root\default".
         /// <para />
-        /// For access to the default namespace on a remote computer using COM or Microsoft-compatible networking, include the computer name: "\\server\root\default". 
+        /// For access to the default namespace on a remote computer using COM or Microsoft-compatible networking, include the computer name: "\\server\root\default".
         /// </param>
         #endregion
         public WmiConnection(string path)
@@ -153,9 +153,9 @@
         /// <param name="path">
         /// The object path of the correct WMI namespace.
         /// <para/>
-        /// For local access to the default namespace, use a simple object path: "root\default" or "\\.\root\default". 
+        /// For local access to the default namespace, use a simple object path: "root\default" or "\\.\root\default".
         /// <para />
-        /// For access to the default namespace on a remote computer using COM or Microsoft-compatible networking, include the computer name: "\\server\root\default". 
+        /// For access to the default namespace on a remote computer using COM or Microsoft-compatible networking, include the computer name: "\\server\root\default".
         /// </param>
         /// <param name="options">Specifies all settings required to make a WMI connection.</param>
         #endregion
@@ -172,9 +172,9 @@
         /// <param name="path">
         /// The object path of the correct WMI namespace.
         /// <para/>
-        /// For local access to the default namespace, use a simple object path: "root\default" or "\\.\root\default". 
+        /// For local access to the default namespace, use a simple object path: "root\default" or "\\.\root\default".
         /// <para />
-        /// For access to the default namespace on a remote computer using COM or Microsoft-compatible networking, include the computer name: "\\server\root\default". 
+        /// For access to the default namespace on a remote computer using COM or Microsoft-compatible networking, include the computer name: "\\server\root\default".
         /// </param>
         /// <param name="credential">The credential to make a remote connection.</param>
         #endregion
@@ -183,7 +183,7 @@
             this.path = path;
             this.credential = credential;
         }
-        
+
         #region Description
         /// <summary>
         /// Initializes a new instance of the <see cref="WmiConnection"/> class.
@@ -191,9 +191,9 @@
         /// <param name="path">
         /// The object path of the correct WMI namespace.
         /// <para/>
-        /// For local access to the default namespace, use a simple object path: "root\default" or "\\.\root\default". 
+        /// For local access to the default namespace, use a simple object path: "root\default" or "\\.\root\default".
         /// <para />
-        /// For access to the default namespace on a remote computer using COM or Microsoft-compatible networking, include the computer name: "\\server\root\default". 
+        /// For access to the default namespace on a remote computer using COM or Microsoft-compatible networking, include the computer name: "\\server\root\default".
         /// </param>
         /// <param name="credential">The credential to make a remote connection.</param>
         /// <param name="options">Specifies all settings required to make a WMI connection.</param>
@@ -208,7 +208,7 @@
         #endregion
 
         #region Properties
-        
+
         #region Description
         /// <summary>
         /// Gets a value indicating whether the connection is currently bound to a WMI server and namespace.
@@ -234,9 +234,9 @@
         /// </summary>
         #endregion
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private string Authority 
+        private string Authority
         {
-            get 
+            get
             {
                 if (this.credential != null && !string.IsNullOrWhiteSpace(this.credential.Domain))
                 {
@@ -357,18 +357,6 @@
 
         #region Description
         /// <summary>
-        /// Creates a <see cref="WmiQuery"/> for the given <see cref="string"/>.
-        /// </summary>
-        /// <param name="wql">The query.</param>
-        /// <returns>The created <see cref="WmiQuery"/>.</returns>
-        #endregion
-        public WmiQuery CreateQuery(string wql)
-        {
-            return new WmiQuery(this, wql);
-        }
-
-        #region Description
-        /// <summary>
         /// Executes a query to retrieve objects.
         /// </summary>
         /// <param name="query">The query which will be executed.</param>
@@ -376,8 +364,13 @@
         /// <exception cref="System.ObjectDisposedException">Object already disposed.</exception>
         /// <exception cref="System.ArgumentNullException"><paramref name="query"/> is null.</exception>
         #endregion
-        public WmiObjectEnumerator ExecuteQuery(string query)
+        public WmiObjectEnumerator ExecuteQuery(WmiQuery query)
         {
+            if (query == null)
+            {
+                throw new ArgumentNullException(MethodBase.GetCurrentMethod().GetParameters()[0].Name);
+            }
+
             return new WmiObjectEnumerator(this.InternalExecuteQuery(query));
         }
 
@@ -401,12 +394,11 @@
         /// Executes a query to retrieve objects.
         /// </summary>
         /// <param name="query">The query which will be executed.</param>
-        /// <param name="behaviorOption">The flag to influence the behavior of the enumerator.</param>
         /// <returns>An object collection that contains the result set of the query.</returns>
         /// <exception cref="System.ObjectDisposedException">Object already disposed.</exception>
         /// <exception cref="System.ArgumentNullException"><paramref name="query"/> is null.</exception>
         #endregion
-        internal IWbemClassObjectEnumerator InternalExecuteQuery(string query, WbemClassObjectEnumeratorBehaviorOption behaviorOption = WbemClassObjectEnumeratorBehaviorOption.ReturnImmediately)
+        internal IWbemClassObjectEnumerator InternalExecuteQuery(WmiQuery query)
         {
             if (this.isDisposed)
             {
@@ -422,21 +414,23 @@
 
             IWbemClassObjectEnumerator enumerator;
 
+            WbemClassObjectEnumeratorBehaviorOption behaviorOption = (WbemClassObjectEnumeratorBehaviorOption)query.EnumeratorBehaviorOption;
+
             if (this.IsRemote)
             {
                 AuthenticationLevel authLevel = this.options.EnablePackageEncryption ? AuthenticationLevel.PacketPrivacy : AuthenticationLevel.PacketIntegrity;
 
                 // use the native function by the extension method for a faster call
-                enumerator = this.wbemServices.ExecQuery(query, behaviorOption, this.context, authLevel, ImpersonationLevel.Impersonate, this.credential.UserName, this.credential.Password, this.Authority);
+                enumerator = this.wbemServices.ExecQuery(query.ToString(), behaviorOption, this.context, authLevel, ImpersonationLevel.Impersonate, this.credential.UserName, this.credential.Password, this.Authority);
             }
             else
             {
-                enumerator = this.wbemServices.ExecQuery(query, behaviorOption, this.context);
+                enumerator = this.wbemServices.ExecQuery(query.ToString(), behaviorOption, this.context);
             }
 
             return enumerator;
         }
-        
+
         #endregion
     }
 }

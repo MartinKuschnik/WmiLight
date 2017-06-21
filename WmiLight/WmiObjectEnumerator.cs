@@ -49,12 +49,12 @@
             }
 
             this.wbemClassObjectEnumerator = enumerator;
-            
+
             enumerator.Reset();
         }
 
-        #endregion        
-        
+        #endregion
+
         #region Functions
 
         #region Description
@@ -71,9 +71,9 @@
         #endregion
         object IEnumerator.Current
         {
-            get 
+            get
             {
-                return this.Current; 
+                return this.Current;
             }
         }
 
