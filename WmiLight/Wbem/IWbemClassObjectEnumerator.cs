@@ -12,7 +12,9 @@
     [ComImport]
     [Guid("027947e1-d731-11ce-a357-000000000001")]
     [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+#if !NETSTANDARD2_0
     [TypeLibTypeAttribute(TypeLibTypeFlags.FRestricted)]
+#endif
     internal interface IWbemClassObjectEnumerator
     {
         #region Description

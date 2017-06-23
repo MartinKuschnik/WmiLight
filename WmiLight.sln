@@ -31,6 +31,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WmiLight.Core.TestApp", "WmiLight.Core.TestApp\WmiLight.Core.TestApp.csproj", "{9399B263-0539-49F6-9590-BC2F7900CA6E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WmiLight.Core", "WmiLight.Core\WmiLight.Core.csproj", "{F9D47927-72A6-4B70-B64C-26C9C7A91E6E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +48,14 @@ Global
 		{B4B62BF4-AB12-4687-8D02-DA9B5EAEF128}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B4B62BF4-AB12-4687-8D02-DA9B5EAEF128}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B4B62BF4-AB12-4687-8D02-DA9B5EAEF128}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9399B263-0539-49F6-9590-BC2F7900CA6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9399B263-0539-49F6-9590-BC2F7900CA6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9399B263-0539-49F6-9590-BC2F7900CA6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9399B263-0539-49F6-9590-BC2F7900CA6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9D47927-72A6-4B70-B64C-26C9C7A91E6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9D47927-72A6-4B70-B64C-26C9C7A91E6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9D47927-72A6-4B70-B64C-26C9C7A91E6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9D47927-72A6-4B70-B64C-26C9C7A91E6E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -57,8 +57,25 @@
         #endregion
         static NativeMethods()
         {
-            string dllPath = System.Runtime.InteropServices.RuntimeEnvironment.GetRuntimeDirectory() + Path.DirectorySeparatorChar + NativeMethods.UnmanagedWmiLibraryDllName;
+            string dllPath = "";
+#if NETSTANDARD2_0
+            switch (RuntimeInformation.ProcessArchitecture)
+            {
+                case Architecture.Arm:
+                    throw new PlatformNotSupportedException("Arm is not supported");
+                case Architecture.Arm64:
+                    throw new PlatformNotSupportedException("Arm64 is not supported");
 
+                case Architecture.X64:
+                    dllPath = Path.Combine(AppContext.BaseDirectory, "x64", NativeMethods.UnmanagedWmiLibraryDllName);
+                    break;
+                case Architecture.X86:
+                    dllPath = Path.Combine(AppContext.BaseDirectory, "x86", NativeMethods.UnmanagedWmiLibraryDllName);
+                    break;
+            }
+#else
+            dllPath = System.Runtime.InteropServices.RuntimeEnvironment.GetRuntimeDirectory() + Path.DirectorySeparatorChar + NativeMethods.UnmanagedWmiLibraryDllName;
+#endif
             IntPtr loadLibrary = LoadLibrary(dllPath);
 
             if (loadLibrary != IntPtr.Zero)

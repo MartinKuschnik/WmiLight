@@ -1,0 +1,76 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE;DEBUG;NETSTANDARD2_0</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\WmiLight\AuthenticationProtocol.cs" Link="AuthenticationProtocol.cs" />
+    <Compile Include="..\WmiLight\EnumeratorBehaviorOption.cs" Link="EnumeratorBehaviorOption.cs" />
+    <Compile Include="..\WmiLight\Exceptions\InvalidNamespaceException.cs" Link="Exceptions\InvalidNamespaceException.cs" />
+    <Compile Include="..\WmiLight\Exceptions\InvalidParameterException.cs" Link="Exceptions\InvalidParameterException.cs" />
+    <Compile Include="..\WmiLight\Exceptions\LocalCredentialsException.cs" Link="Exceptions\LocalCredentialsException.cs" />
+    <Compile Include="..\WmiLight\Exceptions\TransportFailureException.cs" Link="Exceptions\TransportFailureException.cs" />
+    <Compile Include="..\WmiLight\Exceptions\WmiException.cs" Link="Exceptions\WmiException.cs" />
+    <Compile Include="..\WmiLight\Internal\Attribute\ExceptionAttribute.cs" Link="Internal\Attribute\ExceptionAttribute.cs" />
+    <Compile Include="..\WmiLight\Internal\Attribute\HResultAttribute.cs" Link="Internal\Attribute\HResultAttribute.cs" />
+    <Compile Include="..\WmiLight\Internal\AuthenticationLevel.cs" Link="Internal\AuthenticationLevel.cs" />
+    <Compile Include="..\WmiLight\Internal\CimType.cs" Link="Internal\CimType.cs" />
+    <Compile Include="..\WmiLight\Internal\DebuggerFakeField.cs" Link="Internal\DebuggerFakeField.cs" />
+    <Compile Include="..\WmiLight\Internal\HResult.cs" Link="Internal\HResult.cs" />
+    <Compile Include="..\WmiLight\Internal\HResultInfo.cs" Link="Internal\HResultInfo.cs" />
+    <Compile Include="..\WmiLight\Internal\ImpersonationLevel.cs" Link="Internal\ImpersonationLevel.cs" />
+    <Compile Include="..\WmiLight\Internal\NativeMethods.cs" Link="Internal\NativeMethods.cs" />
+    <Compile Include="..\WmiLight\Wbem\Enumerations\WbemChangeMode.cs" Link="Wbem\Enumerations\WbemChangeMode.cs" />
+    <Compile Include="..\WmiLight\Wbem\Enumerations\WbemClassObjectComparisonOption.cs" Link="Wbem\Enumerations\WbemClassObjectComparisonOption.cs" />
+    <Compile Include="..\WmiLight\Wbem\Enumerations\WbemClassObjectEnumeratorBehaviorOption.cs" Link="Wbem\Enumerations\WbemClassObjectEnumeratorBehaviorOption.cs" />
+    <Compile Include="..\WmiLight\Wbem\Enumerations\WbemConditionFlag.cs" Link="Wbem\Enumerations\WbemConditionFlag.cs" />
+    <Compile Include="..\WmiLight\Wbem\Enumerations\WbemConnectOption.cs" Link="Wbem\Enumerations\WbemConnectOption.cs" />
+    <Compile Include="..\WmiLight\Wbem\Enumerations\WbemStatus.cs" Link="Wbem\Enumerations\WbemStatus.cs" />
+    <Compile Include="..\WmiLight\Wbem\Extensions\IWbemCallResultExtensions.cs" Link="Wbem\Extensions\IWbemCallResultExtensions.cs" />
+    <Compile Include="..\WmiLight\Wbem\Extensions\IWbemClassObjectEnumeratorExtensions.cs" Link="Wbem\Extensions\IWbemClassObjectEnumeratorExtensions.cs" />
+    <Compile Include="..\WmiLight\Wbem\Extensions\IWbemClassObjectExtensions.cs" Link="Wbem\Extensions\IWbemClassObjectExtensions.cs" />
+    <Compile Include="..\WmiLight\Wbem\Extensions\IWbemContextExtensions.cs" Link="Wbem\Extensions\IWbemContextExtensions.cs" />
+    <Compile Include="..\WmiLight\Wbem\Extensions\IWbemLocatorExtensions.cs" Link="Wbem\Extensions\IWbemLocatorExtensions.cs" />
+    <Compile Include="..\WmiLight\Wbem\Extensions\IWbemObjectSinkExtensions.cs" Link="Wbem\Extensions\IWbemObjectSinkExtensions.cs" />
+    <Compile Include="..\WmiLight\Wbem\Extensions\IWbemQualifierSetExtensions.cs" Link="Wbem\Extensions\IWbemQualifierSetExtensions.cs" />
+    <Compile Include="..\WmiLight\Wbem\Extensions\IWbemServicesExtensions.cs" Link="Wbem\Extensions\IWbemServicesExtensions.cs" />
+    <Compile Include="..\WmiLight\Wbem\IWbemCallResult.cs" Link="Wbem\IWbemCallResult.cs" />
+    <Compile Include="..\WmiLight\Wbem\IWbemClassObject.cs" Link="Wbem\IWbemClassObject.cs" />
+    <Compile Include="..\WmiLight\Wbem\IWbemClassObjectEnumerator.cs" Link="Wbem\IWbemClassObjectEnumerator.cs" />
+    <Compile Include="..\WmiLight\Wbem\IWbemContext.cs" Link="Wbem\IWbemContext.cs" />
+    <Compile Include="..\WmiLight\Wbem\IWbemLocator.cs" Link="Wbem\IWbemLocator.cs" />
+    <Compile Include="..\WmiLight\Wbem\IWbemObjectSink.cs" Link="Wbem\IWbemObjectSink.cs" />
+    <Compile Include="..\WmiLight\Wbem\IWbemQualifierSet.cs" Link="Wbem\IWbemQualifierSet.cs" />
+    <Compile Include="..\WmiLight\Wbem\IWbemServices.cs" Link="Wbem\IWbemServices.cs" />
+    <Compile Include="..\WmiLight\Wbem\WbemLocator.cs" Link="Wbem\WbemLocator.cs" />
+    <Compile Include="..\WmiLight\WmiConnection.cs" Link="WmiConnection.cs" />
+    <Compile Include="..\WmiLight\WmiConnectionExtensions.cs" Link="WmiConnectionExtensions.cs" />
+    <Compile Include="..\WmiLight\WmiConnectionOptions.cs" Link="WmiConnectionOptions.cs" />
+    <Compile Include="..\WmiLight\WmiObject.cs" Link="WmiObject.cs" />
+    <Compile Include="..\WmiLight\WmiObjectEnumerator.cs" Link="WmiObjectEnumerator.cs" />
+    <Compile Include="..\WmiLight\WmiObjectGenus.cs" Link="WmiObjectGenus.cs" />
+    <Compile Include="..\WmiLight\WmiQuery.cs" Link="WmiQuery.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Exceptions\" />
+    <Folder Include="Internal\Attribute\" />
+    <Folder Include="Wbem\Enumerations\" />
+    <Folder Include="Wbem\Extensions\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="x64\WMINet_Utils.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="x86\WMINet_Utils.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>
