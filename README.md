@@ -32,13 +32,25 @@ using (WmiConnection con = new WmiConnection())
 }
 ```
 
-Query all partitions for a remote machine:
+Query all partitions for a remote machine with credentials:
 ```C#
 
 var opt = new WmiConnectionOptions() { EnablePackageEncryption = true };
 var cred = new NetworkCredential("USERNAME", "PASSWORD", "DOMAIN");
 
 using (WmiConnection con = new WmiConnection(@"\\MACHINENAME\root\cimv2", cred, opt))
+{
+    foreach (WmiObject partition in con.CreateQuery("SELECT * FROM Win32_DiskPartition"))
+    {
+        Console.WriteLine(partition["Name"]);
+    }
+}
+```
+Query all partitions for a remote machine with Integrated Windows Authentication:
+```C#
+var opt = new WmiConnectionOptions() { EnablePackageEncryption = true };
+
+using (WmiConnection con = new WmiConnection(@"\\MACHINENAME\root\cimv2", opt))
 {
     foreach (WmiObject partition in con.CreateQuery("SELECT * FROM Win32_DiskPartition"))
     {
