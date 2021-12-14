@@ -1,4 +1,4 @@
-# WmiLight [![Build status](https://ci.appveyor.com/api/projects/status/9m2i007a2ylifuy3?svg=true)](https://ci.appveyor.com/project/martinkuschnik/wmilight) [![NuGet Status](http://img.shields.io/nuget/v/WmiLight.svg?style=flat)](https://www.nuget.org/packages/WmiLight/)
+# WmiLight [![build](https://github.com/MartinKuschnik/WmiLight/workflows/.NET%20Core/badge.svg)](https://github.com/MartinKuschnik/WmiLight/actions) [![NuGet Status](http://img.shields.io/nuget/v/WmiLight.svg?style=flat)](https://www.nuget.org/packages/WmiLight/)
 
 ## What is WmiLight?
 A simple and light wmi framework. It has only one function: sending WMI queries.
