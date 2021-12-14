@@ -1,0 +1,32 @@
+name: .NET Core
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  release:
+    types:
+      - published
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.301
+    - name: Install dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+    - name: Pack with dotnet
+      if: github.event.action == 'published'
+      run: dotnet pack WmiLight\WmiLight.csproj --configuration Release --output nuget-packages --no-build
+    - name: Push with dotnet
+      if: github.event.action == 'published'
+      run: dotnet nuget push nuget-packages/ --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
