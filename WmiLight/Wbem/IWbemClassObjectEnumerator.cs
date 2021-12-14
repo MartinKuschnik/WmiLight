@@ -12,7 +12,6 @@
     [ComImport]
     [Guid("027947e1-d731-11ce-a357-000000000001")]
     [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    [TypeLibTypeAttribute(TypeLibTypeFlags.FRestricted)]
     internal interface IWbemClassObjectEnumerator
     {
         #region Description

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Net;
 
-namespace WmiLight.TestApp
+namespace WmiLight.TestApp_NetCore
 {
-    class Program
-    {
+    internal class Program
+    {        
         static void Main(string[] args)
         {
             Console.WriteLine("Win32_Process:");

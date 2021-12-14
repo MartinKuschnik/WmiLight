@@ -1,5 +1,6 @@
 ﻿namespace WmiLight
 {
+    using Microsoft.Win32;
     using System;
     using System.IO;
     using System.Runtime.InteropServices;
@@ -11,7 +12,7 @@
     /// </summary>
     #endregion
     internal static class NativeMethods
-    {        
+    {
         #region Fields
 
         #region Description
@@ -57,18 +58,20 @@
         #endregion
         static NativeMethods()
         {
-            string dllPath = System.Runtime.InteropServices.RuntimeEnvironment.GetRuntimeDirectory() + Path.DirectorySeparatorChar + NativeMethods.UnmanagedWmiLibraryDllName;
+            string installRoot = (string)Registry.LocalMachine.OpenSubKey("SOFTWARE\\Microsoft\\.NETFramework\\")?.GetValue("InstallRoot") ?? RuntimeEnvironment.GetRuntimeDirectory();
+
+            string dllPath = Path.Combine(installRoot, "v4.0.30319", UnmanagedWmiLibraryDllName);
 
             IntPtr loadLibrary = LoadLibrary(dllPath);
 
             if (loadLibrary != IntPtr.Zero)
             {
                 IntPtr procAddr = GetProcAddress(loadLibrary, "BlessIWbemServices");
-                
+
                 CoSetProxyBlanketForIWbemServices = (CoSetProxyBlanketForIWbemServicesFunction)Marshal.GetDelegateForFunctionPointer(procAddr, typeof(CoSetProxyBlanketForIWbemServicesFunction));
 
                 CoSetProxyBlanketForIWbemClassObjectEnumerator = (CoSetProxyBlanketForIWbemClassObjectEnumeratorFunction)Marshal.GetDelegateForFunctionPointer(procAddr, typeof(CoSetProxyBlanketForIWbemClassObjectEnumeratorFunction));
-                
+
                 ExecQueryWmi = (ExecQueryFunction)Marshal.GetDelegateForFunctionPointer(GetProcAddress(loadLibrary, "ExecQueryWmi"), typeof(ExecQueryFunction));
             }
             else
@@ -98,13 +101,13 @@
         /// <returns>A coded numerical value that is assigned to a specific exception.</returns>
         #endregion
         internal delegate HResult CoSetProxyBlanketForIWbemServicesFunction(
-            [In, MarshalAs(UnmanagedType.Interface)] 
+            [In, MarshalAs(UnmanagedType.Interface)]
             IWbemServices wbemServices,
-            [In, MarshalAs(UnmanagedType.BStr)]  
+            [In, MarshalAs(UnmanagedType.BStr)]
             string userName,
-            [In, MarshalAs(UnmanagedType.BStr)] 
+            [In, MarshalAs(UnmanagedType.BStr)]
             string password,
-            [In, MarshalAs(UnmanagedType.BStr)]  
+            [In, MarshalAs(UnmanagedType.BStr)]
             string authority,
             [In]
             ImpersonationLevel impersonationLevel,
@@ -128,13 +131,13 @@
         /// <returns>A coded numerical value that is assigned to a specific exception.</returns>
         #endregion
         internal delegate HResult CoSetProxyBlanketForIWbemClassObjectEnumeratorFunction(
-            [In, MarshalAs(UnmanagedType.Interface)] 
+            [In, MarshalAs(UnmanagedType.Interface)]
             IWbemClassObjectEnumerator wbemClassObjectEnumerator,
-            [In, MarshalAs(UnmanagedType.BStr)]  
+            [In, MarshalAs(UnmanagedType.BStr)]
             string userName,
-            [In, MarshalAs(UnmanagedType.BStr)] 
+            [In, MarshalAs(UnmanagedType.BStr)]
             string password,
-            [In, MarshalAs(UnmanagedType.BStr)]  
+            [In, MarshalAs(UnmanagedType.BStr)]
             string authority,
             [In]
             ImpersonationLevel impersonationLevel,
@@ -172,29 +175,29 @@
         internal delegate HResult ExecQueryFunction(
             [In][MarshalAs(UnmanagedType.BStr)]
             string queryLanguage,
-            [In][MarshalAs(UnmanagedType.BStr)]  
+            [In][MarshalAs(UnmanagedType.BStr)]
             string query,
-            [In] 
+            [In]
             WbemClassObjectEnumeratorBehaviorOption enumeratorBehaviorOption,
-            [In] 
+            [In]
             IWbemContext ctx,
-            [Out] 
+            [Out]
             out IWbemClassObjectEnumerator enumerator,
-            [In] 
+            [In]
             AuthenticationLevel impersonationLevel,
-            [In] 
+            [In]
             ImpersonationLevel authenticationLevel,
-            [In] 
+            [In]
             IWbemServices wbemService,
-            [In][MarshalAs(UnmanagedType.BStr)]  
+            [In][MarshalAs(UnmanagedType.BStr)]
             string userName,
-            [In][MarshalAs(UnmanagedType.BStr)]  
+            [In][MarshalAs(UnmanagedType.BStr)]
             string password,
-            [In][MarshalAs(UnmanagedType.BStr)]  
+            [In][MarshalAs(UnmanagedType.BStr)]
             string authority);
 
         #endregion
-        
+
         #region Methods
 
         #region Description
