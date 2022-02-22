@@ -24,13 +24,13 @@ jobs:
       run: dotnet restore
     - name: Extract Private Key
       run: |
-           echo "${{ secrets.PRIVATE_KEY }}" > private_key.base64
-           certutil -decode private_key.base64 private_key.snk
-           rm private_key.base64 -v
+           echo "${{ secrets.PRIVATE_KEY }}" > WmiLight\private_key.base64
+           certutil -decode WmiLight\private_key.base64 WmiLight\private_key.snk
+           rm WmiLight\private_key.base64 -v
     - name: Build
       run: dotnet build --configuration Release --no-restore
     - name: Cleanup Private Key
-      run: rm private_key.snk -v
+      run: rm WmiLight\private_key.snk -v
     - name: Pack with dotnet
       if: github.event.action == 'published'
       run: dotnet pack WmiLight\WmiLight.csproj --configuration Release --output nuget-packages --no-build
