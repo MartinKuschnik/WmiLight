@@ -2,11 +2,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <OutputType>Library</OutputType>
-	  <SccProjectName>SAK</SccProjectName>
-	  <SccLocalPath>SAK</SccLocalPath>
-	  <SccAuxPath>SAK</SccAuxPath>
-	  <SccProvider>SAK</SccProvider>
-	  <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DocumentationFile>
