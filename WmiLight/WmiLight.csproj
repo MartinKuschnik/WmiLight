@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <OutputType>Library</OutputType>
@@ -29,7 +29,7 @@
   </Target>
   <PropertyGroup />
   <PropertyGroup>
-    <Version>3.0.4</Version>
+    <Version>3.0.6</Version>
     <PackageId>WmiLight</PackageId>
     <Authors>Martin Kuschnik</Authors>
     <Company>Martin Kuschnik</Company>
