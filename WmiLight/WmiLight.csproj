@@ -22,10 +22,10 @@
     <DocumentationFile>bin\PreRelease\WmiLight.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>False</SignAssembly>
+    <SignAssembly>True</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>Properties\Key.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>public_key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="Properties\NugetPackageContent\" />
@@ -48,6 +48,7 @@
     <RootNamespace>WmiLight</RootNamespace>
     <AssemblyName>WmiLight</AssemblyName>
     <PackageLicenseExpression>GPL-2.0-only</PackageLicenseExpression>
+    <DelaySign>True</DelaySign>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers" Version="0.3.261302">
