@@ -31,7 +31,7 @@
   </Target>
   <PropertyGroup />
   <PropertyGroup>
-    <Version>3.0.3</Version>
+    <Version>3.0.4</Version>
     <PackageId>WmiLight</PackageId>
     <Authors>Martin Kuschnik</Authors>
     <Company>Martin Kuschnik</Company>
