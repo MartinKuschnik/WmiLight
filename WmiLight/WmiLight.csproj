@@ -17,11 +17,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <DocumentationFile>bin\PreRelease\WmiLight.xml</DocumentationFile>
   </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>True</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyOriginatorKeyFile>public_key.snk</AssemblyOriginatorKeyFile>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+	<SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>private_key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="Properties\NugetPackageContent\" />
@@ -44,7 +42,7 @@
     <RootNamespace>WmiLight</RootNamespace>
     <AssemblyName>WmiLight</AssemblyName>
     <PackageLicenseExpression>GPL-2.0-only</PackageLicenseExpression>
-    <DelaySign>True</DelaySign>
+    <DelaySign>False</DelaySign>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers" Version="0.3.261302">
