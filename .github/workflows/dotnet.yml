@@ -24,6 +24,8 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --configuration Release --no-restore
+    - name: Sign
+      run: powershell whoami
     - name: Pack with dotnet
       if: github.event.action == 'published'
       run: dotnet pack WmiLight\WmiLight.csproj --configuration Release --output nuget-packages --no-build
