@@ -2,11 +2,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <OutputType>Library</OutputType>
-	  <SccProjectName>SAK</SccProjectName>
-	  <SccLocalPath>SAK</SccLocalPath>
-	  <SccAuxPath>SAK</SccAuxPath>
-	  <SccProvider>SAK</SccProvider>
-	  <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DocumentationFile>
@@ -35,7 +31,7 @@
   </Target>
   <PropertyGroup />
   <PropertyGroup>
-    <Version>3.0.0</Version>
+    <Version>3.0.1</Version>
     <PackageId>WmiLight</PackageId>
     <Authors>Martin Kuschnik</Authors>
     <Company>Martin Kuschnik</Company>
