@@ -22,14 +22,14 @@ jobs:
         dotnet-version: 3.1.301
     - name: Install dependencies
       run: dotnet restore
-    - name: Build
-      run: dotnet build --configuration Release --no-restore
-    - name: Sign
+    - name: Extract Private Key
       run: |
            echo "${{ secrets.PRIVATE_KEY }}" > private_key.base64
            certutil -decode private_key.base64 private_key.snk
-           sn -R WmiLight\bin\Release\netstandard2.0\WmiLight.dll private_key.snk
-           rm private_key.*
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+    - name: Cleanup Private Key
+      run:  rm private_key.*
     - name: Pack with dotnet
       if: github.event.action == 'published'
       run: dotnet pack WmiLight\WmiLight.csproj --configuration Release --output nuget-packages --no-build
