@@ -25,7 +25,8 @@ jobs:
     - name: Build
       run: dotnet build --configuration Release --no-restore
     - name: Sign
-      run: echo "${{ secrets.PRIVATE_KEY }}" > private_key.base64
+      run: |
+           echo "${{ secrets.PRIVATE_KEY }}" > private_key.base64
            certutil -decode private_key.base64 private_key.snk
            sn -R WmiLight\bin\Release\netstandard2.0\WmiLight.dll private_key.snk
            rm private_key.*
