@@ -29,19 +29,19 @@
   </Target>
   <PropertyGroup />
   <PropertyGroup>
-    <Version>3.0.6</Version>
+    <Version>3.1.0</Version>
     <PackageId>WmiLight</PackageId>
     <Authors>Martin Kuschnik</Authors>
     <Company>Martin Kuschnik</Company>
     <Description>A simple and light wmi framework.</Description>
-    <Copyright>Copyright 2021 Martin Kuschnik</Copyright>
+    <Copyright>Copyright 2022 Martin Kuschnik</Copyright>
     <PackageProjectUrl>https://github.com/MartinKuschnik/WmiLight</PackageProjectUrl>
     <RepositoryUrl>https://github.com/MartinKuschnik/WmiLight</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>WmiLight WMI Windows Management Instrumentation windows c#</PackageTags>
     <RootNamespace>WmiLight</RootNamespace>
     <AssemblyName>WmiLight</AssemblyName>
-    <PackageLicenseExpression>GPL-2.0-only</PackageLicenseExpression>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <DelaySign>False</DelaySign>
   </PropertyGroup>
   <ItemGroup>
