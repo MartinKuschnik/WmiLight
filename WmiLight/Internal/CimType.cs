@@ -1,10 +1,13 @@
-﻿namespace WmiLight
+﻿using System;
+
+namespace WmiLight
 {
     #region Description
     /// <summary>
     /// Describes the possible CIM types for properties, qualifiers, or method parameters.
     /// </summary>
     #endregion
+    [Flags]
     internal enum CimType
     {
         #region Description
@@ -116,5 +119,14 @@
         /// </summary>
         #endregion
         Char16 = 103,
+
+        // Flags:
+
+        #region Description
+        /// <summary>
+        /// Flag indicading an array. 
+        /// </summary>
+        #endregion
+        ArrayFlag = 0x2000
     }
 }
