@@ -38,7 +38,7 @@ jobs:
            rm WmiLight\private_key.base64 -v
            
     - name: Build .Net Lib
-      run: msbuild /m /p:Configuration=Release /p:Platform='Any CPU' WmiLight\WmiLight.csproj
+      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform='Any CPU' WmiLight\WmiLight.csproj
       
     - name: Cleanup Private Key
       run: rm WmiLight\private_key.snk -v
@@ -57,9 +57,28 @@ jobs:
       run: dotnet pack WmiLight\WmiLight.csproj --configuration ${{env.BUILD_CONFIGURATION}} --output nuget-packages --no-build      
 
     - name: Add Nativ Native Lib to NuGet package
-      uses: montudor/action-zip@v1
-      with:
-        args: zip -u nuget-packages/*.nupkg ddd
+      run: |
+            $nuget_package_name =  ('nuget-packages\' + (Get-ChildItem .\nuget-packages\))
+            $zip_file = [io.path]::ChangeExtension($nuget_package_name, ".zip")
+        
+            # rename .nupkg to .zip because we need a .zip for Expand-Archive
+            Rename-Item $nuget_package_name ([io.path]::GetFileName($zip_file))
+            
+            Expand-Archive $zip_file -DestinationPath 'nuget-packages\unpacked'
+            
+            Remove-Item $zip_file
+            
+            New-Item 'nuget-packages\unpacked\runtimes\win-x64\native\' -Type Directory
+            New-Item 'nuget-packages\unpacked\runtimes\win-x86\native\' -Type Directory
+            
+            Copy-Item 'WmiLight.Native\bin\${{env.BUILD_CONFIGURATION}}\x64\WmiLight.Native.dll' 'nuget-packages\unpacked\runtimes\win-x64\native\'
+            Copy-Item 'WmiLight.Native\bin\${{env.BUILD_CONFIGURATION}}\x86\WmiLight.Native.dll' 'nuget-packages\unpacked\runtimes\win-x86\native\'
+            
+            Compress-Archive 'nuget-packages\unpacked\*' $zip_file
+            
+            Rename-Item $zip_file ([io.path]::GetFileName($nuget_package_name))
+            
+            Remove-Item -Recurse -Force -Confirm:$false 'nuget-packages\unpacked'
       
     - name: Push with dotnet
       if: github.event.action == 'published'
