@@ -8,6 +8,11 @@ on:
   release:
     types:
       - published
+env:
+  # Configuration type to build.
+  # You can convert this to a build matrix if you need coverage of multiple configuration types.
+  # https://docs.github.com/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
+  BUILD_CONFIGURATION: Release
 
 jobs:
   build:
@@ -23,7 +28,7 @@ jobs:
         dotnet-version: 8.x
         
     - name: Setup MSBuild
-      uses: microsoft/setup-msbuild@v1.3.1
+      uses: microsoft/setup-msbuild@v1.1.3
         
     - name: Install dependencies
       run: dotnet restore
@@ -33,15 +38,26 @@ jobs:
            echo "${{ secrets.PRIVATE_KEY }}" > WmiLight\private_key.base64
            certutil -decode WmiLight\private_key.base64 WmiLight\private_key.snk
            rm WmiLight\private_key.base64 -v
-    - name: Build
-      run: dotnet build --configuration Release --no-restore
+           
+    - name: Build .Net
+      run: dotnet build --configuration ${{env.BUILD_CONFIGURATION}} --no-restore
       
     - name: Cleanup Private Key
       run: rm WmiLight\private_key.snk -v
       
+    - name: Build Native Lib (x64)
+      working-directory: ${{env.GITHUB_WORKSPACE}}     
+      # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
+      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=x64 src\WmiLight.Native\WmiLight.Native.vcxproj
+      
+    - name: Build Native Lib (x86)
+      working-directory: ${{env.GITHUB_WORKSPACE}}     
+      # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
+      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=x86 src\WmiLight.Native\WmiLight.Native.vcxproj
+      
     - name: Pack with dotnet
       if: github.event.action == 'published'
-      run: dotnet pack WmiLight\WmiLight.csproj --configuration Release --output nuget-packages --no-build
+      run: dotnet pack WmiLight\WmiLight.csproj --configuration ${{env.BUILD_CONFIGURATION}} --output nuget-packages --no-build
       
     - name: Push with dotnet
       if: github.event.action == 'published'
