@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "WmiLight.TestApp-NetCore": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

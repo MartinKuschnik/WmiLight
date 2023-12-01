@@ -60,14 +60,10 @@
         public WmiQuery(WmiConnection connection, string wql, EnumeratorBehaviorOption enumeratorBehaviorOptions)
         {
             if (connection == null)
-            {
-                throw new ArgumentNullException(MethodBase.GetCurrentMethod().GetParameters()[0].Name);
-            }
+                throw new ArgumentNullException(nameof(connection));
 
             if (wql == null)
-            {
-                throw new ArgumentNullException(MethodBase.GetCurrentMethod().GetParameters()[1].Name);
-            }
+                throw new ArgumentNullException(nameof(wql));
 
             this.wql = wql;
 

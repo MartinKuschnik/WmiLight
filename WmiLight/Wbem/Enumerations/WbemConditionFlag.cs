@@ -2,7 +2,7 @@
 {
     #region Description
     /// <summary>
-    /// Enumeration to specify a condition for the <see cref="IWbemClassObject.GetNames"/>() method. 
+    /// Enumeration to specify a condition for the <see cref="WbemClassObject.GetNames"/>() method. 
     /// </summary>
     #endregion
     internal enum WbemConditionFlag

@@ -3,8 +3,6 @@
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Reflection;
-    using System.Runtime.InteropServices;
     using WmiLight.Wbem;
 
     #region Description
@@ -18,10 +16,10 @@
 
         #region Description
         /// <summary>
-        /// The native <see cref="IWbemClassObjectEnumerator"/> object.
+        /// The native <see cref="WbemClassObjectEnumerator"/> object.
         /// </summary>
         #endregion
-        private readonly IWbemClassObjectEnumerator wbemClassObjectEnumerator;
+        private readonly WbemClassObjectEnumerator wbemClassObjectEnumerator;
 
         #region Description
         /// <summary>
@@ -41,12 +39,10 @@
         /// <param name="enumerator">The the native enumerator.</param>
         /// <exception cref="ArgumentNullException"><paramref name="enumerator"/> is null.</exception>
         #endregion
-        internal WmiObjectEnumerator(IWbemClassObjectEnumerator enumerator)
+        internal WmiObjectEnumerator(WbemClassObjectEnumerator enumerator)
         {
             if (enumerator == null)
-            {
-                throw new ArgumentNullException(MethodBase.GetCurrentMethod().GetParameters()[0].Name);
-            }
+                throw new ArgumentNullException(nameof(enumerator));
 
             this.wbemClassObjectEnumerator = enumerator;
 
@@ -86,13 +82,10 @@
         public bool MoveNext()
         {
             if (this.disposed)
-            {
-                throw new ObjectDisposedException(typeof(WmiObjectEnumerator).FullName);
-            }
+                throw new ObjectDisposedException(nameof(WmiObjectEnumerator));
 
-            IWbemClassObject currentWmiObject = this.wbemClassObjectEnumerator.Next();
 
-            if (currentWmiObject != null)
+            if (this.wbemClassObjectEnumerator.Next(out WbemClassObject currentWmiObject))
             {
                 this.Current = new WmiObject(currentWmiObject);
                 return true;
@@ -109,16 +102,9 @@
         public void Reset()
         {
             if (this.disposed)
-            {
-                throw new ObjectDisposedException(typeof(WmiObjectEnumerator).FullName);
-            }
+                throw new ObjectDisposedException(nameof(WmiObjectEnumerator));
 
-            HResult hresult = this.wbemClassObjectEnumerator.Reset();
-
-            if (hresult.Failed)
-            {
-                throw (Exception)hresult;
-            }
+            this.wbemClassObjectEnumerator.Reset();
         }
 
         #region Description
@@ -130,9 +116,9 @@
         {
             if (!this.disposed)
             {
-                Marshal.ReleaseComObject(this.wbemClassObjectEnumerator);
-
                 this.disposed = true;
+
+                this.wbemClassObjectEnumerator.Dispose();
             }
         }
 

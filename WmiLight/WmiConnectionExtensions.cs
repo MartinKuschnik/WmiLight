@@ -23,9 +23,7 @@ namespace WmiLight
         public static WmiQuery CreateQuery(this WmiConnection connection, string wql, EnumeratorBehaviorOption enumeratorBehaviorOptions)
         {
             if (wql == null)
-            {
-                throw new ArgumentNullException(MethodBase.GetCurrentMethod().GetParameters()[1].Name);
-            }
+                throw new ArgumentNullException(nameof(wql));
 
             return new WmiQuery(connection, wql, enumeratorBehaviorOptions);
         }
@@ -42,9 +40,7 @@ namespace WmiLight
         public static WmiQuery CreateQuery(this WmiConnection connection, string wql)
         {
             if (wql == null)
-            {
-                throw new ArgumentNullException(MethodBase.GetCurrentMethod().GetParameters()[1].Name);
-            }
+                throw new ArgumentNullException(nameof(wql));
 
             return new WmiQuery(connection, wql);
         }
@@ -63,9 +59,7 @@ namespace WmiLight
         public static WmiObjectEnumerator ExecuteQuery(this WmiConnection connection, string query, EnumeratorBehaviorOption enumeratorBehaviorOptions)
         {
             if (query == null)
-            {
-                throw new ArgumentNullException(MethodBase.GetCurrentMethod().GetParameters()[1].Name);
-            }
+                throw new ArgumentNullException(nameof(query));
 
             return connection.ExecuteQuery(connection.CreateQuery(query, enumeratorBehaviorOptions));
         }
@@ -83,9 +77,7 @@ namespace WmiLight
         public static WmiObjectEnumerator ExecuteQuery(this WmiConnection connection, string query)
         {
             if (query == null)
-            {
-                throw new ArgumentNullException(MethodBase.GetCurrentMethod().GetParameters()[1].Name);
-            }
+                throw new ArgumentNullException(nameof(query));
 
             return connection.ExecuteQuery(connection.CreateQuery(query));
         }

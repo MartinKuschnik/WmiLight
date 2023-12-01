@@ -3,8 +3,6 @@
     using System;
     using System.Diagnostics;
     using System.Net;
-    using System.Reflection;
-    using System.Runtime.InteropServices;
     using WmiLight.Wbem;
 
     #region Description
@@ -71,7 +69,7 @@
 
         #region Description
         /// <summary>
-        /// true if the <see cref="IWbemServices"/> is connected, otherwise false.
+        /// true if the <see cref="WbemServices"/> is connected, otherwise false.
         /// </summary>
         #endregion
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -87,20 +85,20 @@
 
         #region Description
         /// <summary>
-        /// The native <see cref="IWbemServices"/> object.
+        /// The native <see cref="WbemServices"/> object.
         /// </summary>
         #endregion
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private IWbemServices wbemServices;
+        private WbemServices wbemServices;
 
 #pragma warning disable 0649 // Field is never assigned to, and will always have its default value 'null'.
         #region Description
         /// <summary>
-        /// The native <see cref="IWbemContext"/> object.
+        /// The native context object.
         /// </summary>
         #endregion
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private IWbemContext context;
+        private IntPtr context;
 #pragma warning restore 0649
 
         #endregion
@@ -221,7 +219,7 @@
             {
                 if (this.isDisposed)
                 {
-                    throw new ObjectDisposedException(typeof(WmiConnection).Name);
+                    throw new ObjectDisposedException(nameof(WmiConnection));
                 }
 
                 return this.isConnected ? true : false;
@@ -283,41 +281,42 @@
         {
             if (this.isDisposed)
             {
-                throw new ObjectDisposedException(typeof(WmiConnection).FullName);
+                throw new ObjectDisposedException(nameof(WmiConnection));
             }
 
             if (!this.isConnected)
             {
-                IWbemLocator locator = new WbemLocator();
-
-                lock (this.connectLockObject)
+                using (WbemLocator locator = new WbemLocator())
                 {
-                    if (!this.isConnected)
+                    lock (this.connectLockObject)
                     {
-                        AuthenticationLevel authLevel = this.options.EnablePackageEncryption ? AuthenticationLevel.PacketIntegrity : AuthenticationLevel.PacketPrivacy;
-
-                        if (this.IsRemote)
+                        if (!this.isConnected)
                         {
-                            try
-                            {
-                                this.wbemServices = locator.ConnectServer(this.path, this.credential.UserName, this.credential.Password, null, WbemConnectOption.None, this.Authority, this.context);
-                                this.wbemServices.SetProxy(this.credential.UserName, this.credential.Password, this.Authority, ImpersonationLevel.Impersonate, authLevel);
-                            }
-                            catch (LocalCredentialsException)
-                            {
-                                // try again without credential
-                                this.ignoreCredential = true;
-                                this.Open();
-                                return; // exit method
-                            }
-                        }
-                        else
-                        {
-                            this.wbemServices = locator.ConnectServer(this.path, null, null, null, WbemConnectOption.None, null, this.context);
-                            this.wbemServices.SetProxy(ImpersonationLevel.Impersonate, authLevel);
-                        }
+                            AuthenticationLevel authLevel = this.options.EnablePackageEncryption ? AuthenticationLevel.PacketIntegrity : AuthenticationLevel.PacketPrivacy;
 
-                        this.isConnected = true;
+                            if (this.IsRemote)
+                            {
+                                try
+                                {
+                                    this.wbemServices = locator.ConnectServer(this.path, this.credential.UserName, this.credential.Password, null, WbemConnectOption.None, this.Authority, this.context);
+                                    this.wbemServices.SetProxy(this.credential.UserName, this.credential.Password, this.Authority, ImpersonationLevel.Impersonate, authLevel);
+                                }
+                                catch (LocalCredentialsException)
+                                {
+                                    // try again without credential
+                                    this.ignoreCredential = true;
+                                    this.Open();
+                                    return; // exit method
+                                }
+                            }
+                            else
+                            {
+                                this.wbemServices = locator.ConnectServer(this.path, null, null, null, WbemConnectOption.None, null, this.context);
+                                this.wbemServices.SetProxy(ImpersonationLevel.Impersonate, authLevel);
+                            }
+
+                            this.isConnected = true;
+                        }
                     }
                 }
             }
@@ -332,9 +331,7 @@
         public void Close()
         {
             if (this.isDisposed)
-            {
-                throw new ObjectDisposedException(typeof(WmiConnection).FullName);
-            }
+                throw new ObjectDisposedException(nameof(WmiConnection));
 
             if (this.isConnected)
             {
@@ -344,8 +341,7 @@
                     {
                         if (this.wbemServices != null)
                         {
-                            Marshal.ReleaseComObject(this.wbemServices);
-
+                            this.wbemServices.Dispose();
                             this.wbemServices = null;
                         }
 
@@ -367,9 +363,7 @@
         public WmiObjectEnumerator ExecuteQuery(WmiQuery query)
         {
             if (query == null)
-            {
-                throw new ArgumentNullException(MethodBase.GetCurrentMethod().GetParameters()[0].Name);
-            }
+                throw new ArgumentNullException(nameof(query));
 
             return new WmiObjectEnumerator(this.InternalExecuteQuery(query));
         }
@@ -398,21 +392,15 @@
         /// <exception cref="System.ObjectDisposedException">Object already disposed.</exception>
         /// <exception cref="System.ArgumentNullException"><paramref name="query"/> is null.</exception>
         #endregion
-        internal IWbemClassObjectEnumerator InternalExecuteQuery(WmiQuery query)
+        internal WbemClassObjectEnumerator InternalExecuteQuery(WmiQuery query)
         {
             if (this.isDisposed)
-            {
-                throw new ObjectDisposedException(typeof(WmiConnection).FullName);
-            }
+                throw new ObjectDisposedException(nameof(WmiConnection));
 
             if (query == null)
-            {
-                throw new ArgumentNullException(MethodBase.GetCurrentMethod().GetParameters()[0].Name);
-            }
+                throw new ArgumentNullException(nameof(query));
 
             this.Open();
-
-            IWbemClassObjectEnumerator enumerator;
 
             WbemClassObjectEnumeratorBehaviorOption behaviorOption = (WbemClassObjectEnumeratorBehaviorOption)query.EnumeratorBehaviorOption;
 
@@ -420,15 +408,12 @@
             {
                 AuthenticationLevel authLevel = this.options.EnablePackageEncryption ? AuthenticationLevel.PacketPrivacy : AuthenticationLevel.PacketIntegrity;
 
-                // use the native function by the extension method for a faster call
-                enumerator = this.wbemServices.ExecQuery(query.ToString(), behaviorOption, this.context, authLevel, ImpersonationLevel.Impersonate, this.credential.UserName, this.credential.Password, this.Authority);
+                return this.wbemServices.ExecQuery(query.ToString(), behaviorOption, this.context, this.credential.UserName, this.credential.Password, this.Authority, authLevel, ImpersonationLevel.Impersonate);
             }
             else
             {
-                enumerator = this.wbemServices.ExecQuery(query.ToString(), behaviorOption, this.context);
+                return this.wbemServices.ExecQuery(query.ToString(), behaviorOption, this.context);
             }
-
-            return enumerator;
         }
 
         #endregion

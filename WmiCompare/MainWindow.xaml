@@ -1,0 +1,82 @@
+﻿<Window x:Class="WmiCompare.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WmiCompare"
+        mc:Ignorable="d"
+        Title="WMI Compare" Height="450" Width="800">
+    <Grid>
+ 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.Resources>
+            <Style TargetType="{x:Type ListViewItem}">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Error}" Value="True">
+                        <Setter Property="Foreground" Value="IndianRed" />
+                        <Setter Property="FontWeight" Value="Bold" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Grid.Resources>
+
+        <DockPanel Grid.ColumnSpan="2">
+            <Button x:Name="QueryButton" DockPanel.Dock="Right" Padding="5" Click="Button_Click">Query</Button>
+            <TextBox x:Name="QueryTextBox">SELECT * FROM Win32_Process</TextBox>
+        </DockPanel>
+
+        <ListView Grid.Row="1" Grid.Column="0" x:Name="LeftListView" ScrollViewer.ScrollChanged="LeftListView_ScrollChanged" >
+            <ListView.View>
+                <GridView AllowsColumnReorder="true">
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="Property" Width="auto"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Type}" Header="Type" Width="auto" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <ListView Grid.Row="1" Grid.Column="1" x:Name="RightListView" ScrollViewer.ScrollChanged="RightListView_ScrollChanged">
+            <ListView.View>
+                <GridView AllowsColumnReorder="true">
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="Property" Width="auto"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Type}" Header="Type" Width="auto" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <StatusBar Grid.Row="2">
+            <StatusBarItem>
+                <TextBlock x:Name="LeftRecordCountTextBlock" Text="Record Count:" />
+            </StatusBarItem>
+            <Separator />
+            <StatusBarItem>
+                <TextBlock x:Name="LeftPropertyCountTextBlock" Text="Property Count:" />
+            </StatusBarItem>
+            <Separator />
+            <StatusBarItem>
+                <TextBlock x:Name="LeftQueryDurationTextBlock" Text="Query Duration:" />
+            </StatusBarItem>
+        </StatusBar>
+
+        <StatusBar Grid.Row="2" Grid.Column="1">
+            <StatusBarItem>
+                <TextBlock x:Name="RightRecordCountTextBlock" Text="Record Count:" />
+            </StatusBarItem>
+            <Separator />
+            <StatusBarItem>
+                <TextBlock x:Name="RightPropertyCountTextBlock" Text="Property Count:" />
+            </StatusBarItem>
+            <Separator />
+            <StatusBarItem>
+                <TextBlock x:Name="RightQueryDurationTextBlock" Text="Query Duration:" />
+            </StatusBarItem>
+        </StatusBar>
+    </Grid>
+</Window>

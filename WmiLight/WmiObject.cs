@@ -4,8 +4,6 @@
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
-    using System.Reflection;
-    using System.Runtime.InteropServices;
     using WmiLight.Wbem;
 
     #region Description
@@ -103,11 +101,11 @@
 
         #region Description
         /// <summary>
-        /// The native <see cref="IWbemClassObject"/> object.
+        /// The native <see cref="WbemClassObject"/> object.
         /// </summary>
         #endregion
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private readonly IWbemClassObject wbemClassObject;
+        private readonly WbemClassObject wbemClassObject;
 
         #region Description
         /// <summary>
@@ -115,7 +113,7 @@
         /// </summary>
         #endregion
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private bool disposed;        
+        private bool disposed;
 
         #endregion
 
@@ -125,14 +123,12 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="WmiObject"/> class.
         /// </summary>
-        /// <param name="wmiObject">The native <see cref="IWbemClassObject"/> object.</param>
+        /// <param name="wmiObject">The native <see cref="WbemClassObject"/> object.</param>
         #endregion
-        internal WmiObject(IWbemClassObject wmiObject)
+        internal WmiObject(WbemClassObject wmiObject)
         {
             if (wmiObject == null)
-            {
-                throw new ArgumentNullException(MethodBase.GetCurrentMethod().GetParameters().First().Name);
-            }
+                throw new ArgumentNullException(nameof(wmiObject));
 
             this.wbemClassObject = wmiObject;
         }
@@ -327,9 +323,7 @@
         public object GetPropertyValue(string propertyName)
         {
             if (this.disposed)
-            {
-                throw new ObjectDisposedException(typeof(WmiObject).FullName);
-            }
+                throw new ObjectDisposedException(nameof(WmiObject));
 
             return this.wbemClassObject.Get(propertyName);
         }
@@ -345,11 +339,9 @@
         public TResult GetPropertyValue<TResult>(string propertyName)
         {
             if (this.disposed)
-            {
-                throw new ObjectDisposedException(typeof(WmiObject).FullName);
-            }
+                throw new ObjectDisposedException(nameof(WmiObject));
 
-            return (TResult)this.wbemClassObject.Get(propertyName);
+            return wbemClassObject.Get<TResult>(propertyName);
         }
 
         #region Description
@@ -361,7 +353,7 @@
         {
             if (!this.disposed)
             {
-                Marshal.ReleaseComObject(this.wbemClassObject);
+                this.wbemClassObject.Dispose();
                 this.disposed = true;
             }
         }

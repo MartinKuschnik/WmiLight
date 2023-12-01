@@ -4,7 +4,7 @@ using System.Net;
 namespace WmiLight.TestApp_NetCore
 {
     internal class Program
-    {        
+    {
         static void Main(string[] args)
         {
             Console.WriteLine("Win32_Process:");
@@ -15,9 +15,9 @@ namespace WmiLight.TestApp_NetCore
 
             using (WmiConnection conncetion = new WmiConnection(/*@"\\MACHINENAME\root\cimv2", cred, opt*/))
             {
-                foreach (WmiObject partition in conncetion.CreateQuery("SELECT * FROM Win32_DiskPartition"))
+                foreach (WmiObject process in conncetion.CreateQuery("SELECT * FROM Win32_Process"))
                 {
-                    Console.WriteLine(partition["Name"]);
+                    Console.WriteLine($"#{process.GetPropertyValue<uint>("ProcessId")} - {process["Name"]}");
                 }
             }
 

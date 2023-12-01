@@ -23,25 +23,25 @@
   </Target>
   <PropertyGroup />
   <PropertyGroup>
-    <Version>4.0.0</Version>
+    <Version>5.0.0-pre</Version>
     <PackageId>WmiLight</PackageId>
     <Authors>Martin Kuschnik</Authors>
     <Company>Martin Kuschnik</Company>
-    <Description>A simple and light wmi framework.</Description>
-    <Copyright>Copyright 2022 Martin Kuschnik</Copyright>
+    <Description>A simple and light WMI framework.</Description>
+    <Copyright>Copyright 2023 Martin Kuschnik</Copyright>
     <PackageProjectUrl>https://github.com/MartinKuschnik/WmiLight</PackageProjectUrl>
     <RepositoryUrl>https://github.com/MartinKuschnik/WmiLight</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>WmiLight WMI Windows Management Instrumentation windows c#</PackageTags>
+    <PackageTags>WmiLight WMI Windows Management Instrumentation windows c# AOT</PackageTags>
     <RootNamespace>WmiLight</RootNamespace>
     <AssemblyName>WmiLight</AssemblyName>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <DelaySign>False</DelaySign>
+    <Title></Title>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers" Version="0.3.261302">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
   </ItemGroup>
 </Project>

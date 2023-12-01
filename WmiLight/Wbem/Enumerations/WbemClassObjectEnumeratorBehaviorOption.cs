@@ -4,7 +4,7 @@
 
     #region Description
     /// <summary>
-    /// The options to change the behavior of the <see cref="IWbemClassObjectEnumerator"/>.
+    /// The options to change the behavior of the <see cref="WbemClassObjectEnumerator"/>.
     /// </summary>
     #endregion
     [Flags]
@@ -35,7 +35,7 @@
         /// This flag causes a forward-only enumerator to be returned. 
         /// <para />
         /// Forward-only enumerators are generally much faster and use less memory than conventional enumerators but do not allow calls to 
-        /// <see cref="IWbemClassObjectEnumerator.Clone"/> or <see cref="IWbemClassObjectEnumerator.Reset"/>.
+        /// <see cref="WbemClassObjectEnumerator.Reset"/>.
         /// </summary>
         #endregion
         ForwardOnly             = 0x00000020,

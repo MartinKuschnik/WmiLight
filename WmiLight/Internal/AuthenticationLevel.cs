@@ -48,12 +48,6 @@
         /// Packet Privacy-level COM authentication.
         /// </summary>
         #endregion
-        PacketPrivacy = 6,
-        #region Description
-        /// <summary>
-        /// The default COM authentication level. WMI uses the default Windows Authentication setting.
-        /// </summary>
-        #endregion
-        Unchanged = -1
+        PacketPrivacy = 6
     }
 }

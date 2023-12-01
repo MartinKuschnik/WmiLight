@@ -1,59 +1,85 @@
-﻿namespace WmiLight.Wbem
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+
+namespace WmiLight.Wbem
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Globalization;
-
-    #region Description
-    /// <summary>
-    /// Static class with extension methods for the <see cref="WmiLight.Wbem.IWbemClassObject"/> interface.
-    /// </summary>
-    #endregion
-    internal static class IWbemClassObjectExtensions
+    internal class WbemClassObject : IUnknown
     {
-        #region Description
-        /// <summary>
-        /// Gets the names of all properties in the object.
-        /// </summary>
-        /// <param name="this">The <see cref="IWbemClassObject"/> object which will be used to execute the method.</param>
-        /// <param name="flags">Combination of flags. (see <see url="http://msdn.microsoft.com/en-us/library/windows/desktop/aa391447(v=vs.85).aspx"/>)</param>
-        /// <returns>The names of all properties.</returns>
-        #endregion
-        internal static IEnumerable<string> GetNames(this IWbemClassObject @this, WbemConditionFlag flags = WbemConditionFlag.WBEM_FLAG_NONSYSTEM_ONLY)
+        internal WbemClassObject(IntPtr nativePointer)
+            : base(nativePointer)
         {
-            string[] names = null;
-            HResult hr = @this.GetNames(null, flags, null, out names);
-
-            if (hr.Failed)
-            {
-                throw (Exception)hr;
-            }
-
-            return names;
         }
 
-        #region Description
-        /// <summary>
-        /// Gets a particular property value.
-        /// </summary>
-        /// <param name="this">The <see cref="IWbemClassObject"/> object which will be used to execute the method.</param>
-        /// <param name="propertyName">Name of the desired property.</param>
-        /// <returns>The correct type and value for the qualifier.</returns>
-        #endregion
-        internal static object Get(this IWbemClassObject @this, string propertyName)
+        public CimType GetType(string propertyName)
         {
-            object value;
-            CimType type;
-            int flavor;
+            if (this.Disposed)
+                throw new ObjectDisposedException(nameof(WbemClassObject));
 
-            HResult hresult = @this.Get(propertyName, 0, out value, out type, out flavor);
+            CimType cimType;
 
-            if (hresult.Failed)
-            {
-                throw (Exception)hresult;
-            }
+            HResult hResult = NativeMethods.GetType(this.NativePointer, propertyName, out cimType);
 
-            return value == DBNull.Value ? null : MapWmiValueToValue(value, type);
+            if (hResult.Failed)
+                throw (Exception)hResult;
+
+            return cimType;
+        }
+
+        public object Get(string propertyName)
+        {
+            if (this.Disposed)
+                throw new ObjectDisposedException(nameof(WbemClassObject));
+
+            object value = null;
+            CimType valueType;
+
+            HResult hResult = NativeMethods.Get(this.NativePointer, propertyName, ref value, out valueType);
+
+            if (hResult.Failed)
+                throw (Exception)hResult;
+
+            if (value == DBNull.Value)
+                return null;
+
+            return MapWmiValueToValue(value, valueType);
+        }
+
+        public TResult Get<TResult>(string propertyName)
+        {
+            if (this.Disposed)
+                throw new ObjectDisposedException(nameof(WbemClassObject));
+
+            object value = null;
+            CimType valueType;
+
+            HResult hResult = NativeMethods.Get(this.NativePointer, propertyName, ref value, out valueType);
+
+            if (hResult.Failed)
+                throw (Exception)hResult;
+
+            if (value == DBNull.Value)
+                return default(TResult);
+
+            if (typeof(TResult) == value.GetType())
+                return (TResult)value;
+
+            return (TResult)MapWmiValueToValue(value, valueType);
+        }
+
+        internal IEnumerable<string> GetNames()
+        {
+            if (this.Disposed)
+                throw new ObjectDisposedException(nameof(WbemClassObject));
+
+            string[] names;
+
+            HResult hResult = NativeMethods.GetNames(this.NativePointer, out names);
+
+            if (hResult.Failed)
+                throw (Exception)hResult;
+
+            return names;
         }
 
         private static object MapWmiValueToValue(object wmiValue, CimType type)
@@ -113,11 +139,11 @@
 
                     case CimType.Object:
                         throw new NotSupportedException("CimType 'Object[]' currently not supported.");
-                        //val = new ManagementBaseObject[length];
+                    //val = new ManagementBaseObject[length];
 
-                        //for (int i = 0; i < length; i++)
-                        //    ((ManagementBaseObject[])val)[i] = new ManagementBaseObject(new IWbemClassObjectFreeThreaded(Marshal.GetIUnknownForObject(wmiValueArray.GetValue(i))));
-                        //break;
+                    //for (int i = 0; i < length; i++)
+                    //    ((ManagementBaseObject[])val)[i] = new ManagementBaseObject(new IWbemClassObjectFreeThreaded(Marshal.GetIUnknownForObject(wmiValueArray.GetValue(i))));
+                    //break;
 
                     default:
                         return wmiValue;

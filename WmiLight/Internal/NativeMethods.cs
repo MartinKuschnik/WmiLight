@@ -1,8 +1,6 @@
 ﻿namespace WmiLight
 {
-    using Microsoft.Win32;
     using System;
-    using System.IO;
     using System.Runtime.InteropServices;
     using WmiLight.Wbem;
 
@@ -13,228 +11,77 @@
     #endregion
     internal static class NativeMethods
     {
-        #region Fields
-
-        #region Description
-        /// <summary>
-        /// Sets the authentication information that will be used to make calls on the specified proxy.
-        /// </summary>
-        #endregion
-        internal static readonly CoSetProxyBlanketForIWbemServicesFunction CoSetProxyBlanketForIWbemServices;
-
-        #region Description
-        /// <summary>
-        /// Sets the authentication information that will be used to make calls on the specified proxy.
-        /// </summary>
-        #endregion
-        internal static readonly CoSetProxyBlanketForIWbemClassObjectEnumeratorFunction CoSetProxyBlanketForIWbemClassObjectEnumerator;
-
-        #region Description
-        /// <summary>
-        /// Sets the authentication information and executes a query to retrieve objects.
-        /// </summary>
-        #endregion
-        internal static readonly ExecQueryFunction ExecQueryWmi;
-
-        #endregion
-
-        #region Constants
-
-        #region Description
-        /// <summary>
-        /// The name of the native COM DLL.
-        /// </summary>
-        #endregion
-        private const string UnmanagedWmiLibraryDllName = "wminet_utils.dll";
-
-        #endregion
-
-        #region Static Constructor
-
-        #region Description
-        /// <summary>
-        /// Initializes static members of the <see cref="NativeMethods" /> class.
-        /// </summary>
-        #endregion
-        static NativeMethods()
-        {
-            string installRoot = (string)Registry.LocalMachine.OpenSubKey("SOFTWARE\\Microsoft\\.NETFramework\\")?.GetValue("InstallRoot") ?? RuntimeEnvironment.GetRuntimeDirectory();
-
-            string dllPath = Path.Combine(installRoot, "v4.0.30319", UnmanagedWmiLibraryDllName);
-
-            IntPtr loadLibrary = LoadLibrary(dllPath);
-
-            if (loadLibrary != IntPtr.Zero)
-            {
-                IntPtr procAddr = GetProcAddress(loadLibrary, "BlessIWbemServices");
-
-                CoSetProxyBlanketForIWbemServices = (CoSetProxyBlanketForIWbemServicesFunction)Marshal.GetDelegateForFunctionPointer(procAddr, typeof(CoSetProxyBlanketForIWbemServicesFunction));
-
-                CoSetProxyBlanketForIWbemClassObjectEnumerator = (CoSetProxyBlanketForIWbemClassObjectEnumeratorFunction)Marshal.GetDelegateForFunctionPointer(procAddr, typeof(CoSetProxyBlanketForIWbemClassObjectEnumeratorFunction));
-
-                ExecQueryWmi = (ExecQueryFunction)Marshal.GetDelegateForFunctionPointer(GetProcAddress(loadLibrary, "ExecQueryWmi"), typeof(ExecQueryFunction));
-            }
-            else
-            {
-                throw new WmiException(string.Format("Unable to load library {0}.", NativeMethods.UnmanagedWmiLibraryDllName));
-            }
-        }
-
-        #endregion
-
-        #region Delegates
-
-        #region Description
-        /// <summary>
-        /// The function to set the authentication information for a <see cref="WmiLight.Wbem.IWbemServices"/> object.
-        /// </summary>
-        /// <param name="wbemServices">The <see cref="WmiLight.Wbem.IWbemServices"/> object which will by wrapped with a proxy.</param>
-        /// <param name="userName">The name of the user.</param>
-        /// <param name="password">The password of the user.</param>
-        /// <param name="authority">
-        /// The authority to be used to authenticate the specified user.
-        /// <para />
-        /// Example: "ntlmdomain:MYDOMAIN"
-        /// </param>
-        /// <param name="impersonationLevel">The impersonation level which will be used.</param>
-        /// <param name="authenticationLevel">The authentication level which will be used.</param>
-        /// <returns>A coded numerical value that is assigned to a specific exception.</returns>
-        #endregion
-        internal delegate HResult CoSetProxyBlanketForIWbemServicesFunction(
-            [In, MarshalAs(UnmanagedType.Interface)]
-            IWbemServices wbemServices,
-            [In, MarshalAs(UnmanagedType.BStr)]
-            string userName,
-            [In, MarshalAs(UnmanagedType.BStr)]
-            string password,
-            [In, MarshalAs(UnmanagedType.BStr)]
-            string authority,
-            [In]
-            ImpersonationLevel impersonationLevel,
-            [In]
-            AuthenticationLevel authenticationLevel);
-
-        #region Description
-        /// <summary>
-        /// The function to set the authentication information for a <see cref="WmiLight.Wbem.IWbemClassObjectEnumerator"/> object.
-        /// </summary>
-        /// <param name="wbemClassObjectEnumerator">The <see cref="WmiLight.Wbem.IWbemClassObjectEnumerator"/> object which will by wrapped with a proxy.</param>
-        /// <param name="userName">The name of the user.</param>
-        /// <param name="password">The password of the user.</param>
-        /// <param name="authority">
-        /// The authority to be used to authenticate the specified user.
-        /// <para />
-        /// Example: "ntlmdomain:MYDOMAIN"
-        /// </param>
-        /// <param name="impersonationLevel">The impersonation level which will be used.</param>
-        /// <param name="authenticationLevel">The authentication level which will be used.</param>
-        /// <returns>A coded numerical value that is assigned to a specific exception.</returns>
-        #endregion
-        internal delegate HResult CoSetProxyBlanketForIWbemClassObjectEnumeratorFunction(
-            [In, MarshalAs(UnmanagedType.Interface)]
-            IWbemClassObjectEnumerator wbemClassObjectEnumerator,
-            [In, MarshalAs(UnmanagedType.BStr)]
-            string userName,
-            [In, MarshalAs(UnmanagedType.BStr)]
-            string password,
-            [In, MarshalAs(UnmanagedType.BStr)]
-            string authority,
-            [In]
-            ImpersonationLevel impersonationLevel,
-            [In]
-            AuthenticationLevel authenticationLevel);
-
-        #region Description
-        /// <summary>
-        /// Sets the authentication information and executes a query to retrieve objects.
-        /// </summary>
-        /// <param name="queryLanguage">
-        /// The query language. 
-        /// <para />
-        /// Typically, this is WQL. 
-        /// </param>
-        /// <param name="query">The query which will be executed.</param>
-        /// <param name="enumeratorBehaviorOption">Flag for the behavior of the created enumerator.</param>
-        /// <param name="ctx">
-        /// Typically, this is NULL. 
-        /// Otherwise, this is an <see cref="WmiLight.Wbem.IWbemContext"/> object required by one or more dynamic class providers.
-        /// </param>
-        /// <param name="enumerator">The enumerator for the results of the query.</param>
-        /// <param name="impersonationLevel">The impersonation level which will be used.</param>
-        /// <param name="authenticationLevel">The authentication level which will be used.</param>
-        /// <param name="wbemService">The <see cref="IWbemServices" /> object./></param>
-        /// <param name="userName">The name of the user.</param>
-        /// <param name="password">The password of the user.</param>
-        /// <param name="authority">
-        /// The authority to be used to authenticate the specified user.
-        /// <para />
-        /// Example: "ntlmdomain:MYDOMAIN"
-        /// </param>
-        /// <returns>A coded numerical value that is assigned to a specific exception.</returns>
-        #endregion
-        internal delegate HResult ExecQueryFunction(
-            [In][MarshalAs(UnmanagedType.BStr)]
-            string queryLanguage,
-            [In][MarshalAs(UnmanagedType.BStr)]
-            string query,
-            [In]
-            WbemClassObjectEnumeratorBehaviorOption enumeratorBehaviorOption,
-            [In]
-            IWbemContext ctx,
-            [Out]
-            out IWbemClassObjectEnumerator enumerator,
-            [In]
-            AuthenticationLevel impersonationLevel,
-            [In]
-            ImpersonationLevel authenticationLevel,
-            [In]
-            IWbemServices wbemService,
-            [In][MarshalAs(UnmanagedType.BStr)]
-            string userName,
-            [In][MarshalAs(UnmanagedType.BStr)]
-            string password,
-            [In][MarshalAs(UnmanagedType.BStr)]
-            string authority);
-
-        #endregion
+        private const string NATIVE_DLL_NAME = "WmiLight.Native.dll";
 
         #region Methods
 
-        #region Description
-        /// <summary>
-        /// Loads the specified module into the address space of the calling process. The specified module may cause other modules to be loaded.
-        /// </summary>
-        /// <param name="fileName">
-        /// The name of the module. 
-        /// This can be either a library module (a .dll file) or an executable module (an .exe file). 
-        /// The name specified is the file name of the module and is not related to the name stored in the library module itself, 
-        /// as specified by the LIBRARY keyword in the module-definition (.def) file.
-        /// </param>
-        /// <returns>
-        /// If the function succeeds, the return value is a handle to the module.
-        /// If the function fails, the return value is NULL.
-        /// </returns>
-        /// <remarks><see url="http://msdn.microsoft.com/en-us/library/windows/desktop/ms684175(v=vs.85).aspx"/></remarks>
-        #endregion
-        [DllImport("kernel32.dll")]
-        private static extern IntPtr LoadLibrary(string fileName);
+        [DllImport(NATIVE_DLL_NAME)]
+        public static extern HResult CreateWbemLocator(out IntPtr pWbemLocator);
 
-        #region Description
-        /// <summary>
-        /// Retrieves the address of an exported function or variable from the specified dynamic-link library (DLL).
-        /// </summary>
-        /// <param name="hModule">A handle to the DLL module that contains the function or variable. </param>
-        /// <param name="procname">
-        /// The function or variable name, or the function's ordinal value. If this parameter is an ordinal value, it must be in the low-order word; the high-order word must be zero.
-        /// </param>
-        /// <returns>
-        /// If the function succeeds, the return value is the address of the exported function or variable.
-        /// If the function fails, the return value is NULL.
-        /// </returns>
-        /// <remarks><see url="http://msdn.microsoft.com/en-us/library/windows/desktop/ms683212(v=vs.85).aspx"/></remarks>
-        #endregion
-        [DllImport("kernel32.dll")]
-        private static extern IntPtr GetProcAddress(IntPtr hModule, string procname);
+        [DllImport(NATIVE_DLL_NAME)]
+        public static extern HResult ReleaseIUnknown(IntPtr pIUnknown);
+
+        [DllImport(NATIVE_DLL_NAME)]
+        public static extern HResult ConnectServer(
+            IntPtr pWbemLocator,
+            [MarshalAs(UnmanagedType.LPWStr)]
+            string networkResource,
+            [MarshalAs(UnmanagedType.LPWStr)]
+            string userName,
+            [MarshalAs(UnmanagedType.LPWStr)]
+            string userPassword,
+            [MarshalAs(UnmanagedType.LPWStr)]
+            string locale,
+            [MarshalAs (UnmanagedType.U4)]
+            WbemConnectOption wbemConnectOption,
+            [MarshalAs(UnmanagedType.LPWStr)]
+            string authority,
+            IntPtr pCtx,
+            out IntPtr pWbemServices);
+
+        [DllImport(NATIVE_DLL_NAME)]
+        public static extern HResult SetProxy(
+            IntPtr pIUnknown,
+            [MarshalAs(UnmanagedType.LPWStr)]
+            string username,
+            [MarshalAs(UnmanagedType.LPWStr)]
+            string password,
+            [MarshalAs(UnmanagedType.LPWStr)]
+            string authority,
+            ImpersonationLevel impersonationLevel,
+            AuthenticationLevel authenticationLevel);
+
+        [DllImport(NATIVE_DLL_NAME)]
+        public static extern HResult ExecQuery(
+            IntPtr pWbemServices,
+            [MarshalAs(UnmanagedType.LPWStr)]
+            string ueryLanguage,
+            [MarshalAs(UnmanagedType.LPWStr)]
+            string query,
+            WbemClassObjectEnumeratorBehaviorOption behaviorOption,
+            IntPtr ctx,
+            out IntPtr pEnumerator);
+
+        [DllImport(NATIVE_DLL_NAME)]
+        public static extern HResult Next(IntPtr pEnumerator, out IntPtr pClassObject);
+
+        [DllImport(NATIVE_DLL_NAME)]
+        public static extern HResult Reset(IntPtr pEnumerator);
+
+        [DllImport(NATIVE_DLL_NAME)]
+        public static extern HResult Get(
+            IntPtr pClassObject,
+            [MarshalAs(UnmanagedType.LPWStr)]
+            string propertyName,
+            [MarshalAs(UnmanagedType.Struct)]
+            ref object value,
+            out CimType valueType);
+
+        [DllImport(NATIVE_DLL_NAME)]
+        public static extern HResult GetType(IntPtr pClassObject, [MarshalAs(UnmanagedType.LPWStr)] string propertyName, out CimType cimType);
+
+        [DllImport(NATIVE_DLL_NAME)]
+        public static extern HResult GetNames(IntPtr pClassObject, [MarshalAs(UnmanagedType.SafeArray, SafeArraySubType = VarEnum.VT_BSTR)] out string[] pNames);
 
         #endregion
     }

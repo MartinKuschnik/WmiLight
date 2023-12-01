@@ -1,20 +1,36 @@
 ﻿namespace WmiLight.Wbem
 {
     using System;
-    using System.Runtime.CompilerServices;
-    using System.Runtime.InteropServices;
 
-    #region Description
-    /// <summary>
-    /// Use the <see cref="WbemLocator"/> class to obtain the initial namespace pointer to the <see cref="IWbemServices"/> interface for WMI on a specific host computer. 
-    /// You can access Windows Management itself using the <see cref="IWbemServices"/> pointer, which is returned by the <see cref="WbemLocator.ConnectServer"/> method.
-    /// </summary>
-    #endregion
-    [ComImport]
-    [Guid("4590f811-1d3a-11d0-891f-00aa004b2e24")]
-    internal class WbemLocator : IWbemLocator
+    internal class WbemLocator : IUnknown
     {
+        #region Constructors
+
+        #region Description
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WbemLocator"/> class.
+        /// </summary>
+        #endregion
+        public WbemLocator()
+            : base(CreateWbemLocator())
+        {
+        }
+
+        #endregion
+
         #region Methods
+
+        private static IntPtr CreateWbemLocator()
+        {
+            IntPtr nativeWbemLocator;
+
+            HResult hResult = NativeMethods.CreateWbemLocator(out nativeWbemLocator);
+
+            if (hResult.Failed)
+                throw (Exception)hResult;
+
+            return nativeWbemLocator;
+        }
 
         #region Description
         /// <summary>
@@ -59,20 +75,35 @@
         /// </param>
         /// <param name="ctx">
         /// Typically, this is NULL. 
-        /// Otherwise, this is an <see cref="IWbemContext"/> object required by one or more dynamic class providers.
+        /// Otherwise, this is an IWbemContext object required by one or more dynamic class providers.
         /// The values in the context object must be specified in the documentation for the providers in question. 
         /// For more information about this parameter, see <see url="http://msdn.microsoft.com/en-us/library/windows/desktop/aa392303(v=vs.85).aspx"/>.
-        /// </param>
-        /// <param name="wbemServices">
-        /// Receives an <see cref="IWbemServices"/> object bound to the specified namespace. This pointer has a positive reference count. 
-        /// This is set to NULL when there is an error.
         /// </param>
         /// <returns>A value that gives information about the status of an operation.</returns>
         /// <remarks><see url="http://msdn.microsoft.com/en-us/library/windows/desktop/aa391769(v=vs.85).aspx"/></remarks>
         #endregion
-        [PreserveSig]
-        [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
-        public virtual extern HResult ConnectServer(string networkResource, string userName, string userPassword, string locale, WbemConnectOption wbemConnectOption, string authority, IWbemContext ctx, out IWbemServices wbemServices);
+        internal WbemServices ConnectServer(string networkResource, string userName, string userPassword, string locale, WbemConnectOption wbemConnectOption, string authority, IntPtr ctx)
+        {
+            if (this.Disposed)
+                throw new ObjectDisposedException(nameof(WbemLocator));
+
+            IntPtr wbemServices;
+
+            HResult hResult = NativeMethods.ConnectServer(this.NativePointer, networkResource, userName, userPassword, locale, wbemConnectOption, authority, ctx, out wbemServices);
+
+            if (hResult.Failed)
+            {
+                switch (hResult)
+                {
+                    case (int)WbemStatus.WBEM_E_INVALID_NAMESPACE:
+                        throw new InvalidNamespaceException(networkResource);
+                    default:
+                        throw (Exception)hResult;
+                }
+            }
+
+            return new WbemServices(wbemServices);
+        }
 
         #endregion
     }
