@@ -38,9 +38,11 @@ jobs:
            rm WmiLight\private_key.base64 -v
            
     - name: Build .Net Lib
+      working-directory: ${{env.GITHUB_WORKSPACE}}  
       run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform='Any CPU' WmiLight\WmiLight.csproj
       
     - name: Cleanup Private Key
+      working-directory: ${{env.GITHUB_WORKSPACE}}  
       run: rm WmiLight\private_key.snk -v
       
     - name: Build Native Lib (x64)
@@ -54,9 +56,11 @@ jobs:
       run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=x86 WmiLight.Native\WmiLight.Native.vcxproj
       
     - name: Pack with dotnet
+      working-directory: ${{env.GITHUB_WORKSPACE}}  
       run: dotnet pack WmiLight\WmiLight.csproj --configuration ${{env.BUILD_CONFIGURATION}} --output nuget-packages --no-build      
 
     - name: Add Nativ Native Lib to NuGet package
+      working-directory: ${{env.GITHUB_WORKSPACE}}  
       run: |
             $nuget_package_name =  ('nuget-packages\' + (Get-ChildItem .\nuget-packages\))
             $zip_file = [io.path]::ChangeExtension($nuget_package_name, ".zip")
@@ -81,5 +85,6 @@ jobs:
             Remove-Item -Recurse -Force -Confirm:$false 'nuget-packages\unpacked'
       
     - name: Push with dotnet
+      working-directory: ${{env.GITHUB_WORKSPACE}}  
       if: github.event.action == 'published'
       run: dotnet nuget push nuget-packages/ --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
