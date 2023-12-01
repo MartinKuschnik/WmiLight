@@ -37,7 +37,7 @@ jobs:
            certutil -decode WmiLight\private_key.base64 WmiLight\private_key.snk
            rm WmiLight\private_key.base64 -v
            
-    - name: Build .Net
+    - name: Build .Net Lib
       run: msbuild /m /p:Configuration=Release /p:Platform=x64 WmiLight\WmiLight.csproj
       
     - name: Cleanup Private Key
@@ -46,12 +46,12 @@ jobs:
     - name: Build Native Lib (x64)
       working-directory: ${{env.GITHUB_WORKSPACE}}     
       # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
-      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=x64 src\WmiLight.Native\WmiLight.Native.vcxproj
+      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=x64 WmiLight.Native\WmiLight.Native.vcxproj
       
     - name: Build Native Lib (x86)
       working-directory: ${{env.GITHUB_WORKSPACE}}     
       # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
-      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=x86 src\WmiLight.Native\WmiLight.Native.vcxproj
+      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=x86 WmiLight.Native\WmiLight.Native.vcxproj
       
     - name: Pack with dotnet
       if: github.event.action == 'published'
