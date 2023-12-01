@@ -54,8 +54,12 @@ jobs:
       run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=x86 WmiLight.Native\WmiLight.Native.vcxproj
       
     - name: Pack with dotnet
-      if: github.event.action == 'published'
-      run: dotnet pack WmiLight\WmiLight.csproj --configuration ${{env.BUILD_CONFIGURATION}} --output nuget-packages --no-build
+      run: dotnet pack WmiLight\WmiLight.csproj --configuration ${{env.BUILD_CONFIGURATION}} --output nuget-packages --no-build      
+
+    - name: Add Nativ Native Lib to NuGet package
+      uses: montudor/action-zip@v1
+      with:
+        args: zip -u nuget-packages/*.nupkg ddd
       
     - name: Push with dotnet
       if: github.event.action == 'published'
