@@ -15,13 +15,19 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
+    
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 8.x
+        
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1.3.1
+        
     - name: Install dependencies
       run: dotnet restore
+      
     - name: Extract Private Key
       run: |
            echo "${{ secrets.PRIVATE_KEY }}" > WmiLight\private_key.base64
@@ -29,11 +35,14 @@ jobs:
            rm WmiLight\private_key.base64 -v
     - name: Build
       run: dotnet build --configuration Release --no-restore
+      
     - name: Cleanup Private Key
       run: rm WmiLight\private_key.snk -v
+      
     - name: Pack with dotnet
       if: github.event.action == 'published'
       run: dotnet pack WmiLight\WmiLight.csproj --configuration Release --output nuget-packages --no-build
+      
     - name: Push with dotnet
       if: github.event.action == 'published'
       run: dotnet nuget push nuget-packages/ --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
