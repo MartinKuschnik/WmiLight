@@ -57,8 +57,8 @@ jobs:
     - name: Add Nativ Native Lib to NuGet package 
       working-directory: ${{env.GITHUB_WORKSPACE}} 
       run: |
-            $nuget_package_name =  ('nuget-packages\' + (Get-ChildItem 'nuget-packages\'))
-            Write-Host $nuget_package_name
+            $nuget_package_name =  ('nuget-packages\' + [io.path]::GetFileName((Get-ChildItem 'nuget-packages\')))
+            
             $zip_file = [io.path]::ChangeExtension($nuget_package_name, ".zip")
         
             # rename .nupkg to .zip because we need a .zip for Expand-Archive
