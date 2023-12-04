@@ -23,7 +23,7 @@
   </Target>
   <PropertyGroup />
   <PropertyGroup>
-    <Version>5.0.0-pre</Version>
+    <Version>5.0.0</Version>
     <PackageId>WmiLight</PackageId>
     <Authors>Martin Kuschnik</Authors>
     <Company>Martin Kuschnik</Company>
