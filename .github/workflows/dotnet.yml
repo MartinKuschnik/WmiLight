@@ -43,13 +43,21 @@ jobs:
     - name: Cleanup Private Key
       run: rm WmiLight\private_key.snk -v
       
-    - name: Build Native Lib (x64) 
+    - name: Build Native dynamic Lib (x64) 
       # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
-      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=x64 WmiLight.Native\WmiLight.Native.vcxproj
+      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:ConfigurationType=DynamicLibrary /p:Platform=x64 WmiLight.Native\WmiLight.Native.vcxproj
+     
+    - name: Build Native dynamic Lib (x86)  
+      # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
+      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:ConfigurationType=DynamicLibrary /p:Platform=x86 WmiLight.Native\WmiLight.Native.vcxproj
       
-    - name: Build Native Lib (x86)  
+    - name: Build Native static Lib (x64) 
       # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
-      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=x86 WmiLight.Native\WmiLight.Native.vcxproj
+      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:ConfigurationType=StaticLibrary /p:Platform=x64 WmiLight.Native\WmiLight.Native.vcxproj
+        
+    - name: Build Native static Lib (x86)  
+      # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
+      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:ConfigurationType=StaticLibrary /p:Platform=x86 WmiLight.Native\WmiLight.Native.vcxproj
       
     - name: Pack with dotnet
       run: dotnet pack WmiLight\WmiLight.csproj --configuration ${{env.BUILD_CONFIGURATION}} --output nuget-packages --no-build      
@@ -74,6 +82,9 @@ jobs:
             Copy-Item 'WmiLight.Native\bin\${{env.BUILD_CONFIGURATION}}\x64\WmiLight.Native.dll' 'nuget-packages\unpacked\runtimes\win-x64\native\'
             Copy-Item 'WmiLight.Native\bin\${{env.BUILD_CONFIGURATION}}\x86\WmiLight.Native.dll' 'nuget-packages\unpacked\runtimes\win-x86\native\'
             
+            Copy-Item 'WmiLight.Native\bin\${{env.BUILD_CONFIGURATION}}\x64\WmiLight.Native.lib' 'nuget-packages\unpacked\runtimes\win-x64\native\'
+            Copy-Item 'WmiLight.Native\bin\${{env.BUILD_CONFIGURATION}}\x86\WmiLight.Native.lib' 'nuget-packages\unpacked\runtimes\win-x86\native\'
+
             Compress-Archive 'nuget-packages\unpacked\*' $zip_file
             
             Rename-Item $zip_file ([io.path]::GetFileName($nuget_package_name))
