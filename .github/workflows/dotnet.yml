@@ -82,8 +82,8 @@ jobs:
             Copy-Item 'WmiLight.Native\bin\${{env.BUILD_CONFIGURATION}}\x64\WmiLight.Native.dll' 'nuget-packages\unpacked\runtimes\win-x64\native\'
             Copy-Item 'WmiLight.Native\bin\${{env.BUILD_CONFIGURATION}}\x86\WmiLight.Native.dll' 'nuget-packages\unpacked\runtimes\win-x86\native\'
             
-            Copy-Item 'WmiLight.Native\bin\${{env.BUILD_CONFIGURATION}}\x64\WmiLight.Native.lib' 'nuget-packages\unpacked\lib\native\win-x64\native\'
-            Copy-Item 'WmiLight.Native\bin\${{env.BUILD_CONFIGURATION}}\x86\WmiLight.Native.lib' 'nuget-packages\unpacked\lib\native\win-x86\native\'
+            Copy-Item 'WmiLight.Native\bin\${{env.BUILD_CONFIGURATION}}\x64\WmiLight.Native.lib' 'nuget-packages\unpacked\lib\native\win-x64\'
+            Copy-Item 'WmiLight.Native\bin\${{env.BUILD_CONFIGURATION}}\x86\WmiLight.Native.lib' 'nuget-packages\unpacked\lib\native\win-x86\'
 
             Compress-Archive 'nuget-packages\unpacked\*' $zip_file
             
