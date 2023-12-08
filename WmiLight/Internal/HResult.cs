@@ -1,11 +1,9 @@
 ﻿namespace WmiLight
 {
     using System;
-    using System.Collections.Generic;
     using System.Diagnostics;
-    using System.Linq;
-    using System.Reflection;
     using System.Runtime.InteropServices;
+    using WmiLight.Wbem;
 
     #region Description
     /// <summary>
@@ -113,30 +111,14 @@
 
         #region Description
         /// <summary>
-        /// The lock object to sync parallel access to the <see cref="HResult.map"/> field.
-        /// </summary>
-        #endregion
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private static readonly object MapLockObj = new object();
-        
-        #region Description
-        /// <summary>
-        /// The Exception-Map.
-        /// </summary>
-        #endregion
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private static Dictionary<HResult, Tuple<Enum, ExceptionAttribute>> map;
-
-        #region Description
-        /// <summary>
         /// The value ob the <see cref="HResult"/> as <see cref="Int32"/>.
         /// </summary>
         #endregion
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly int value;
-        
+
         #endregion
-                
+
         #region Constructors
 
         #region Description
@@ -149,8 +131,8 @@
         {
             this.value = intValue;
         }
-        
-        #endregion        
+
+        #endregion
 
         #region Properties
 
@@ -164,45 +146,6 @@
             get
             {
                 return this.value < 0;
-            }
-        }
-
-        #region Description
-        /// <summary>
-        /// Gets the exception map.
-        /// </summary>
-        #endregion
-        private static Dictionary<HResult, Tuple<Enum, ExceptionAttribute>> Map
-        {
-            get
-            {
-                if (HResult.map == null)
-                {
-                    lock (HResult.MapLockObj)
-                    {
-                        if (HResult.map == null)
-                        {
-                            Dictionary<HResult, Tuple<Enum, ExceptionAttribute>> newToStringValues = new Dictionary<HResult, Tuple<Enum, ExceptionAttribute>>();
-
-                            foreach (Type hresultEnum in typeof(HResult).Assembly.GetTypes().Where<Type>(t => t.IsEnum && t.GetCustomAttributes(typeof(HResultAttribute), false).Any()))
-                            {
-                                foreach (Enum item in Enum.GetValues(hresultEnum))
-                                {
-                                    IEnumerable<ExceptionAttribute> attributes = hresultEnum.GetMember(item.ToString()).First().GetCustomAttributes(typeof(ExceptionAttribute), false) as IEnumerable<ExceptionAttribute>;
-
-                                    if (!newToStringValues.ContainsKey(item.GetHashCode()))
-                                    {
-                                        newToStringValues[item.GetHashCode()] = new Tuple<Enum, ExceptionAttribute>(item, attributes.FirstOrDefault<ExceptionAttribute>());
-                                    }
-                                }
-                            }
-
-                            HResult.map = newToStringValues;
-                        }
-                    }
-                }
-
-                return HResult.map;
             }
         }
 
@@ -223,48 +166,32 @@
         {
             if (hr.Failed)
             {
-                Tuple<Enum, ExceptionAttribute> tupel = null;
-
-                if (HResult.Map.TryGetValue(hr, out tupel))
+                switch (hr)
                 {
-                    if (tupel.Item2 != null)
-                    {
-                        ConstructorInfo ctorInfo = tupel.Item2.ExceptionType.GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic, null, new Type[] { typeof(HResultInfo) }, null);
+                    case (int)WbemStatus.WBEM_E_ACCESS_DENIED:
+                        return new UnauthorizedAccessException("Access is denied.");
 
-                        if (ctorInfo != null)
-                        {
-                            return ctorInfo.Invoke(new object[] { new HResultInfo(hr, tupel.Item2.ExceptionMessage, tupel.Item1.ToString()) }) as Exception;
-                        }
-                        else
-                        {
-                            ctorInfo = tupel.Item2.ExceptionType.GetConstructor(new Type[] { typeof(string) });
+                    case (int)WbemStatus.WBEM_E_OUT_OF_MEMORY:
+                        return new OutOfMemoryException("There was not enough memory to complete the operation.");
 
-                            if (ctorInfo != null)
-                            {
-                                return ctorInfo.Invoke(new object[] { tupel.Item2.ExceptionMessage }) as Exception;
-                            }
-                            else
-                            {
-                                ctorInfo = tupel.Item2.ExceptionType.GetConstructor(Type.EmptyTypes);
+                    case (int)WbemStatus.WBEM_E_INVALID_PARAMETER:
+                        return new InvalidParameterException(new HResultInfo(hr, "A specified parameter is not valid.", WbemStatus.WBEM_E_INVALID_PARAMETER.ToString()));
 
-                                if (ctorInfo != null)
-                                {
-                                    return ctorInfo.Invoke(Type.EmptyTypes) as Exception;
-                                }
-#if DEBUG
-                                else
-                                {
-                                    Debug.Write(string.Format("The exception '{0}' does not contain a supported constructor.", tupel.Item2.ExceptionType.Name), "[WARNING]");
-                                }
-#endif
-                            }
-                        }
-                    }
+                    case (int)WbemStatus.WBEM_E_INVALID_NAMESPACE:
+                        return new InvalidNamespaceException(new HResultInfo(hr, "The specified namespace did not exist on the server.", WbemStatus.WBEM_E_INVALID_NAMESPACE.ToString()));
 
-                    return new WmiException(new HResultInfo(hr, string.Format("Exception from HRESULT: {0} ({1})", "0x" + hr.value.ToString("x"), hr.ToString()), tupel.Item1.ToString()));
+                    case (int)WbemStatus.WBEM_E_TRANSPORT_FAILURE:
+                        return new TransportFailureException(new HResultInfo(hr, "The remote procedure call (RPC) link between the current process and WMI failed.", WbemStatus.WBEM_E_TRANSPORT_FAILURE.ToString()));
+
+                    case (int)WbemStatus.WBEM_E_LOCAL_CREDENTIALS:
+                        return new LocalCredentialsException(new HResultInfo(hr, "Username, password, or authority can only used on a remote connection.", WbemStatus.WBEM_E_LOCAL_CREDENTIALS.ToString()));
+
+                    case (int)WbemStatus.WBEM_E_FAILED:
+                        return new WmiException(new HResultInfo(hr, "An unspecified error occurred.", WbemStatus.WBEM_E_FAILED.ToString()));
+
+                    default:
+                        return Marshal.GetExceptionForHR(hr.value);
                 }
-
-                return Marshal.GetExceptionForHR(hr.value);
             }
 
             return null;
@@ -363,7 +290,7 @@
         }
 
         #endregion
-        
+
         #region Description
         /// <summary>
         /// Serves as a hash function.
@@ -412,11 +339,9 @@
         #endregion
         public override string ToString()
         {
-            Tuple<Enum, ExceptionAttribute> tupel;
-
-            if (HResult.Map.TryGetValue(this, out tupel))
+            if (Enum.IsDefined(typeof(WbemStatus), this.value))
             {
-                return tupel.Item1.ToString();
+                return ((WbemStatus)value).ToString();
             }
             else
             {

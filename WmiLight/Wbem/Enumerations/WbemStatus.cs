@@ -8,7 +8,6 @@
     /// </summary>
     /// <remarks><see url="http://msdn.microsoft.com/en-us/library/cc250949.aspx"/></remarks>
     #endregion
-    [HResult]
     internal enum WbemStatus : int
     {
         #region ===================== 0x0000**** =====================
@@ -122,7 +121,6 @@
         /// The call failed.
         /// </summary>
         #endregion
-        [Exception("An unspecified error occurred.", typeof(WmiException))]
         WBEM_E_FAILED = unchecked((int)0x80041001),
 
         #region Description
@@ -130,7 +128,6 @@
         /// The current user does not have permission to perform the action.
         /// </summary>
         #endregion
-        [Exception("Access is denied.", typeof(UnauthorizedAccessException))]
         WBEM_E_ACCESS_DENIED = unchecked((int)0x80041003),
 
         #region Description
@@ -138,7 +135,6 @@
         /// There was not enough memory for the operation.
         /// </summary>
         #endregion
-        [Exception("There was not enough memory to complete the operation.", typeof(OutOfMemoryException))]
         WBEM_E_OUT_OF_MEMORY = unchecked((int)0x80041006),
 
         #region Description
@@ -146,7 +142,6 @@
         /// One of the parameters to the call is not correct.
         /// </summary>
         #endregion
-        [Exception("A specified parameter is not valid.", typeof(InvalidParameterException))]
         WBEM_E_INVALID_PARAMETER = unchecked((int)0x80041008),
 
         #region Description
@@ -154,7 +149,6 @@
         /// The specified namespace could not be found.
         /// </summary>
         #endregion
-        [Exception("The specified namespace did not exist on the server.", typeof(InvalidNamespaceException))]
         WBEM_E_INVALID_NAMESPACE = unchecked((int)0x8004100E),
 
         #region Description
@@ -162,7 +156,6 @@
         /// A networking error that prevents normal operation has occurred.
         /// </summary>
         #endregion
-        [Exception("The remote procedure call (RPC) link between the current process and WMI failed.", typeof(TransportFailureException))]
         WBEM_E_TRANSPORT_FAILURE = unchecked((int)0x80041015),
 
         #region Description
@@ -172,10 +165,7 @@
         /// default security.
         /// </summary>
         #endregion
-        [Exception("Username, password, or authority can only used on a remote connection.", typeof(LocalCredentialsException))]
         WBEM_E_LOCAL_CREDENTIALS = unchecked((int)0x80041064),
-
-        #region ===================== NOT MAPPED =====================
 
         #region Description
         /// <summary>
@@ -837,8 +827,6 @@
         /// </summary>
         #endregion
         WBEMESS_E_REGISTRATION_TOO_PRECISE = unchecked((int)0x80042002),
-
-        #endregion
 
         #endregion
     }

@@ -1,47 +1,50 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <OutputType>Library</OutputType>
-	  <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DocumentationFile>
-    </DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DocumentationFile>bin\Release\WmiLight.xml</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+	<PropertyGroup>
+		<TargetFrameworks>netstandard2.0;.Net7.0;.Net8.0</TargetFrameworks>
+		<OutputType>Library</OutputType>
+		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+		<DocumentationFile>
+		</DocumentationFile>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+		<DocumentationFile>bin\Release\WmiLight.xml</DocumentationFile>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
 	<SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>private_key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
-  <ItemGroup>
-    <Folder Include="Properties\NugetPackageContent\" />
-  </ItemGroup>
-  <Target Name="AfterBuild" />
-  <Target Name="AfterClean">
-  </Target>
-  <PropertyGroup />
-  <PropertyGroup>
-    <Version>5.0.2-pre</Version>
-    <PackageId>WmiLight</PackageId>
-    <Authors>Martin Kuschnik</Authors>
-    <Company>Martin Kuschnik</Company>
-    <Description>A simple and light WMI framework.</Description>
-    <Copyright>Copyright 2023 Martin Kuschnik</Copyright>
-    <PackageProjectUrl>https://github.com/MartinKuschnik/WmiLight</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/MartinKuschnik/WmiLight</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-    <PackageTags>WmiLight WMI Windows Management Instrumentation windows c# AOT</PackageTags>
-    <RootNamespace>WmiLight</RootNamespace>
-    <AssemblyName>WmiLight</AssemblyName>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <DelaySign>False</DelaySign>
-    <Title></Title>
-  </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers" Version="0.3.261302">
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-  </ItemGroup>
+	<ItemGroup>
+		<Folder Include="Properties\NugetPackageContent\" />
+	</ItemGroup>
+	<PropertyGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0')) Or $([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
+		<IsTrimmable>true</IsTrimmable>
+	</PropertyGroup>
+	<Target Name="AfterBuild" />
+	<Target Name="AfterClean">
+	</Target>
+	<PropertyGroup />
+	<PropertyGroup>
+		<Version>5.1.0-pre</Version>
+		<PackageId>WmiLight</PackageId>
+		<Authors>Martin Kuschnik</Authors>
+		<Company>Martin Kuschnik</Company>
+		<Description>A simple and light WMI framework.</Description>
+		<Copyright>Copyright 2023 Martin Kuschnik</Copyright>
+		<PackageProjectUrl>https://github.com/MartinKuschnik/WmiLight</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/MartinKuschnik/WmiLight</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageTags>WmiLight WMI Windows Management Instrumentation windows c# AOT</PackageTags>
+		<RootNamespace>WmiLight</RootNamespace>
+		<AssemblyName>WmiLight</AssemblyName>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<DelaySign>False</DelaySign>
+		<Title></Title>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers" Version="0.3.261302">
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+	</ItemGroup>
 </Project>
