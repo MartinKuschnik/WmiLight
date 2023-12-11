@@ -59,9 +59,25 @@ using (WmiConnection con = new WmiConnection(@"\\MACHINENAME\root\cimv2", opt))
 }
 ```
 
+## Native AOT deployment
+
+WmiLight supports Native AOT deployment since [Version 5.0.0](https://github.com/MartinKuschnik/WmiLight/releases/tag/v5.0.0).
+
+It's also possible to link WmiLight statically to have only one executable working without the `WmiLight.dll`. <br/>
+To link WmiLight statically, add `<PublishWmiLightStaticallyLinked>true</PublishWmiLightStaticallyLinked>` to your project file.
+
+```xml
+<PropertyGroup>
+    <PublishAot>true</PublishAot>
+    <PublishWmiLightStaticallyLinked>true</PublishWmiLightStaticallyLinked>
+</PropertyGroup>
+```
+
 ## Other benefits:
 
 * easy usage
+
+* support for Native AOT deployment
 
 * no distinction between local and remote queries
 
