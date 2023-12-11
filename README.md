@@ -69,3 +69,35 @@ using (WmiConnection con = new WmiConnection(@"\\MACHINENAME\root\cimv2", opt))
 
     ![Debugger_Preview](https://github.com/MartinKuschnik/WmiLight/blob/master/doc/pics/debugger_preview.jpg "Debugger Preview")
 
+## How to exclude `WmiLight.Native.dll` when publishing native aot exe in .net 8.0?
+You can modify your project file by referring to the following examples:
+``` xml
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <PublishAot>True</PublishAot>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Add WmiLight Package -->
+    <PackageReference Include="WmiLight" Version="5.1.0" GeneratePathProperty="true" />
+
+    <!-- https://learn.microsoft.com/en-us/dotnet/core/deploying/native-aot/interop -->
+    <DirectPInvoke Include="WmiLight.Native" />
+    <NativeLibrary Include="wbemuuid.lib" Condition="$(RuntimeIdentifier.StartsWith('win'))" />
+    <NativeLibrary Include="$(PkgWmiLight)\lib\native\$(RuntimeIdentifier)\WmiLight.Native.lib" Condition="$(RuntimeIdentifier.StartsWith('win'))" />
+  </ItemGroup>
+
+  <!-- The DLL file will be copied when it is published, so we need to remove it -->
+  <Target Name="RemoveFileToPublish" AfterTargets="ComputeResolvedFilesToPublishList">
+    <ItemGroup>
+      <ResolvedFileToPublish Remove="@(ResolvedFileToPublish)" Condition="'%(ResolvedFileToPublish.RelativePath)' == 'WmiLight.Native.dll'" />
+    </ItemGroup>
+  </Target>
+
+</Project>
+```
+
+
