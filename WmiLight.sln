@@ -32,6 +32,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WmiLight.Native", "WmiLight
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WmiCompare", "WmiCompare\WmiCompare.csproj", "{3B555BF3-9FAF-4754-AE49-3B5A5CC16054}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{4315B3D9-F82D-41D5-AAEF-9EBD78F844C1}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -100,6 +105,7 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{582EB9E1-0602-4CA6-8BF1-3FA269370402} = {1E5BFE7B-DA04-4FED-8025-873524C76B83}
+		{4315B3D9-F82D-41D5-AAEF-9EBD78F844C1} = {00FA0660-8B93-4087-A693-BDB73D5A601C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3EF104CD-B33D-41E5-804A-52DD9906C0B9}

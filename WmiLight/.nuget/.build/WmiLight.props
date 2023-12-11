@@ -1,0 +1,8 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Condition="$(PublishWmiLightStaticallyLinked) == true">
+    <!-- https://learn.microsoft.com/en-us/dotnet/core/deploying/native-aot/interop -->
+    <DirectPInvoke Include="WmiLight.Native" />
+    <NativeLibrary Include="wbemuuid.lib" Condition="$(RuntimeIdentifier.StartsWith('win'))" />
+    <NativeLibrary Include="$(MSBuildThisFileDirectory)..\lib\native\$(RuntimeIdentifier)\WmiLight.Native.lib" Condition="$(RuntimeIdentifier.StartsWith('win'))" />
+  </ItemGroup>
+</Project>

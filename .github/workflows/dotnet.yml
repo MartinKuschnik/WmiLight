@@ -76,19 +76,30 @@ jobs:
             
             Remove-Item $zip_file
             
+            # create folders for native runtime DLLs
             New-Item 'nuget-packages\unpacked\runtimes\win-x64\native\' -Type Directory
             New-Item 'nuget-packages\unpacked\runtimes\win-x86\native\' -Type Directory
             
+            # create folders native libs
             New-Item 'nuget-packages\unpacked\lib\native\win-x64\' -Type Directory
             New-Item 'nuget-packages\unpacked\lib\native\win-x86\' -Type Directory
-            
+                        
+            # create folders for WmiLight.props and WmiLight.targets
+            New-Item 'nuget-packages\unpacked\build\' -Type Directory
+
+            # copy native runtime DLLs for dynamic linking
             Copy-Item 'WmiLight.Native\bin\${{env.BUILD_CONFIGURATION}}\x64\WmiLight.Native.dll' 'nuget-packages\unpacked\runtimes\win-x64\native\'
             Copy-Item 'WmiLight.Native\bin\${{env.BUILD_CONFIGURATION}}\x86\WmiLight.Native.dll' 'nuget-packages\unpacked\runtimes\win-x86\native\'
             
+            # copy native libs and .pdb files for static linking
             Copy-Item 'WmiLight.Native\bin\${{env.BUILD_CONFIGURATION}}\x64\WmiLight.Native.lib' 'nuget-packages\unpacked\lib\native\win-x64\'
             Copy-Item 'WmiLight.Native\bin\${{env.BUILD_CONFIGURATION}}\x64\WmiLight.Native.pdb' 'nuget-packages\unpacked\lib\native\win-x64\'
             Copy-Item 'WmiLight.Native\bin\${{env.BUILD_CONFIGURATION}}\x86\WmiLight.Native.lib' 'nuget-packages\unpacked\lib\native\win-x86\'
             Copy-Item 'WmiLight.Native\bin\${{env.BUILD_CONFIGURATION}}\x86\WmiLight.Native.pdb' 'nuget-packages\unpacked\lib\native\win-x86\'
+
+            # copy WmiLight.props and WmiLight.targets
+            Copy-Item 'WmiLight\.nuget\.build\WmiLight.props' 'nuget-packages\unpacked\build\'
+            Copy-Item 'WmiLight\.nuget\.build\WmiLight.targets' 'nuget-packages\unpacked\build\'
 
             Compress-Archive 'nuget-packages\unpacked\*' $zip_file
             
