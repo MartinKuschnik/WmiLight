@@ -1,6 +1,6 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<!-- The DLL file will be copied when it is published, so we need to remove it -->
-	<Target Name="RemoveFileToPublish" AfterTargets="ComputeResolvedFilesToPublishList" Condition="$(PublishWmiLightStaticallyLinked) == true">
+	<Target Name="RemoveFileToPublish" AfterTargets="ComputeResolvedFilesToPublishList" Condition="$(PublishAot) == true And $(PublishWmiLightStaticallyLinked) == true">
 		<ItemGroup>
 			<ResolvedFileToPublish Remove="@(ResolvedFileToPublish)" Condition="'%(ResolvedFileToPublish.RelativePath)' == 'WmiLight.Native.dll'" />
 		</ItemGroup>
