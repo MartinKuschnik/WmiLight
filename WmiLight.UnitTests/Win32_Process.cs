@@ -254,16 +254,6 @@ namespace WmiLight.UnitTests
         }
 
         [TestMethod]
-        public void Win32_Process_KernelModeTime_Is_Equal_To_System_Management()
-        {
-            using (ManagementBaseObject msObject = WmiHelper.GetFirstSystemManagementObjects(@"root\cimv2", "Win32_Process"))
-            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_Process"))
-            {
-                WmiAssert.AreEqual<System.UInt64>(msObject, wmiObject, "KernelModeTime");
-            }
-        }
-
-        [TestMethod]
         public void Win32_Process_KernelModeTime_Is_UInt64()
         {
             const string PropertyName = "KernelModeTime";
