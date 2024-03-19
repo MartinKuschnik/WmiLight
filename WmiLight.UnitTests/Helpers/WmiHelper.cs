@@ -12,7 +12,8 @@ namespace WmiLight.UnitTests
                 {
                     using (ManagementObjectCollection.ManagementObjectEnumerator enumerator = collection.GetEnumerator())
                     {
-                        enumerator.MoveNext();
+                        if (!enumerator.MoveNext())
+                            Assert.Inconclusive();
 
                         return enumerator.Current;
                     }
@@ -25,7 +26,8 @@ namespace WmiLight.UnitTests
             {
                 using (WmiObjectEnumerator enumerator = conncetion.ExecuteQuery(new WmiQuery(conncetion, $"SELECT * FROM {@class}")))
                 {
-                    enumerator.MoveNext();
+                    if (!enumerator.MoveNext())
+                        Assert.Inconclusive();
 
                     return enumerator.Current;
                 }
