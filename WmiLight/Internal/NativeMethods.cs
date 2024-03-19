@@ -73,9 +73,17 @@
             IntPtr pClassObject,
             [MarshalAs(UnmanagedType.LPWStr)]
             string propertyName,
-            [MarshalAs(UnmanagedType.Struct)]
-            ref object value,
+            ref VARIANT value,
             out CimType valueType);
+
+        [DllImport("oleaut32.dll", SetLastError = true)]
+        public static extern HResult VariantClear(ref VARIANT variant);
+
+        [DllImport("Propsys.dll")]
+        public static extern uint VariantGetElementCount(ref VARIANT variant);
+
+        [DllImport("Propsys.dll")]
+        public static extern HResult InitVariantFromVariantArrayElem(ref VARIANT variant,  uint iElem,  ref VARIANT pvar);
 
         [DllImport(NATIVE_DLL_NAME)]
         public static extern HResult GetType(IntPtr pClassObject, [MarshalAs(UnmanagedType.LPWStr)] string propertyName, out CimType cimType);
