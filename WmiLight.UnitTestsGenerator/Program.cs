@@ -28,7 +28,7 @@ namespace WmiLight.UnitTestsGenerator
                 new Tuple<string, string, string[]>( "root\\cimv2","Win32_Keyboard" , []),
                 new Tuple<string, string, string[]>( "root\\cimv2","Win32_NetworkAdapter" , []),
                 new Tuple<string, string, string[]>( "root\\cimv2","Win32_NetworkAdapterConfiguration" , []),
-                new Tuple<string, string, string[]>( "root\\cimv2","Win32_OperatingSystem" , ["FreePhysicalMemory", "FreeVirtualMemory", "LocalDateTime"]),
+                new Tuple<string, string, string[]>( "root\\cimv2","Win32_OperatingSystem" , ["FreePhysicalMemory", "FreeVirtualMemory", "LocalDateTime", "FreeSpaceInPagingFiles", ]),
                 new Tuple<string, string, string[]>( "root\\cimv2","Win32_Printer" , []),
                 new Tuple<string, string, string[]>( "root\\cimv2","Win32_PhysicalMemory" , []),
                 new Tuple<string, string, string[]>( "root\\cimv2","Win32_Process" , ["KernelModeTime"]),

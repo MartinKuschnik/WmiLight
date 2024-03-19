@@ -7,13 +7,20 @@ namespace WmiLight.UnitTests
     {
         internal static void AreEqual<T>(ManagementBaseObject msObject, WmiObject wmiObject, string propertyName)
         {
-            if (typeof(T).IsArray)
+            object msValue = msObject.GetPropertyValue(propertyName);
+            object wmiValue = wmiObject.GetPropertyValue(propertyName);
+
+            if (msValue == null || wmiValue == null)
             {
-                CollectionAssert.AreEqual((T)msObject.GetPropertyValue(propertyName) as ICollection, wmiObject.GetPropertyValue<T>(propertyName) as ICollection);
+                Assert.AreEqual(msValue, wmiValue);
+            }
+            else if (typeof(T).IsArray)
+            {
+                CollectionAssert.AreEqual(msValue as ICollection, wmiValue as ICollection);
             }
             else
             {
-                Assert.AreEqual((T)msObject.GetPropertyValue(propertyName), wmiObject.GetPropertyValue<T>(propertyName));
+                Assert.AreEqual(msValue, wmiValue);
             }
         }
     }
