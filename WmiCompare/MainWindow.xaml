@@ -10,6 +10,7 @@
  
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
@@ -27,31 +28,35 @@
                 </Style.Triggers>
             </Style>
         </Grid.Resources>
+        <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center">System.Management</TextBlock>
+        <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">WmiLight</TextBlock>
 
         <DockPanel Grid.ColumnSpan="2">
             <Button x:Name="QueryButton" DockPanel.Dock="Right" Padding="5" Click="Button_Click">Query</Button>
-            <TextBox x:Name="QueryTextBox">SELECT * FROM Win32_Process</TextBox>
+            <TextBox x:Name="QueryTextBox">SELECT * FROM Win32_VideoController</TextBox>
         </DockPanel>
 
-        <ListView Grid.Row="1" Grid.Column="0" x:Name="LeftListView" ScrollViewer.ScrollChanged="LeftListView_ScrollChanged" >
+        <ListView Grid.Row="2" Grid.Column="0" x:Name="LeftListView" ScrollViewer.ScrollChanged="LeftListView_ScrollChanged" >
             <ListView.View>
                 <GridView AllowsColumnReorder="true">
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="Property" Width="auto"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Type}" Header="Type" Width="auto" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Value}" Header="Value" Width="auto" />
                 </GridView>
             </ListView.View>
         </ListView>
 
-        <ListView Grid.Row="1" Grid.Column="1" x:Name="RightListView" ScrollViewer.ScrollChanged="RightListView_ScrollChanged">
+        <ListView Grid.Row="2" Grid.Column="1" x:Name="RightListView" ScrollViewer.ScrollChanged="RightListView_ScrollChanged">
             <ListView.View>
                 <GridView AllowsColumnReorder="true">
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="Property" Width="auto"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Type}" Header="Type" Width="auto" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Value}" Header="Value" Width="auto" />
                 </GridView>
             </ListView.View>
         </ListView>
 
-        <StatusBar Grid.Row="2">
+        <StatusBar Grid.Row="3">
             <StatusBarItem>
                 <TextBlock x:Name="LeftRecordCountTextBlock" Text="Record Count:" />
             </StatusBarItem>
@@ -65,7 +70,7 @@
             </StatusBarItem>
         </StatusBar>
 
-        <StatusBar Grid.Row="2" Grid.Column="1">
+        <StatusBar Grid.Row="3" Grid.Column="1">
             <StatusBarItem>
                 <TextBlock x:Name="RightRecordCountTextBlock" Text="Record Count:" />
             </StatusBarItem>

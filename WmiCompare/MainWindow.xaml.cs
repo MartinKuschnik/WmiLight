@@ -1,15 +1,8 @@
 ﻿using System.Diagnostics;
 using System.Management;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using WmiLight;
 
 namespace WmiCompare
@@ -29,8 +22,32 @@ namespace WmiCompare
             public string? Name { get; set; }
 
             public Type? Type { get; set; }
+            public string? Value { get; set; }
 
             public bool Error { get; set; }
+        }
+
+        private static string? ObjectValueToString(object? value)
+        {
+            if (value is null)
+                return "null";
+
+            if (value is Array valueAsArray)
+            {
+                List<string> strings = new List<string>();
+
+                foreach (var arrayItem in valueAsArray)
+                {
+                    if (arrayItem is string)
+                        strings.Add($"\"{arrayItem.ToString()}\"");
+                    else
+                        strings.Add(arrayItem.ToString() ?? "null");
+
+                }
+                return "{ " +string.Join(",", strings) + " }";
+            }
+
+            return value.ToString();
         }
 
         private void LeftListView_ScrollChanged(object sender, ScrollChangedEventArgs e)
@@ -74,9 +91,8 @@ namespace WmiCompare
                 this.LeftListView.Items.Clear();
                 this.RightListView.Items.Clear();
 
-
-
                 int leftCount = 0, rightCount = 0;
+                int leftPropCount = 0, rightPropCount = 0;
 
                 Stopwatch stopwatch = Stopwatch.StartNew();
 
@@ -90,34 +106,33 @@ namespace WmiCompare
                     {
                         foreach (PropertyData prop in retObject.Properties)
                         {
-                            this.LeftListView.Items.Add(new Property() { Name = prop.Name, Type = prop.Value?.GetType() });
-                        }
+                            leftPropCount++;
+                            this.LeftListView.Items.Add(new Property() { Name = prop.Name, Type = prop.Value?.GetType(), Value = ObjectValueToString(prop.Value) });
+                        } 
                     }
                 }
 
                 stopwatch.Stop();
 
                 this.LeftRecordCountTextBlock.Text = $"Record Count: {retObjectCollection.Count}";
-                this.LeftPropertyCountTextBlock.Text = $"Property Count: {leftCount}";
+                this.LeftPropertyCountTextBlock.Text = $"Property Count: {leftPropCount}";
                 this.LeftQueryDurationTextBlock.Text = $"Query Duration: {(int)stopwatch.ElapsedMilliseconds} ms";
 
                 stopwatch.Restart();
-
-                int count = 0;
 
                 Stopwatch stopwatch2 = Stopwatch.StartNew();
 
                 using (WmiConnection conncetion = new WmiConnection())
                 {
-
                     foreach (WmiObject partition in conncetion.CreateQuery(this.QueryTextBox.Text))
                     {
                         if (rightCount++ == 0)
                         {
                             foreach (string propertyName in partition.GetPropertyNames())
                             {
+                                rightPropCount++;
                                 var value = partition.GetPropertyValue(propertyName);
-                                this.RightListView.Items.Add(new Property() { Name = propertyName, Type = value?.GetType() });
+                                this.RightListView.Items.Add(new Property() { Name = propertyName, Type = value?.GetType(), Value = ObjectValueToString(value) });
                             }
                         }
                     }
@@ -125,8 +140,8 @@ namespace WmiCompare
 
                 stopwatch.Stop();
 
-                this.RightRecordCountTextBlock.Text = $"Record Count: {count}";
-                this.RightPropertyCountTextBlock.Text = $"Property Count: {rightCount}";
+                this.RightRecordCountTextBlock.Text = $"Record Count: {rightCount}";
+                this.RightPropertyCountTextBlock.Text = $"Property Count: {rightPropCount}";
                 this.RightQueryDurationTextBlock.Text = $"Query Duration: {(int)stopwatch.ElapsedMilliseconds} ms";
 
 
@@ -145,7 +160,7 @@ namespace WmiCompare
                         Property left = (Property)this.LeftListView.Items[i];
                         Property right = (Property)this.RightListView.Items[i];
 
-                        if (left.Type != right.Type)
+                        if (left.Type != right.Type || left.Value != right.Value)
                         {
                             left.Error = right.Error = true;
                         }
