@@ -55,9 +55,15 @@ jobs:
     - name: Build Native static Lib (x86, NoOp) 
       # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
       run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:ConfigurationType=StaticLibrary /p:WholeProgramOptimization=false /p:Platform=x86 WmiLight.Native\WmiLight.Native.vcxproj
-           
+        
+    - name: Restore NuGet Package for Unit Tests
+      run: msbuild WmiLight.UnitTests\WmiLight.UnitTests.csproj -t:restore -p:RestorePackagesConfig=true
+                 
     - name: Build Unit Tests (x64)
       run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=x64 WmiLight.UnitTests\WmiLight.UnitTests.csproj
+    
+    - name: Build Unit Tests (x86)
+      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=x86 WmiLight.UnitTests\WmiLight.UnitTests.csproj
       
     - name: Run Unit Tests (x64)
       uses: MartinKuschnik/vstest-action-with-space-support@v1.0.1
@@ -66,9 +72,6 @@ jobs:
         searchFolder: '**\*'
         platform: x64
         
-    - name: Build Unit Tests (x86)
-      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=x86 WmiLight.UnitTests\WmiLight.UnitTests.csproj
-              
     - name: Run Unit Tests (x86)
       uses: MartinKuschnik/vstest-action-with-space-support@v1.0.1
       with:
