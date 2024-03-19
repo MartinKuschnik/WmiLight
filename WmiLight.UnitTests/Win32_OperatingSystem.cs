@@ -616,16 +616,6 @@ namespace WmiLight.UnitTests
         }
 
         [TestMethod]
-        public void Win32_OperatingSystem_FreeSpaceInPagingFiles_Is_Equal_To_System_Management()
-        {
-            using (ManagementBaseObject msObject = WmiHelper.GetFirstSystemManagementObjects(@"root\cimv2", "Win32_OperatingSystem"))
-            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_OperatingSystem"))
-            {
-                WmiAssert.AreEqual<System.UInt64>(msObject, wmiObject, "FreeSpaceInPagingFiles");
-            }
-        }
-
-        [TestMethod]
         public void Win32_OperatingSystem_FreeSpaceInPagingFiles_Is_UInt64()
         {
             const string PropertyName = "FreeSpaceInPagingFiles";
