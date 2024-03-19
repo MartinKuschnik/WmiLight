@@ -58,6 +58,20 @@ jobs:
     - name: Build Native static Lib (x86, NoOp) 
       # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
       run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:ConfigurationType=StaticLibrary /p:WholeProgramOptimization=false /p:Platform=x86 WmiLight.Native\WmiLight.Native.vcxproj
+
+    - name: Unit Tests (x64)
+      uses: MartinKuschnik/vstest-action-with-space-support@v1.0.1
+      with:
+        testAssembly: '*UnitTests*.dll'
+        searchFolder: '**\*'
+        platform: x64
+        
+    - name: Unit Tests (x86)
+      uses: MartinKuschnik/vstest-action-with-space-support@v1.0.1
+      with:
+        testAssembly: '*UnitTests*.dll'
+        searchFolder: '**\*'
+        platform: x86
       
     - name: Pack with dotnet
       run: dotnet pack WmiLight\WmiLight.csproj --configuration ${{env.BUILD_CONFIGURATION}} --output nuget-packages --no-build      
