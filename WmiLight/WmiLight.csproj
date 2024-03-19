@@ -23,12 +23,12 @@
 	</Target>
 	<PropertyGroup />
 	<PropertyGroup>
-		<Version>5.1.1</Version>
+		<Version>6.0.0</Version>
 		<PackageId>WmiLight</PackageId>
 		<Authors>Martin Kuschnik</Authors>
 		<Company>Martin Kuschnik</Company>
 		<Description>A simple and light WMI framework.</Description>
-		<Copyright>Copyright 2023 Martin Kuschnik</Copyright>
+		<Copyright>Copyright 2024 Martin Kuschnik</Copyright>
 		<PackageProjectUrl>https://github.com/MartinKuschnik/WmiLight</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/MartinKuschnik/WmiLight</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
