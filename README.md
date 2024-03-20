@@ -73,24 +73,6 @@ To link WmiLight statically, add `<PublishWmiLightStaticallyLinked>true</Publish
 </PropertyGroup>
 ```
 
-## Trimming during publish
-
-If you'd like to reduce the size of you executable, you can enable assembly trimming during publish.
-
-```xml
-<PropertyGroup>
-  <PublishTrimmed>true</PublishTrimmed>
-</PropertyGroup>
-```
-WmiLight supports this but requires some COM types. Therfore the built-in COM support must be enabled.
-
-```xml
-<PropertyGroup>
-  <PublishTrimmed>true</PublishTrimmed>
-  <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
-</PropertyGroup>
-```
-
 ## Other benefits:
 
 * easy usage
