@@ -1,5 +1,7 @@
 #include "pch.h"
 
+#include "EventSinkProxy.h"
+
 #include <Wbemidl.h>
 
 #ifdef __cplusplus
@@ -46,12 +48,12 @@ extern "C" {  // only need to export C interface if
 
 	__declspec(dllexport) HRESULT CreateWbemLocator(IWbemLocator** locator)
 	{
-		return CoCreateInstance(
-			CLSID_WbemLocator,
-			0,
-			CLSCTX_INPROC_SERVER,
-			IID_IWbemLocator,
-			reinterpret_cast<LPVOID*>(locator));
+		return CoCreateInstance(CLSID_WbemLocator, nullptr, CLSCTX_INPROC_SERVER, IID_IWbemLocator, reinterpret_cast<LPVOID*>(locator));
+	}
+
+	__declspec(dllexport) HRESULT CreateWbemUnsecuredApartment(IWbemUnsecuredApartment** unsecuredApartment)
+	{
+		return CoCreateInstance(CLSID_UnsecuredApartment, nullptr, CLSCTX_LOCAL_SERVER, IID_IUnsecuredApartment, reinterpret_cast<void**>(unsecuredApartment));
 	}
 
 	__declspec(dllexport) HRESULT ReleaseIUnknown(IUnknown* pIUnknown)
@@ -62,6 +64,14 @@ extern "C" {  // only need to export C interface if
 		pIUnknown->Release();
 
 		return S_OK;
+	}
+
+	__declspec(dllexport) HRESULT QueryInterface(IUnknown* pIUnknown, REFIID riid, void** ppvObject)
+	{
+		if (pIUnknown == nullptr)
+			return E_POINTER;
+
+		return pIUnknown->QueryInterface(riid, ppvObject);
 	}
 
 	__declspec(dllexport) HRESULT ConnectServer(
@@ -116,7 +126,7 @@ extern "C" {  // only need to export C interface if
 		}
 
 		SEC_WINNT_AUTH_IDENTITY authInfo{};
-		
+
 		authInfo.User = (unsigned short*)username;
 		authInfo.UserLength = username == nullptr ? 0 : static_cast<unsigned long>(wcslen(username));
 
@@ -152,6 +162,59 @@ extern "C" {  // only need to export C interface if
 			return E_POINTER;
 
 		return wbemServices->ExecQuery(ueryLanguage, query, behaviorOption, ctx, pEnumerator);
+	}
+
+	__declspec(dllexport) HRESULT CreateEventSinkStub(
+		IWbemUnsecuredApartment* pUnsecApp,
+		void* pEventSink,
+		EventSinkProxy::IndicateFunction indicateFunction,
+		EventSinkProxy::SetStatusFunction setStatusFunction,
+		IWbemObjectSink** pEventSinkStub)
+	{
+		if (pUnsecApp == nullptr || pEventSink == nullptr)
+			return E_POINTER;
+
+		EventSinkProxy* pSink = new EventSinkProxy(pEventSink, indicateFunction, setStatusFunction);
+
+		// Allows us to delete the object from the heap by calling Release() if the CreateObjectStub() call fails.
+		pSink->AddRef();
+
+		IUnknown* pStubUnk = NULL;
+		HRESULT hr = pUnsecApp->CreateObjectStub(pSink, &pStubUnk);
+
+		if (FAILED(hr))
+		{
+			// delete the object from the heap because stub creation failed
+			pSink->Release();
+
+			return hr;
+		}
+
+		hr = pStubUnk->QueryInterface(IID_IWbemObjectSink, reinterpret_cast<void**>(pEventSinkStub));
+
+		// This Release call does not delete the object from the heap because the sink is referended by the sink stub
+		pSink->Release();
+
+		// decrease ref count, object keeps alive by other referneces
+		pStubUnk->Release();
+
+		return hr;
+	}
+
+	__declspec(dllexport) HRESULT CancelAsyncCall(IWbemServices* wbemServices, IWbemObjectSink* pEventSinkProxy)
+	{
+		if (wbemServices == nullptr || pEventSinkProxy == nullptr)
+			return E_POINTER;
+
+		return wbemServices->CancelAsyncCall(pEventSinkProxy);
+	}
+
+	__declspec(dllexport) HRESULT ExecNotificationQueryAsync(IWbemServices* wbemServices, wchar_t* ueryLanguage, wchar_t* query, IWbemContext* ctx, IWbemObjectSink* pStubSink)
+	{
+		if (wbemServices == nullptr)
+			return E_POINTER;
+
+		return wbemServices->ExecNotificationQueryAsync(ueryLanguage, query, 0, ctx, pStubSink);
 	}
 
 	__declspec(dllexport) HRESULT Next(

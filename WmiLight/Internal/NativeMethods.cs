@@ -13,10 +13,33 @@
     {
         private const string NATIVE_DLL_NAME = "WmiLight.Native.dll";
 
+        #region Delegates
+
+        public delegate HResult Indicate(
+            IntPtr pEventSink,
+            int lObjectCount,
+            [MarshalAs(UnmanagedType.LPArray, SizeParamIndex=1)]
+            IntPtr[] apObjArray
+        );
+
+        public delegate HResult SetStatus(
+            IntPtr pEventSink,
+            int lFlags,
+            HResult hResult,
+            [MarshalAs(UnmanagedType.LPWStr)]
+            string strParam,
+            IntPtr pObjParam
+        );
+
+        #endregion
+
         #region Methods
 
         [DllImport(NATIVE_DLL_NAME)]
         public static extern HResult CreateWbemLocator(out IntPtr pWbemLocator);
+
+        [DllImport(NATIVE_DLL_NAME)]
+        public static extern HResult CreateWbemUnsecuredApartment(out IntPtr pUnsecuredApartment);        
 
         [DllImport(NATIVE_DLL_NAME)]
         public static extern HResult ReleaseIUnknown(IntPtr pIUnknown);
@@ -64,6 +87,22 @@
             WbemClassObjectEnumeratorBehaviorOption behaviorOption,
             IntPtr ctx,
             out IntPtr pEnumerator);
+
+        [DllImport(NATIVE_DLL_NAME)]
+        public static extern HResult ExecNotificationQueryAsync(
+            IntPtr pWbemServices,
+            [MarshalAs(UnmanagedType.LPWStr)]
+            string ueryLanguage,
+            [MarshalAs(UnmanagedType.LPWStr)]
+            string query,
+            IntPtr ctx,
+            IntPtr pEventSinkProxy);
+
+        [DllImport(NATIVE_DLL_NAME)]
+        public static extern HResult CancelAsyncCall(IntPtr pWbemServices, IntPtr pEventSinkProxy);
+
+        [DllImport(NATIVE_DLL_NAME)]
+        public static extern HResult CreateEventSinkStub(IntPtr pUnsecApp, IntPtr pEventSink, Indicate indicateFunction, SetStatus setStatusFunction, out IntPtr eventSinkStub);
 
         [DllImport(NATIVE_DLL_NAME)]
         public static extern HResult Next(IntPtr pEnumerator, out IntPtr pClassObject);

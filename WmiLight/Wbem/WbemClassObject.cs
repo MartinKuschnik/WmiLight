@@ -18,7 +18,7 @@ namespace WmiLight.Wbem
 
             CimType cimType;
 
-            HResult hResult = NativeMethods.GetType(this.NativePointer, propertyName, out cimType);
+            HResult hResult = NativeMethods.GetType(this, propertyName, out cimType);
 
             if (hResult.Failed)
                 throw (Exception)hResult;
@@ -36,7 +36,7 @@ namespace WmiLight.Wbem
 
             try
             {
-                HResult hResult = NativeMethods.Get(this.NativePointer, propertyName, ref value, out valueType);
+                HResult hResult = NativeMethods.Get(this, propertyName, ref value, out valueType);
 
                 if (hResult.Failed)
                     throw (Exception)hResult;
@@ -62,7 +62,7 @@ namespace WmiLight.Wbem
 
             try
             {
-                HResult hResult = NativeMethods.Get(this.NativePointer, propertyName, ref value, out valueType);
+                HResult hResult = NativeMethods.Get(this, propertyName, ref value, out valueType);
 
                 if (hResult.Failed)
                     throw (Exception)hResult;
@@ -85,7 +85,7 @@ namespace WmiLight.Wbem
 
             string[] names;
 
-            HResult hResult = NativeMethods.GetNames(this.NativePointer, out names);
+            HResult hResult = NativeMethods.GetNames(this, out names);
 
             if (hResult.Failed)
                 throw (Exception)hResult;

@@ -16,7 +16,7 @@ namespace WmiLight.Wbem
 
             IntPtr pClassObject;
             
-            HResult hResult = NativeMethods.Next(this.NativePointer, out pClassObject);
+            HResult hResult = NativeMethods.Next(this, out pClassObject);
 
             if (hResult.Failed)
                 throw (Exception)hResult;
@@ -36,7 +36,7 @@ namespace WmiLight.Wbem
             if (this.Disposed)
                 throw new ObjectDisposedException(nameof(WbemClassObjectEnumerator));
 
-            HResult hResult =  NativeMethods.Reset(this.NativePointer);
+            HResult hResult =  NativeMethods.Reset(this);
 
             if (hResult.Failed)
                 throw (Exception)hResult;
