@@ -72,7 +72,7 @@ using (WmiConnection con = new WmiConnection(@"\\MACHINENAME\root\cimv2", opt))
     }
 }
 ```
-Get a notification if a process has started:
+ALternative way to get a notification if a process has started:
 ```C#
 var opt = new WmiConnectionOptions() { EnablePackageEncryption = true };
 
