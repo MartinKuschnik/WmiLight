@@ -22,6 +22,9 @@
         public static extern HResult ReleaseIUnknown(IntPtr pIUnknown);
 
         [DllImport(NATIVE_DLL_NAME)]
+        public static extern HResult QueryInterface(IntPtr pIUnknown, Guid riid, out IntPtr ppvObject);
+
+        [DllImport(NATIVE_DLL_NAME)]
         public static extern HResult ConnectServer(
             IntPtr pWbemLocator,
             [MarshalAs(UnmanagedType.LPWStr)]
@@ -83,7 +86,7 @@
         public static extern uint VariantGetElementCount(ref VARIANT variant);
 
         [DllImport("Propsys.dll")]
-        public static extern HResult InitVariantFromVariantArrayElem(ref VARIANT variant,  uint iElem,  ref VARIANT pvar);
+        public static extern HResult InitVariantFromVariantArrayElem(ref VARIANT variant, uint iElem, ref VARIANT pvar);
 
         [DllImport(NATIVE_DLL_NAME)]
         public static extern HResult GetType(IntPtr pClassObject, [MarshalAs(UnmanagedType.LPWStr)] string propertyName, out CimType cimType);
