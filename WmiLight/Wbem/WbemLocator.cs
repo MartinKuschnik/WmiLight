@@ -89,7 +89,7 @@
 
             IntPtr wbemServices;
 
-            HResult hResult = NativeMethods.ConnectServer(this.NativePointer, networkResource, userName, userPassword, locale, wbemConnectOption, authority, ctx, out wbemServices);
+            HResult hResult = NativeMethods.ConnectServer(this, networkResource, userName, userPassword, locale, wbemConnectOption, authority, ctx, out wbemServices);
 
             if (hResult.Failed)
             {

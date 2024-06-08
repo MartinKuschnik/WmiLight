@@ -45,6 +45,37 @@ namespace WmiLight
             return new WmiQuery(connection, wql);
         }
 
+        /// <summary>
+        /// Creates a <see cref="WmiEventWatcher"/> that can be used to subscribes to temporary event notifications based on a specified event query.
+        /// </summary>
+        /// <param name="connection">the extended <see cref="WmiConnection"/> object.</param>
+        /// <param name="wql">A WMI event query, which defines the events for which the watcher will listen.</param>
+        /// <returns>The created <see cref="WmiEventWatcher"/>.</returns>
+        /// <exception cref="System.ArgumentNullException"><paramref name="wql"/> is null.</exception>
+        public static WmiEventWatcher CreateEventWatcher(this WmiConnection connection, string wql)
+        {
+            if (wql == null)
+                throw new ArgumentNullException(nameof(wql));
+
+            return new WmiEventWatcher(connection, wql);
+        }
+
+        /// <summary>
+        /// Creates a <see cref="WmiEventSubscription"/> that notifies about wmi events.
+        /// </summary>
+        /// <param name="connection">the extended <see cref="WmiConnection"/> object.</param>
+        /// <param name="wql">A WMI event query, which defines the events for which the watcher will listen.</param>
+        /// <param name="action">Action that is invoked if the event notification occures.</param>
+        /// <returns>The created <see cref="WmiEventSubscription"/>.</returns>
+        /// <exception cref="System.ArgumentNullException"><paramref name="wql"/> is null.</exception>
+        public static WmiEventSubscription CreateEventSubscription(this WmiConnection connection, string wql, Action<WmiObject> action)
+        {
+            if (wql == null)
+                throw new ArgumentNullException(nameof(wql));
+
+            return connection.ExecNotificationQueryAsync(wql, action);
+        }
+
         #region Description
         /// <summary>
         /// Executes a query to retrieve objects.

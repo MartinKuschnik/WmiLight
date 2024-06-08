@@ -58,6 +58,40 @@ using (WmiConnection con = new WmiConnection(@"\\MACHINENAME\root\cimv2", opt))
     }
 }
 ```
+Get a notification if a process has started:
+```C#
+var opt = new WmiConnectionOptions() { EnablePackageEncryption = true };
+
+using (WmiConnection con = new WmiConnection(@"\\MACHINENAME\root\cimv2", opt))
+{
+    using (WmiEventSubscription sub = conncetion.CreateEventSubscription(
+            "SELECT * FROM __InstanceCreationEvent WITHIN 2 WHERE TargetInstance ISA 'Win32_Process'", 
+            x => Console.WriteLine("Process '{0}' started", x.GetPropertyValue<WmiObject>("TargetInstance").GetPropertyValue<string>("Name"))))
+    {
+        // ToDo: wait or do some other suff
+    }
+}
+```
+ALternative way to get a notification if a process has started:
+```C#
+var opt = new WmiConnectionOptions() { EnablePackageEncryption = true };
+
+using (WmiConnection con = new WmiConnection(@"\\MACHINENAME\root\cimv2", opt))
+{
+    using (WmiEventWatcher eventWatcher = conncetion.CreateEventWatcher("SELECT * FROM __InstanceCreationEvent WITHIN 2 WHERE TargetInstance ISA 'Win32_Process'"))
+    {
+        eventWatcher.EventArrived += EventWatcher_EventArrived;
+
+        eventWatcher.Start();
+
+        // ToDo: wait or do some other suff
+
+        eventWatcher.Stop();
+
+        eventWatcher.EventArrived -= EventWatcher_EventArrived;
+    }
+}
+```
 
 ## Native AOT deployment
 

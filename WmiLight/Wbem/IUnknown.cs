@@ -9,7 +9,7 @@ namespace WmiLight.Wbem
 
         private bool disposed = false;
 
-        protected IUnknown(IntPtr nativePointer)
+        internal IUnknown(IntPtr nativePointer)
         {
             this.nativePointer = nativePointer;
         }
@@ -22,7 +22,7 @@ namespace WmiLight.Wbem
                 throw (Exception)hResult;
         }
 
-        protected IntPtr NativePointer => this.nativePointer;
+        public static implicit operator IntPtr(IUnknown iUnknown) => iUnknown.nativePointer;
 
         protected bool Disposed => this.disposed;
 

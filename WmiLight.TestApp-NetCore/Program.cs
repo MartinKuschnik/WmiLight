@@ -19,9 +19,17 @@ namespace WmiLight.TestApp_NetCore
                 {
                     Console.WriteLine($"#{process.GetPropertyValue<uint>("ProcessId")} - {process["Name"]}");
                 }
-            }
 
-            Console.WriteLine("");
+                Console.WriteLine("");
+
+                const string notificationQuery = "SELECT * FROM __InstanceCreationEvent WITHIN 2 WHERE TargetInstance ISA 'Win32_Process'";
+
+                using (WmiEventSubscription sub = conncetion.CreateEventSubscription(notificationQuery, x => Console.WriteLine("Process '{0}' started", x.GetPropertyValue<WmiObject>("TargetInstance").GetPropertyValue<string>("Name"))))
+                {
+                    Console.WriteLine("Observing starting processes. Press any key to stop observing...");
+                    Console.ReadKey();
+                }
+            }
 
             Console.Write("Press Any Key To Exit...");
             Console.ReadKey();

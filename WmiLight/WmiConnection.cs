@@ -91,6 +91,9 @@
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private WbemServices wbemServices;
 
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private Lazy<WbemUnsecuredApartment> wbemUnsecuredApartment = new Lazy<WbemUnsecuredApartment>();
+
 #pragma warning disable 0649 // Field is never assigned to, and will always have its default value 'null'.
         #region Description
         /// <summary>
@@ -368,6 +371,24 @@
             return new WmiObjectEnumerator(this.InternalExecuteQuery(query));
         }
 
+        internal WmiEventSubscription ExecNotificationQueryAsync(string query, Action<WmiObject> action)
+        {
+            if (this.isDisposed)
+                throw new ObjectDisposedException(nameof(WmiConnection));
+
+            if (query == null)
+                throw new ArgumentNullException(nameof(query));
+
+            this.Open();
+
+            WbemObjectSink sink = this.wbemUnsecuredApartment.Value.CreateObjectSink();
+
+            // no distinction between remote and local needed
+            this.wbemServices.ExecNotificationQueryAsync(query.ToString(), this.context, sink);
+
+            return new WmiEventSubscription(this.wbemServices, sink, action);
+        }
+
         #region Description
         /// <summary>
         /// Releases all resources used by the <see cref="WmiConnection"/>.
@@ -378,6 +399,9 @@
             if (!this.isDisposed)
             {
                 this.Close();
+
+                if (this.wbemUnsecuredApartment.IsValueCreated)
+                    this.wbemUnsecuredApartment.Value.Dispose();
 
                 this.isDisposed = true;
             }
