@@ -325,7 +325,23 @@
             if (this.disposed)
                 throw new ObjectDisposedException(nameof(WmiObject));
 
-            return this.wbemClassObject.Get(propertyName);
+            object obj = this.wbemClassObject.Get(propertyName);
+
+            if (obj is WbemClassObject wbemClassObject)
+                return new WmiObject(wbemClassObject);
+
+            if (obj is WbemClassObject[] wbemClassObjectArray)
+            {
+                WmiObject[] wmiObjects = new WmiObject[wbemClassObjectArray.Length];
+
+                for (int i = 0; i < wmiObjects.Length; i++)
+                    wmiObjects[i] = new WmiObject(wbemClassObjectArray[i]);
+
+                return wmiObjects;
+
+            }
+
+            return obj;
         }
 
         #region Description
@@ -340,6 +356,23 @@
         {
             if (this.disposed)
                 throw new ObjectDisposedException(nameof(WmiObject));
+
+            if (typeof(TResult) == typeof(WmiObject))
+            {
+                return (TResult)(object)new WmiObject(wbemClassObject.Get<WbemClassObject>(propertyName));
+            }
+
+            if (typeof(TResult) == typeof(WmiObject[]))
+            {
+                WbemClassObject[] wbemClassObjectArray = wbemClassObject.Get<WbemClassObject[]>(propertyName);
+
+                WmiObject[] wmiObjects = new WmiObject[wbemClassObjectArray.Length];
+
+                for (int i = 0; i < wmiObjects.Length; i++)
+                    wmiObjects[i] = new WmiObject(wbemClassObjectArray[i]);
+
+                return (TResult)(object)wmiObjects;
+            }
 
             return wbemClassObject.Get<TResult>(propertyName);
         }

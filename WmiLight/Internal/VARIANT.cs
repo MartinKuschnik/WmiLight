@@ -49,5 +49,8 @@
 
         [FieldOffset(8)]
         public IntPtr BStrVal;
+
+        [FieldOffset(8)]
+        public IntPtr Object;
     }
 }

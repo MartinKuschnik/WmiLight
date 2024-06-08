@@ -143,6 +143,9 @@ namespace WmiLight.Wbem
                     case CimType.DateTime:
                         return VariantToArray<string>(ref value, typeWithoutArrayFlag);
 
+                    case CimType.Object:
+                        return VariantToArray<WbemClassObject>(ref value, typeWithoutArrayFlag);
+
                     default:
                         throw new NotSupportedException($"CimType '{typeWithoutArrayFlag}[]' currently not supported.");
                 }
@@ -210,6 +213,15 @@ namespace WmiLight.Wbem
 
                     case CimType.DateTime:
                         return Marshal.PtrToStringBSTR(value.BStrVal);
+
+                    case CimType.Object:
+
+                        HResult hResult = NativeMethods.QueryInterface(value.Object, InterfaceIdentifier.IWbemClassObject, out IntPtr pWbemObject);
+
+                        if (hResult.Failed)
+                            throw (Exception)hResult;
+
+                        return new WbemClassObject(pWbemObject);
 
                     default:
                         throw new NotSupportedException($"CimType '{type}' currently not supported.");
