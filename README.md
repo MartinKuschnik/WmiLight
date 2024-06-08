@@ -62,7 +62,7 @@ Get a notification if a process has started:
 ```C#
 var opt = new WmiConnectionOptions() { EnablePackageEncryption = true };
 
-using (WmiConnection con = new WmiConnection(@"\\MACHINENAME\root\cimv2", opt))
+using (WmiConnection conncetion = new WmiConnection(@"\\MACHINENAME\root\cimv2", opt))
 {
     using (WmiEventSubscription sub = conncetion.CreateEventSubscription(
             "SELECT * FROM __InstanceCreationEvent WITHIN 2 WHERE TargetInstance ISA 'Win32_Process'", 
@@ -76,7 +76,7 @@ ALternative way to get a notification if a process has started:
 ```C#
 var opt = new WmiConnectionOptions() { EnablePackageEncryption = true };
 
-using (WmiConnection con = new WmiConnection(@"\\MACHINENAME\root\cimv2", opt))
+using (WmiConnection conncetion = new WmiConnection(@"\\MACHINENAME\root\cimv2", opt))
 {
     using (WmiEventWatcher eventWatcher = conncetion.CreateEventWatcher("SELECT * FROM __InstanceCreationEvent WITHIN 2 WHERE TargetInstance ISA 'Win32_Process'"))
     {
