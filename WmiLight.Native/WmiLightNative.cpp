@@ -66,6 +66,16 @@ extern "C" {  // only need to export C interface if
 		return S_OK;
 	}
 
+	__declspec(dllexport) HRESULT AddRef(IUnknown* pIUnknown)
+	{
+		if (pIUnknown == nullptr)
+			return E_POINTER;
+
+		pIUnknown->AddRef();
+
+		return S_OK;
+	}
+
 	__declspec(dllexport) HRESULT QueryInterface(IUnknown* pIUnknown, REFIID riid, void** ppvObject)
 	{
 		if (pIUnknown == nullptr)
