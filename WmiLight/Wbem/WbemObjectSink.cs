@@ -59,7 +59,25 @@
                             WbemClassObject[] objects = new WbemClassObject[lObjectCount];
 
                             for (int i = 0; i < lObjectCount; i++)
-                                objects[i] = new WbemClassObject(apObjArray[i]);
+                            {
+                                IntPtr pWbemClassObject = apObjArray[i];
+
+                                // It's necessary to increment the ref count here. Otherwise the object is deleted
+                                // directly after the native call. This would case a AccessViolationException when the GC calls
+                                // the destructor of the WbemClassObject that calls the ReleaseIUnknown method to an already deleted
+                                // object.
+                                //
+                                // from MSDN: https://learn.microsoft.com/en-us/windows/win32/api/wbemcli/nf-wbemcli-iwbemobjectsink-indicate
+                                // The array memory itself is read-only, and is owned by the caller of the method.
+                                // Because this is an in parameter, the implementation has the option of calling AddRef on any object pointer
+                                // in the array and holding it before returning if the objects will be used after the method has returned,
+                                // in accordance with COM rules. If the objects are only used for the duration of the Indicate call,
+                                // then you do not need to call AddRef on each object pointer.
+
+                                NativeMethods.AddRef(pWbemClassObject);
+
+                                objects[i] = new WbemClassObject(pWbemClassObject);
+                            }
 
                             eventHandler.Invoke(target, new WbemObjectSinkIndicatedEventArgs(objects));
                         }
