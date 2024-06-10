@@ -45,6 +45,9 @@
         public static extern HResult ReleaseIUnknown(IntPtr pIUnknown);
 
         [DllImport(NATIVE_DLL_NAME)]
+        public static extern HResult AddRef(IntPtr pIUnknown);        
+
+        [DllImport(NATIVE_DLL_NAME)]
         public static extern HResult QueryInterface(IntPtr pIUnknown, Guid riid, out IntPtr ppvObject);
 
         [DllImport(NATIVE_DLL_NAME)]
