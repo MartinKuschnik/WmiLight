@@ -32,19 +32,25 @@ namespace WmiLight.UnitTestsGenerator
                 new Tuple<string, string, string[]>( "root\\cimv2","Win32_Printer" , []),
                 new Tuple<string, string, string[]>( "root\\cimv2","Win32_PhysicalMemory" , []),
                 new Tuple<string, string, string[]>( "root\\cimv2","Win32_Process" , ["KernelModeTime"]),
-                new Tuple<string, string, string[]>( "root\\cimv2","Win32_Processor" , ["KernelModeTime", "LoadPercentage"]),
+                new Tuple<string, string, string[]>( "root\\cimv2","Win32_Processor" , ["KernelModeTime", "LoadPercentage", "L3CacheSize"]),
                 new Tuple<string, string, string[]>( "root\\cimv2","Win32_Registry" , ["KernelModeTime", "LoadPercentage"]),
-                new Tuple<string, string, string[]>( "root\\cimv2","Win32_Service" , []),
+                new Tuple<string, string, string[]>( "root\\cimv2","Win32_Service" , ["DisconnectedSessions", "TotalSessions"]),
                 new Tuple<string, string, string[]>( "root\\cimv2","Win32_Share" , []),
                 new Tuple<string, string, string[]>( "root\\cimv2","Win32_SystemDriver" , []),
                 new Tuple<string, string, string[]>( "root\\cimv2","Win32_UserAccount" , []),
                 new Tuple<string, string, string[]>( "root\\cimv2","Win32_Volume" , ["FreeSpace"]),
                 new Tuple<string, string, string[]>( "root\\cimv2","Win32_VideoController" , []),
-                new Tuple<string, string, string[]>( "root\\cimv2","Win32_WinSAT" , []),                
+                new Tuple<string, string, string[]>( "root\\cimv2","Win32_WinSAT" , []),
 
                 new Tuple<string, string, string[]>( "root\\StandardCimv2","__Provider" , []),
                 new Tuple<string, string, string[]>( "root\\StandardCimv2","CIM_NetworkPort" , []),
                 new Tuple<string, string, string[]>( "root\\StandardCimv2","MSFT_NetAdapter" , []),
+
+                new Tuple<string, string, string[]>( "root\\virtualization\\v2","Msvm_SummaryInformation" , []),
+                new Tuple<string, string, string[]>( "root\\virtualization\\v2","Msvm_ComputerSystem" , []),
+                new Tuple<string, string, string[]>( "root\\virtualization\\v2","Msvm_VirtualSystemCapabilities" , []),
+                
+                new Tuple<string, string, string[]>( "root\\Microsoft\\Windows\\Storage","MSFT_Volume" , []),
             };
 
 
@@ -60,17 +66,23 @@ namespace WmiLight.UnitTestsGenerator
                     ObjectQuery query = new ObjectQuery($"SELECT * FROM {WMI_CLASS}");
                     ManagementObjectSearcher searcher = new ManagementObjectSearcher(scope, query);
 
+                    HashSet<string> props = new HashSet<string>();
+
                     foreach (var wmiObject in searcher.Get())
                     {
                         foreach (var prop in wmiObject.Properties)
                         {
-                            var value = prop.Value;
-
-                            if (value != null)
+                            if (!props.Contains(prop.Name))
                             {
-                                if (!propsToNotCompare.Contains(prop.Name))
+                                var value = prop.Value;
+
+                                if (value != null)
                                 {
-                                    outputFile.Write(@$"
+                                    props.Add(prop.Name);
+
+                                    if (!propsToNotCompare.Contains(prop.Name))
+                                    {
+                                        outputFile.Write(@$"
         [TestMethod]
         public void {WMI_CLASS}_{prop.Name}_Is_Equal_To_System_Management()
         {{
@@ -80,10 +92,9 @@ namespace WmiLight.UnitTestsGenerator
                 WmiAssert.AreEqual<{value.GetType()}>(msObject, wmiObject, ""{prop.Name}"");
             }}
         }}
-"); 
-                                }
+");
 
-                                outputFile.Write(@$"
+                                        outputFile.Write(@$"
         [TestMethod]
         public void {WMI_CLASS}_{prop.Name}_Is_{value.GetType().Name.Split('.').Last().Replace("[]", "Array")}()
         {{
@@ -105,10 +116,10 @@ namespace WmiLight.UnitTestsGenerator
             }}
         }}
 ");
+                                    }
+                                }
                             }
                         }
-
-                        break;
                     }
 
                     outputFile.Write("\t}\r\n}");

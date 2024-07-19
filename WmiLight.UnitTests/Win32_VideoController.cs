@@ -748,5 +748,377 @@ namespace WmiLight.UnitTests
                 System.String genericValue = wmiObject.GetPropertyValue<System.String>(PropertyName);
             }
         }
+
+        [TestMethod]
+        public void Win32_VideoController_CurrentBitsPerPixel_Is_Equal_To_System_Management()
+        {
+            using (ManagementBaseObject msObject = WmiHelper.GetFirstSystemManagementObjects(@"root\cimv2", "Win32_VideoController"))
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_VideoController"))
+            {
+                WmiAssert.AreEqual<System.UInt32>(msObject, wmiObject, "CurrentBitsPerPixel");
+            }
+        }
+
+        [TestMethod]
+        public void Win32_VideoController_CurrentBitsPerPixel_Is_UInt32()
+        {
+            const string PropertyName = "CurrentBitsPerPixel";
+
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_VideoController"))
+            {
+                object indexerValue = wmiObject[PropertyName];
+
+                if (indexerValue != null)
+                    Assert.IsInstanceOfType<System.UInt32>(indexerValue, $"{nameof(WmiObject)}[\"{PropertyName}\"] returned an unexpected type.");
+
+                object noneGenericValue = wmiObject.GetPropertyValue(PropertyName);
+
+                if (noneGenericValue != null)
+                    Assert.IsInstanceOfType<System.UInt32>(noneGenericValue, $"{nameof(WmiObject)}.{nameof(wmiObject.GetPropertyValue)}(\"{PropertyName}\") returned an unexpected type.");
+
+                System.UInt32 genericValue = wmiObject.GetPropertyValue<System.UInt32>(PropertyName);
+            }
+        }
+
+        [TestMethod]
+        public void Win32_VideoController_CurrentHorizontalResolution_Is_Equal_To_System_Management()
+        {
+            using (ManagementBaseObject msObject = WmiHelper.GetFirstSystemManagementObjects(@"root\cimv2", "Win32_VideoController"))
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_VideoController"))
+            {
+                WmiAssert.AreEqual<System.UInt32>(msObject, wmiObject, "CurrentHorizontalResolution");
+            }
+        }
+
+        [TestMethod]
+        public void Win32_VideoController_CurrentHorizontalResolution_Is_UInt32()
+        {
+            const string PropertyName = "CurrentHorizontalResolution";
+
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_VideoController"))
+            {
+                object indexerValue = wmiObject[PropertyName];
+
+                if (indexerValue != null)
+                    Assert.IsInstanceOfType<System.UInt32>(indexerValue, $"{nameof(WmiObject)}[\"{PropertyName}\"] returned an unexpected type.");
+
+                object noneGenericValue = wmiObject.GetPropertyValue(PropertyName);
+
+                if (noneGenericValue != null)
+                    Assert.IsInstanceOfType<System.UInt32>(noneGenericValue, $"{nameof(WmiObject)}.{nameof(wmiObject.GetPropertyValue)}(\"{PropertyName}\") returned an unexpected type.");
+
+                System.UInt32 genericValue = wmiObject.GetPropertyValue<System.UInt32>(PropertyName);
+            }
+        }
+
+        [TestMethod]
+        public void Win32_VideoController_CurrentNumberOfColors_Is_Equal_To_System_Management()
+        {
+            using (ManagementBaseObject msObject = WmiHelper.GetFirstSystemManagementObjects(@"root\cimv2", "Win32_VideoController"))
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_VideoController"))
+            {
+                WmiAssert.AreEqual<System.UInt64>(msObject, wmiObject, "CurrentNumberOfColors");
+            }
+        }
+
+        [TestMethod]
+        public void Win32_VideoController_CurrentNumberOfColors_Is_UInt64()
+        {
+            const string PropertyName = "CurrentNumberOfColors";
+
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_VideoController"))
+            {
+                object indexerValue = wmiObject[PropertyName];
+
+                if (indexerValue != null)
+                    Assert.IsInstanceOfType<System.UInt64>(indexerValue, $"{nameof(WmiObject)}[\"{PropertyName}\"] returned an unexpected type.");
+
+                object noneGenericValue = wmiObject.GetPropertyValue(PropertyName);
+
+                if (noneGenericValue != null)
+                    Assert.IsInstanceOfType<System.UInt64>(noneGenericValue, $"{nameof(WmiObject)}.{nameof(wmiObject.GetPropertyValue)}(\"{PropertyName}\") returned an unexpected type.");
+
+                System.UInt64 genericValue = wmiObject.GetPropertyValue<System.UInt64>(PropertyName);
+            }
+        }
+
+        [TestMethod]
+        public void Win32_VideoController_CurrentNumberOfColumns_Is_Equal_To_System_Management()
+        {
+            using (ManagementBaseObject msObject = WmiHelper.GetFirstSystemManagementObjects(@"root\cimv2", "Win32_VideoController"))
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_VideoController"))
+            {
+                WmiAssert.AreEqual<System.UInt32>(msObject, wmiObject, "CurrentNumberOfColumns");
+            }
+        }
+
+        [TestMethod]
+        public void Win32_VideoController_CurrentNumberOfColumns_Is_UInt32()
+        {
+            const string PropertyName = "CurrentNumberOfColumns";
+
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_VideoController"))
+            {
+                object indexerValue = wmiObject[PropertyName];
+
+                if (indexerValue != null)
+                    Assert.IsInstanceOfType<System.UInt32>(indexerValue, $"{nameof(WmiObject)}[\"{PropertyName}\"] returned an unexpected type.");
+
+                object noneGenericValue = wmiObject.GetPropertyValue(PropertyName);
+
+                if (noneGenericValue != null)
+                    Assert.IsInstanceOfType<System.UInt32>(noneGenericValue, $"{nameof(WmiObject)}.{nameof(wmiObject.GetPropertyValue)}(\"{PropertyName}\") returned an unexpected type.");
+
+                System.UInt32 genericValue = wmiObject.GetPropertyValue<System.UInt32>(PropertyName);
+            }
+        }
+
+        [TestMethod]
+        public void Win32_VideoController_CurrentNumberOfRows_Is_Equal_To_System_Management()
+        {
+            using (ManagementBaseObject msObject = WmiHelper.GetFirstSystemManagementObjects(@"root\cimv2", "Win32_VideoController"))
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_VideoController"))
+            {
+                WmiAssert.AreEqual<System.UInt32>(msObject, wmiObject, "CurrentNumberOfRows");
+            }
+        }
+
+        [TestMethod]
+        public void Win32_VideoController_CurrentNumberOfRows_Is_UInt32()
+        {
+            const string PropertyName = "CurrentNumberOfRows";
+
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_VideoController"))
+            {
+                object indexerValue = wmiObject[PropertyName];
+
+                if (indexerValue != null)
+                    Assert.IsInstanceOfType<System.UInt32>(indexerValue, $"{nameof(WmiObject)}[\"{PropertyName}\"] returned an unexpected type.");
+
+                object noneGenericValue = wmiObject.GetPropertyValue(PropertyName);
+
+                if (noneGenericValue != null)
+                    Assert.IsInstanceOfType<System.UInt32>(noneGenericValue, $"{nameof(WmiObject)}.{nameof(wmiObject.GetPropertyValue)}(\"{PropertyName}\") returned an unexpected type.");
+
+                System.UInt32 genericValue = wmiObject.GetPropertyValue<System.UInt32>(PropertyName);
+            }
+        }
+
+        [TestMethod]
+        public void Win32_VideoController_CurrentRefreshRate_Is_Equal_To_System_Management()
+        {
+            using (ManagementBaseObject msObject = WmiHelper.GetFirstSystemManagementObjects(@"root\cimv2", "Win32_VideoController"))
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_VideoController"))
+            {
+                WmiAssert.AreEqual<System.UInt32>(msObject, wmiObject, "CurrentRefreshRate");
+            }
+        }
+
+        [TestMethod]
+        public void Win32_VideoController_CurrentRefreshRate_Is_UInt32()
+        {
+            const string PropertyName = "CurrentRefreshRate";
+
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_VideoController"))
+            {
+                object indexerValue = wmiObject[PropertyName];
+
+                if (indexerValue != null)
+                    Assert.IsInstanceOfType<System.UInt32>(indexerValue, $"{nameof(WmiObject)}[\"{PropertyName}\"] returned an unexpected type.");
+
+                object noneGenericValue = wmiObject.GetPropertyValue(PropertyName);
+
+                if (noneGenericValue != null)
+                    Assert.IsInstanceOfType<System.UInt32>(noneGenericValue, $"{nameof(WmiObject)}.{nameof(wmiObject.GetPropertyValue)}(\"{PropertyName}\") returned an unexpected type.");
+
+                System.UInt32 genericValue = wmiObject.GetPropertyValue<System.UInt32>(PropertyName);
+            }
+        }
+
+        [TestMethod]
+        public void Win32_VideoController_CurrentScanMode_Is_Equal_To_System_Management()
+        {
+            using (ManagementBaseObject msObject = WmiHelper.GetFirstSystemManagementObjects(@"root\cimv2", "Win32_VideoController"))
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_VideoController"))
+            {
+                WmiAssert.AreEqual<System.UInt16>(msObject, wmiObject, "CurrentScanMode");
+            }
+        }
+
+        [TestMethod]
+        public void Win32_VideoController_CurrentScanMode_Is_UInt16()
+        {
+            const string PropertyName = "CurrentScanMode";
+
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_VideoController"))
+            {
+                object indexerValue = wmiObject[PropertyName];
+
+                if (indexerValue != null)
+                    Assert.IsInstanceOfType<System.UInt16>(indexerValue, $"{nameof(WmiObject)}[\"{PropertyName}\"] returned an unexpected type.");
+
+                object noneGenericValue = wmiObject.GetPropertyValue(PropertyName);
+
+                if (noneGenericValue != null)
+                    Assert.IsInstanceOfType<System.UInt16>(noneGenericValue, $"{nameof(WmiObject)}.{nameof(wmiObject.GetPropertyValue)}(\"{PropertyName}\") returned an unexpected type.");
+
+                System.UInt16 genericValue = wmiObject.GetPropertyValue<System.UInt16>(PropertyName);
+            }
+        }
+
+        [TestMethod]
+        public void Win32_VideoController_CurrentVerticalResolution_Is_Equal_To_System_Management()
+        {
+            using (ManagementBaseObject msObject = WmiHelper.GetFirstSystemManagementObjects(@"root\cimv2", "Win32_VideoController"))
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_VideoController"))
+            {
+                WmiAssert.AreEqual<System.UInt32>(msObject, wmiObject, "CurrentVerticalResolution");
+            }
+        }
+
+        [TestMethod]
+        public void Win32_VideoController_CurrentVerticalResolution_Is_UInt32()
+        {
+            const string PropertyName = "CurrentVerticalResolution";
+
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_VideoController"))
+            {
+                object indexerValue = wmiObject[PropertyName];
+
+                if (indexerValue != null)
+                    Assert.IsInstanceOfType<System.UInt32>(indexerValue, $"{nameof(WmiObject)}[\"{PropertyName}\"] returned an unexpected type.");
+
+                object noneGenericValue = wmiObject.GetPropertyValue(PropertyName);
+
+                if (noneGenericValue != null)
+                    Assert.IsInstanceOfType<System.UInt32>(noneGenericValue, $"{nameof(WmiObject)}.{nameof(wmiObject.GetPropertyValue)}(\"{PropertyName}\") returned an unexpected type.");
+
+                System.UInt32 genericValue = wmiObject.GetPropertyValue<System.UInt32>(PropertyName);
+            }
+        }
+
+        [TestMethod]
+        public void Win32_VideoController_DitherType_Is_Equal_To_System_Management()
+        {
+            using (ManagementBaseObject msObject = WmiHelper.GetFirstSystemManagementObjects(@"root\cimv2", "Win32_VideoController"))
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_VideoController"))
+            {
+                WmiAssert.AreEqual<System.UInt32>(msObject, wmiObject, "DitherType");
+            }
+        }
+
+        [TestMethod]
+        public void Win32_VideoController_DitherType_Is_UInt32()
+        {
+            const string PropertyName = "DitherType";
+
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_VideoController"))
+            {
+                object indexerValue = wmiObject[PropertyName];
+
+                if (indexerValue != null)
+                    Assert.IsInstanceOfType<System.UInt32>(indexerValue, $"{nameof(WmiObject)}[\"{PropertyName}\"] returned an unexpected type.");
+
+                object noneGenericValue = wmiObject.GetPropertyValue(PropertyName);
+
+                if (noneGenericValue != null)
+                    Assert.IsInstanceOfType<System.UInt32>(noneGenericValue, $"{nameof(WmiObject)}.{nameof(wmiObject.GetPropertyValue)}(\"{PropertyName}\") returned an unexpected type.");
+
+                System.UInt32 genericValue = wmiObject.GetPropertyValue<System.UInt32>(PropertyName);
+            }
+        }
+
+        [TestMethod]
+        public void Win32_VideoController_MaxRefreshRate_Is_Equal_To_System_Management()
+        {
+            using (ManagementBaseObject msObject = WmiHelper.GetFirstSystemManagementObjects(@"root\cimv2", "Win32_VideoController"))
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_VideoController"))
+            {
+                WmiAssert.AreEqual<System.UInt32>(msObject, wmiObject, "MaxRefreshRate");
+            }
+        }
+
+        [TestMethod]
+        public void Win32_VideoController_MaxRefreshRate_Is_UInt32()
+        {
+            const string PropertyName = "MaxRefreshRate";
+
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_VideoController"))
+            {
+                object indexerValue = wmiObject[PropertyName];
+
+                if (indexerValue != null)
+                    Assert.IsInstanceOfType<System.UInt32>(indexerValue, $"{nameof(WmiObject)}[\"{PropertyName}\"] returned an unexpected type.");
+
+                object noneGenericValue = wmiObject.GetPropertyValue(PropertyName);
+
+                if (noneGenericValue != null)
+                    Assert.IsInstanceOfType<System.UInt32>(noneGenericValue, $"{nameof(WmiObject)}.{nameof(wmiObject.GetPropertyValue)}(\"{PropertyName}\") returned an unexpected type.");
+
+                System.UInt32 genericValue = wmiObject.GetPropertyValue<System.UInt32>(PropertyName);
+            }
+        }
+
+        [TestMethod]
+        public void Win32_VideoController_MinRefreshRate_Is_Equal_To_System_Management()
+        {
+            using (ManagementBaseObject msObject = WmiHelper.GetFirstSystemManagementObjects(@"root\cimv2", "Win32_VideoController"))
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_VideoController"))
+            {
+                WmiAssert.AreEqual<System.UInt32>(msObject, wmiObject, "MinRefreshRate");
+            }
+        }
+
+        [TestMethod]
+        public void Win32_VideoController_MinRefreshRate_Is_UInt32()
+        {
+            const string PropertyName = "MinRefreshRate";
+
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_VideoController"))
+            {
+                object indexerValue = wmiObject[PropertyName];
+
+                if (indexerValue != null)
+                    Assert.IsInstanceOfType<System.UInt32>(indexerValue, $"{nameof(WmiObject)}[\"{PropertyName}\"] returned an unexpected type.");
+
+                object noneGenericValue = wmiObject.GetPropertyValue(PropertyName);
+
+                if (noneGenericValue != null)
+                    Assert.IsInstanceOfType<System.UInt32>(noneGenericValue, $"{nameof(WmiObject)}.{nameof(wmiObject.GetPropertyValue)}(\"{PropertyName}\") returned an unexpected type.");
+
+                System.UInt32 genericValue = wmiObject.GetPropertyValue<System.UInt32>(PropertyName);
+            }
+        }
+
+        [TestMethod]
+        public void Win32_VideoController_VideoModeDescription_Is_Equal_To_System_Management()
+        {
+            using (ManagementBaseObject msObject = WmiHelper.GetFirstSystemManagementObjects(@"root\cimv2", "Win32_VideoController"))
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_VideoController"))
+            {
+                WmiAssert.AreEqual<System.String>(msObject, wmiObject, "VideoModeDescription");
+            }
+        }
+
+        [TestMethod]
+        public void Win32_VideoController_VideoModeDescription_Is_String()
+        {
+            const string PropertyName = "VideoModeDescription";
+
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_VideoController"))
+            {
+                object indexerValue = wmiObject[PropertyName];
+
+                if (indexerValue != null)
+                    Assert.IsInstanceOfType<System.String>(indexerValue, $"{nameof(WmiObject)}[\"{PropertyName}\"] returned an unexpected type.");
+
+                object noneGenericValue = wmiObject.GetPropertyValue(PropertyName);
+
+                if (noneGenericValue != null)
+                    Assert.IsInstanceOfType<System.String>(noneGenericValue, $"{nameof(WmiObject)}.{nameof(wmiObject.GetPropertyValue)}(\"{PropertyName}\") returned an unexpected type.");
+
+                System.String genericValue = wmiObject.GetPropertyValue<System.String>(PropertyName);
+            }
+        }
 	}
 }

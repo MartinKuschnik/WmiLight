@@ -2,7 +2,7 @@
   "profiles": {
     "WmiLight.UnitTestsGenerator": {
       "commandName": "Project",
-      "workingDirectory": "$(SolutionDir)WmiLight.UnitTests\\"
+      "workingDirectory": "$(ProjectDir)..\\WmiLight.UnitTests\\"
     }
   }
 }

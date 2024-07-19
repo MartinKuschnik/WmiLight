@@ -595,69 +595,6 @@ namespace WmiLight.UnitTests
         }
 
         [TestMethod]
-        public void Win32_OperatingSystem_FreePhysicalMemory_Is_UInt64()
-        {
-            const string PropertyName = "FreePhysicalMemory";
-
-            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_OperatingSystem"))
-            {
-                object indexerValue = wmiObject[PropertyName];
-
-                if (indexerValue != null)
-                    Assert.IsInstanceOfType<System.UInt64>(indexerValue, $"{nameof(WmiObject)}[\"{PropertyName}\"] returned an unexpected type.");
-
-                object noneGenericValue = wmiObject.GetPropertyValue(PropertyName);
-
-                if (noneGenericValue != null)
-                    Assert.IsInstanceOfType<System.UInt64>(noneGenericValue, $"{nameof(WmiObject)}.{nameof(wmiObject.GetPropertyValue)}(\"{PropertyName}\") returned an unexpected type.");
-
-                System.UInt64 genericValue = wmiObject.GetPropertyValue<System.UInt64>(PropertyName);
-            }
-        }
-
-        [TestMethod]
-        public void Win32_OperatingSystem_FreeSpaceInPagingFiles_Is_UInt64()
-        {
-            const string PropertyName = "FreeSpaceInPagingFiles";
-
-            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_OperatingSystem"))
-            {
-                object indexerValue = wmiObject[PropertyName];
-
-                if (indexerValue != null)
-                    Assert.IsInstanceOfType<System.UInt64>(indexerValue, $"{nameof(WmiObject)}[\"{PropertyName}\"] returned an unexpected type.");
-
-                object noneGenericValue = wmiObject.GetPropertyValue(PropertyName);
-
-                if (noneGenericValue != null)
-                    Assert.IsInstanceOfType<System.UInt64>(noneGenericValue, $"{nameof(WmiObject)}.{nameof(wmiObject.GetPropertyValue)}(\"{PropertyName}\") returned an unexpected type.");
-
-                System.UInt64 genericValue = wmiObject.GetPropertyValue<System.UInt64>(PropertyName);
-            }
-        }
-
-        [TestMethod]
-        public void Win32_OperatingSystem_FreeVirtualMemory_Is_UInt64()
-        {
-            const string PropertyName = "FreeVirtualMemory";
-
-            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_OperatingSystem"))
-            {
-                object indexerValue = wmiObject[PropertyName];
-
-                if (indexerValue != null)
-                    Assert.IsInstanceOfType<System.UInt64>(indexerValue, $"{nameof(WmiObject)}[\"{PropertyName}\"] returned an unexpected type.");
-
-                object noneGenericValue = wmiObject.GetPropertyValue(PropertyName);
-
-                if (noneGenericValue != null)
-                    Assert.IsInstanceOfType<System.UInt64>(noneGenericValue, $"{nameof(WmiObject)}.{nameof(wmiObject.GetPropertyValue)}(\"{PropertyName}\") returned an unexpected type.");
-
-                System.UInt64 genericValue = wmiObject.GetPropertyValue<System.UInt64>(PropertyName);
-            }
-        }
-
-        [TestMethod]
         public void Win32_OperatingSystem_InstallDate_Is_Equal_To_System_Management()
         {
             using (ManagementBaseObject msObject = WmiHelper.GetFirstSystemManagementObjects(@"root\cimv2", "Win32_OperatingSystem"))
@@ -702,27 +639,6 @@ namespace WmiLight.UnitTests
         public void Win32_OperatingSystem_LastBootUpTime_Is_String()
         {
             const string PropertyName = "LastBootUpTime";
-
-            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_OperatingSystem"))
-            {
-                object indexerValue = wmiObject[PropertyName];
-
-                if (indexerValue != null)
-                    Assert.IsInstanceOfType<System.String>(indexerValue, $"{nameof(WmiObject)}[\"{PropertyName}\"] returned an unexpected type.");
-
-                object noneGenericValue = wmiObject.GetPropertyValue(PropertyName);
-
-                if (noneGenericValue != null)
-                    Assert.IsInstanceOfType<System.String>(noneGenericValue, $"{nameof(WmiObject)}.{nameof(wmiObject.GetPropertyValue)}(\"{PropertyName}\") returned an unexpected type.");
-
-                System.String genericValue = wmiObject.GetPropertyValue<System.String>(PropertyName);
-            }
-        }
-
-        [TestMethod]
-        public void Win32_OperatingSystem_LocalDateTime_Is_String()
-        {
-            const string PropertyName = "LocalDateTime";
 
             using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_OperatingSystem"))
             {
@@ -923,6 +839,37 @@ namespace WmiLight.UnitTests
                     Assert.IsInstanceOfType<System.String>(noneGenericValue, $"{nameof(WmiObject)}.{nameof(wmiObject.GetPropertyValue)}(\"{PropertyName}\") returned an unexpected type.");
 
                 System.String genericValue = wmiObject.GetPropertyValue<System.String>(PropertyName);
+            }
+        }
+
+        [TestMethod]
+        public void Win32_OperatingSystem_NumberOfLicensedUsers_Is_Equal_To_System_Management()
+        {
+            using (ManagementBaseObject msObject = WmiHelper.GetFirstSystemManagementObjects(@"root\cimv2", "Win32_OperatingSystem"))
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_OperatingSystem"))
+            {
+                WmiAssert.AreEqual<System.UInt32>(msObject, wmiObject, "NumberOfLicensedUsers");
+            }
+        }
+
+        [TestMethod]
+        public void Win32_OperatingSystem_NumberOfLicensedUsers_Is_UInt32()
+        {
+            const string PropertyName = "NumberOfLicensedUsers";
+
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_OperatingSystem"))
+            {
+                object indexerValue = wmiObject[PropertyName];
+
+                if (indexerValue != null)
+                    Assert.IsInstanceOfType<System.UInt32>(indexerValue, $"{nameof(WmiObject)}[\"{PropertyName}\"] returned an unexpected type.");
+
+                object noneGenericValue = wmiObject.GetPropertyValue(PropertyName);
+
+                if (noneGenericValue != null)
+                    Assert.IsInstanceOfType<System.UInt32>(noneGenericValue, $"{nameof(WmiObject)}.{nameof(wmiObject.GetPropertyValue)}(\"{PropertyName}\") returned an unexpected type.");
+
+                System.UInt32 genericValue = wmiObject.GetPropertyValue<System.UInt32>(PropertyName);
             }
         }
 

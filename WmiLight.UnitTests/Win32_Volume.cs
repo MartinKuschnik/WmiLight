@@ -223,6 +223,37 @@ namespace WmiLight.UnitTests
         }
 
         [TestMethod]
+        public void Win32_Volume_DirtyBitSet_Is_Equal_To_System_Management()
+        {
+            using (ManagementBaseObject msObject = WmiHelper.GetFirstSystemManagementObjects(@"root\cimv2", "Win32_Volume"))
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_Volume"))
+            {
+                WmiAssert.AreEqual<System.Boolean>(msObject, wmiObject, "DirtyBitSet");
+            }
+        }
+
+        [TestMethod]
+        public void Win32_Volume_DirtyBitSet_Is_Boolean()
+        {
+            const string PropertyName = "DirtyBitSet";
+
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_Volume"))
+            {
+                object indexerValue = wmiObject[PropertyName];
+
+                if (indexerValue != null)
+                    Assert.IsInstanceOfType<System.Boolean>(indexerValue, $"{nameof(WmiObject)}[\"{PropertyName}\"] returned an unexpected type.");
+
+                object noneGenericValue = wmiObject.GetPropertyValue(PropertyName);
+
+                if (noneGenericValue != null)
+                    Assert.IsInstanceOfType<System.Boolean>(noneGenericValue, $"{nameof(WmiObject)}.{nameof(wmiObject.GetPropertyValue)}(\"{PropertyName}\") returned an unexpected type.");
+
+                System.Boolean genericValue = wmiObject.GetPropertyValue<System.Boolean>(PropertyName);
+            }
+        }
+
+        [TestMethod]
         public void Win32_Volume_DriveLetter_Is_Equal_To_System_Management()
         {
             using (ManagementBaseObject msObject = WmiHelper.GetFirstSystemManagementObjects(@"root\cimv2", "Win32_Volume"))
@@ -312,27 +343,6 @@ namespace WmiLight.UnitTests
                     Assert.IsInstanceOfType<System.String>(noneGenericValue, $"{nameof(WmiObject)}.{nameof(wmiObject.GetPropertyValue)}(\"{PropertyName}\") returned an unexpected type.");
 
                 System.String genericValue = wmiObject.GetPropertyValue<System.String>(PropertyName);
-            }
-        }
-
-        [TestMethod]
-        public void Win32_Volume_FreeSpace_Is_UInt64()
-        {
-            const string PropertyName = "FreeSpace";
-
-            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_Volume"))
-            {
-                object indexerValue = wmiObject[PropertyName];
-
-                if (indexerValue != null)
-                    Assert.IsInstanceOfType<System.UInt64>(indexerValue, $"{nameof(WmiObject)}[\"{PropertyName}\"] returned an unexpected type.");
-
-                object noneGenericValue = wmiObject.GetPropertyValue(PropertyName);
-
-                if (noneGenericValue != null)
-                    Assert.IsInstanceOfType<System.UInt64>(noneGenericValue, $"{nameof(WmiObject)}.{nameof(wmiObject.GetPropertyValue)}(\"{PropertyName}\") returned an unexpected type.");
-
-                System.UInt64 genericValue = wmiObject.GetPropertyValue<System.UInt64>(PropertyName);
             }
         }
 
@@ -474,6 +484,99 @@ namespace WmiLight.UnitTests
         public void Win32_Volume_PageFilePresent_Is_Boolean()
         {
             const string PropertyName = "PageFilePresent";
+
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_Volume"))
+            {
+                object indexerValue = wmiObject[PropertyName];
+
+                if (indexerValue != null)
+                    Assert.IsInstanceOfType<System.Boolean>(indexerValue, $"{nameof(WmiObject)}[\"{PropertyName}\"] returned an unexpected type.");
+
+                object noneGenericValue = wmiObject.GetPropertyValue(PropertyName);
+
+                if (noneGenericValue != null)
+                    Assert.IsInstanceOfType<System.Boolean>(noneGenericValue, $"{nameof(WmiObject)}.{nameof(wmiObject.GetPropertyValue)}(\"{PropertyName}\") returned an unexpected type.");
+
+                System.Boolean genericValue = wmiObject.GetPropertyValue<System.Boolean>(PropertyName);
+            }
+        }
+
+        [TestMethod]
+        public void Win32_Volume_QuotasEnabled_Is_Equal_To_System_Management()
+        {
+            using (ManagementBaseObject msObject = WmiHelper.GetFirstSystemManagementObjects(@"root\cimv2", "Win32_Volume"))
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_Volume"))
+            {
+                WmiAssert.AreEqual<System.Boolean>(msObject, wmiObject, "QuotasEnabled");
+            }
+        }
+
+        [TestMethod]
+        public void Win32_Volume_QuotasEnabled_Is_Boolean()
+        {
+            const string PropertyName = "QuotasEnabled";
+
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_Volume"))
+            {
+                object indexerValue = wmiObject[PropertyName];
+
+                if (indexerValue != null)
+                    Assert.IsInstanceOfType<System.Boolean>(indexerValue, $"{nameof(WmiObject)}[\"{PropertyName}\"] returned an unexpected type.");
+
+                object noneGenericValue = wmiObject.GetPropertyValue(PropertyName);
+
+                if (noneGenericValue != null)
+                    Assert.IsInstanceOfType<System.Boolean>(noneGenericValue, $"{nameof(WmiObject)}.{nameof(wmiObject.GetPropertyValue)}(\"{PropertyName}\") returned an unexpected type.");
+
+                System.Boolean genericValue = wmiObject.GetPropertyValue<System.Boolean>(PropertyName);
+            }
+        }
+
+        [TestMethod]
+        public void Win32_Volume_QuotasIncomplete_Is_Equal_To_System_Management()
+        {
+            using (ManagementBaseObject msObject = WmiHelper.GetFirstSystemManagementObjects(@"root\cimv2", "Win32_Volume"))
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_Volume"))
+            {
+                WmiAssert.AreEqual<System.Boolean>(msObject, wmiObject, "QuotasIncomplete");
+            }
+        }
+
+        [TestMethod]
+        public void Win32_Volume_QuotasIncomplete_Is_Boolean()
+        {
+            const string PropertyName = "QuotasIncomplete";
+
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_Volume"))
+            {
+                object indexerValue = wmiObject[PropertyName];
+
+                if (indexerValue != null)
+                    Assert.IsInstanceOfType<System.Boolean>(indexerValue, $"{nameof(WmiObject)}[\"{PropertyName}\"] returned an unexpected type.");
+
+                object noneGenericValue = wmiObject.GetPropertyValue(PropertyName);
+
+                if (noneGenericValue != null)
+                    Assert.IsInstanceOfType<System.Boolean>(noneGenericValue, $"{nameof(WmiObject)}.{nameof(wmiObject.GetPropertyValue)}(\"{PropertyName}\") returned an unexpected type.");
+
+                System.Boolean genericValue = wmiObject.GetPropertyValue<System.Boolean>(PropertyName);
+            }
+        }
+
+        [TestMethod]
+        public void Win32_Volume_QuotasRebuilding_Is_Equal_To_System_Management()
+        {
+            using (ManagementBaseObject msObject = WmiHelper.GetFirstSystemManagementObjects(@"root\cimv2", "Win32_Volume"))
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_Volume"))
+            {
+                WmiAssert.AreEqual<System.Boolean>(msObject, wmiObject, "QuotasRebuilding");
+            }
+        }
+
+        [TestMethod]
+        public void Win32_Volume_QuotasRebuilding_Is_Boolean()
+        {
+            const string PropertyName = "QuotasRebuilding";
 
             using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_Volume"))
             {

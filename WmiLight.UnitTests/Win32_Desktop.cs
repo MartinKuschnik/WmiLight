@@ -314,5 +314,98 @@ namespace WmiLight.UnitTests
                 System.Boolean genericValue = wmiObject.GetPropertyValue<System.Boolean>(PropertyName);
             }
         }
+
+        [TestMethod]
+        public void Win32_Desktop_Wallpaper_Is_Equal_To_System_Management()
+        {
+            using (ManagementBaseObject msObject = WmiHelper.GetFirstSystemManagementObjects(@"root\cimv2", "Win32_Desktop"))
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_Desktop"))
+            {
+                WmiAssert.AreEqual<System.String>(msObject, wmiObject, "Wallpaper");
+            }
+        }
+
+        [TestMethod]
+        public void Win32_Desktop_Wallpaper_Is_String()
+        {
+            const string PropertyName = "Wallpaper";
+
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_Desktop"))
+            {
+                object indexerValue = wmiObject[PropertyName];
+
+                if (indexerValue != null)
+                    Assert.IsInstanceOfType<System.String>(indexerValue, $"{nameof(WmiObject)}[\"{PropertyName}\"] returned an unexpected type.");
+
+                object noneGenericValue = wmiObject.GetPropertyValue(PropertyName);
+
+                if (noneGenericValue != null)
+                    Assert.IsInstanceOfType<System.String>(noneGenericValue, $"{nameof(WmiObject)}.{nameof(wmiObject.GetPropertyValue)}(\"{PropertyName}\") returned an unexpected type.");
+
+                System.String genericValue = wmiObject.GetPropertyValue<System.String>(PropertyName);
+            }
+        }
+
+        [TestMethod]
+        public void Win32_Desktop_WallpaperTiled_Is_Equal_To_System_Management()
+        {
+            using (ManagementBaseObject msObject = WmiHelper.GetFirstSystemManagementObjects(@"root\cimv2", "Win32_Desktop"))
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_Desktop"))
+            {
+                WmiAssert.AreEqual<System.Boolean>(msObject, wmiObject, "WallpaperTiled");
+            }
+        }
+
+        [TestMethod]
+        public void Win32_Desktop_WallpaperTiled_Is_Boolean()
+        {
+            const string PropertyName = "WallpaperTiled";
+
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_Desktop"))
+            {
+                object indexerValue = wmiObject[PropertyName];
+
+                if (indexerValue != null)
+                    Assert.IsInstanceOfType<System.Boolean>(indexerValue, $"{nameof(WmiObject)}[\"{PropertyName}\"] returned an unexpected type.");
+
+                object noneGenericValue = wmiObject.GetPropertyValue(PropertyName);
+
+                if (noneGenericValue != null)
+                    Assert.IsInstanceOfType<System.Boolean>(noneGenericValue, $"{nameof(WmiObject)}.{nameof(wmiObject.GetPropertyValue)}(\"{PropertyName}\") returned an unexpected type.");
+
+                System.Boolean genericValue = wmiObject.GetPropertyValue<System.Boolean>(PropertyName);
+            }
+        }
+
+        [TestMethod]
+        public void Win32_Desktop_IconSpacing_Is_Equal_To_System_Management()
+        {
+            using (ManagementBaseObject msObject = WmiHelper.GetFirstSystemManagementObjects(@"root\cimv2", "Win32_Desktop"))
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_Desktop"))
+            {
+                WmiAssert.AreEqual<System.UInt32>(msObject, wmiObject, "IconSpacing");
+            }
+        }
+
+        [TestMethod]
+        public void Win32_Desktop_IconSpacing_Is_UInt32()
+        {
+            const string PropertyName = "IconSpacing";
+
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_Desktop"))
+            {
+                object indexerValue = wmiObject[PropertyName];
+
+                if (indexerValue != null)
+                    Assert.IsInstanceOfType<System.UInt32>(indexerValue, $"{nameof(WmiObject)}[\"{PropertyName}\"] returned an unexpected type.");
+
+                object noneGenericValue = wmiObject.GetPropertyValue(PropertyName);
+
+                if (noneGenericValue != null)
+                    Assert.IsInstanceOfType<System.UInt32>(noneGenericValue, $"{nameof(WmiObject)}.{nameof(wmiObject.GetPropertyValue)}(\"{PropertyName}\") returned an unexpected type.");
+
+                System.UInt32 genericValue = wmiObject.GetPropertyValue<System.UInt32>(PropertyName);
+            }
+        }
 	}
 }

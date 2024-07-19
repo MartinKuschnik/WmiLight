@@ -254,27 +254,6 @@ namespace WmiLight.UnitTests
         }
 
         [TestMethod]
-        public void Win32_Process_KernelModeTime_Is_UInt64()
-        {
-            const string PropertyName = "KernelModeTime";
-
-            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_Process"))
-            {
-                object indexerValue = wmiObject[PropertyName];
-
-                if (indexerValue != null)
-                    Assert.IsInstanceOfType<System.UInt64>(indexerValue, $"{nameof(WmiObject)}[\"{PropertyName}\"] returned an unexpected type.");
-
-                object noneGenericValue = wmiObject.GetPropertyValue(PropertyName);
-
-                if (noneGenericValue != null)
-                    Assert.IsInstanceOfType<System.UInt64>(noneGenericValue, $"{nameof(WmiObject)}.{nameof(wmiObject.GetPropertyValue)}(\"{PropertyName}\") returned an unexpected type.");
-
-                System.UInt64 genericValue = wmiObject.GetPropertyValue<System.UInt64>(PropertyName);
-            }
-        }
-
-        [TestMethod]
         public void Win32_Process_Name_Is_Equal_To_System_Management()
         {
             using (ManagementBaseObject msObject = WmiHelper.GetFirstSystemManagementObjects(@"root\cimv2", "Win32_Process"))
@@ -1139,6 +1118,130 @@ namespace WmiLight.UnitTests
                     Assert.IsInstanceOfType<System.UInt64>(noneGenericValue, $"{nameof(WmiObject)}.{nameof(wmiObject.GetPropertyValue)}(\"{PropertyName}\") returned an unexpected type.");
 
                 System.UInt64 genericValue = wmiObject.GetPropertyValue<System.UInt64>(PropertyName);
+            }
+        }
+
+        [TestMethod]
+        public void Win32_Process_MaximumWorkingSetSize_Is_Equal_To_System_Management()
+        {
+            using (ManagementBaseObject msObject = WmiHelper.GetFirstSystemManagementObjects(@"root\cimv2", "Win32_Process"))
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_Process"))
+            {
+                WmiAssert.AreEqual<System.UInt32>(msObject, wmiObject, "MaximumWorkingSetSize");
+            }
+        }
+
+        [TestMethod]
+        public void Win32_Process_MaximumWorkingSetSize_Is_UInt32()
+        {
+            const string PropertyName = "MaximumWorkingSetSize";
+
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_Process"))
+            {
+                object indexerValue = wmiObject[PropertyName];
+
+                if (indexerValue != null)
+                    Assert.IsInstanceOfType<System.UInt32>(indexerValue, $"{nameof(WmiObject)}[\"{PropertyName}\"] returned an unexpected type.");
+
+                object noneGenericValue = wmiObject.GetPropertyValue(PropertyName);
+
+                if (noneGenericValue != null)
+                    Assert.IsInstanceOfType<System.UInt32>(noneGenericValue, $"{nameof(WmiObject)}.{nameof(wmiObject.GetPropertyValue)}(\"{PropertyName}\") returned an unexpected type.");
+
+                System.UInt32 genericValue = wmiObject.GetPropertyValue<System.UInt32>(PropertyName);
+            }
+        }
+
+        [TestMethod]
+        public void Win32_Process_MinimumWorkingSetSize_Is_Equal_To_System_Management()
+        {
+            using (ManagementBaseObject msObject = WmiHelper.GetFirstSystemManagementObjects(@"root\cimv2", "Win32_Process"))
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_Process"))
+            {
+                WmiAssert.AreEqual<System.UInt32>(msObject, wmiObject, "MinimumWorkingSetSize");
+            }
+        }
+
+        [TestMethod]
+        public void Win32_Process_MinimumWorkingSetSize_Is_UInt32()
+        {
+            const string PropertyName = "MinimumWorkingSetSize";
+
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_Process"))
+            {
+                object indexerValue = wmiObject[PropertyName];
+
+                if (indexerValue != null)
+                    Assert.IsInstanceOfType<System.UInt32>(indexerValue, $"{nameof(WmiObject)}[\"{PropertyName}\"] returned an unexpected type.");
+
+                object noneGenericValue = wmiObject.GetPropertyValue(PropertyName);
+
+                if (noneGenericValue != null)
+                    Assert.IsInstanceOfType<System.UInt32>(noneGenericValue, $"{nameof(WmiObject)}.{nameof(wmiObject.GetPropertyValue)}(\"{PropertyName}\") returned an unexpected type.");
+
+                System.UInt32 genericValue = wmiObject.GetPropertyValue<System.UInt32>(PropertyName);
+            }
+        }
+
+        [TestMethod]
+        public void Win32_Process_CommandLine_Is_Equal_To_System_Management()
+        {
+            using (ManagementBaseObject msObject = WmiHelper.GetFirstSystemManagementObjects(@"root\cimv2", "Win32_Process"))
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_Process"))
+            {
+                WmiAssert.AreEqual<System.String>(msObject, wmiObject, "CommandLine");
+            }
+        }
+
+        [TestMethod]
+        public void Win32_Process_CommandLine_Is_String()
+        {
+            const string PropertyName = "CommandLine";
+
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_Process"))
+            {
+                object indexerValue = wmiObject[PropertyName];
+
+                if (indexerValue != null)
+                    Assert.IsInstanceOfType<System.String>(indexerValue, $"{nameof(WmiObject)}[\"{PropertyName}\"] returned an unexpected type.");
+
+                object noneGenericValue = wmiObject.GetPropertyValue(PropertyName);
+
+                if (noneGenericValue != null)
+                    Assert.IsInstanceOfType<System.String>(noneGenericValue, $"{nameof(WmiObject)}.{nameof(wmiObject.GetPropertyValue)}(\"{PropertyName}\") returned an unexpected type.");
+
+                System.String genericValue = wmiObject.GetPropertyValue<System.String>(PropertyName);
+            }
+        }
+
+        [TestMethod]
+        public void Win32_Process_ExecutablePath_Is_Equal_To_System_Management()
+        {
+            using (ManagementBaseObject msObject = WmiHelper.GetFirstSystemManagementObjects(@"root\cimv2", "Win32_Process"))
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_Process"))
+            {
+                WmiAssert.AreEqual<System.String>(msObject, wmiObject, "ExecutablePath");
+            }
+        }
+
+        [TestMethod]
+        public void Win32_Process_ExecutablePath_Is_String()
+        {
+            const string PropertyName = "ExecutablePath";
+
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_Process"))
+            {
+                object indexerValue = wmiObject[PropertyName];
+
+                if (indexerValue != null)
+                    Assert.IsInstanceOfType<System.String>(indexerValue, $"{nameof(WmiObject)}[\"{PropertyName}\"] returned an unexpected type.");
+
+                object noneGenericValue = wmiObject.GetPropertyValue(PropertyName);
+
+                if (noneGenericValue != null)
+                    Assert.IsInstanceOfType<System.String>(noneGenericValue, $"{nameof(WmiObject)}.{nameof(wmiObject.GetPropertyValue)}(\"{PropertyName}\") returned an unexpected type.");
+
+                System.String genericValue = wmiObject.GetPropertyValue<System.String>(PropertyName);
             }
         }
 	}

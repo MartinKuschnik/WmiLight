@@ -231,17 +231,33 @@ namespace WmiLight.Wbem
 
         private static T[] VariantToArray<T>(ref VARIANT value, CimType type)
         {
-            uint elementCount = NativeMethods.VariantGetElementCount(ref value);
+            uint arrayDims = NativeMethods.SafeArrayGetDim(value.Object);
 
-            T[] array = new T[elementCount];
+            if (arrayDims != 1) 
+                throw new NotSupportedException("Only single-dimensional arrays are supported");
 
-            for (uint i = 0; i < elementCount; i++)
+            int lBound, uBound;
+
+            HResult hResult = NativeMethods.SafeArrayGetLBound(value.Object, arrayDims, out lBound);
+
+            if (hResult.Failed)
+                throw (Exception)hResult;
+
+            hResult = NativeMethods.SafeArrayGetUBound(value.Object, arrayDims, out uBound);
+
+            if (hResult.Failed)
+                throw (Exception)hResult;
+
+            T[] array = new T[uBound - lBound + 1];
+
+            for (int i = lBound; i <= uBound; i++)
             {
                 VARIANT variant = default;
 
                 try
                 {
-                    HResult hResult = NativeMethods.InitVariantFromVariantArrayElem(ref value, i, ref variant);
+                    variant.vt = value.vt & ~VARENUM.VT_ARRAY;
+                    hResult = NativeMethods.SafeArrayGetElement(value.Object, i, out variant.Object);
 
                     if (hResult.Failed)
                         throw (Exception)hResult;
