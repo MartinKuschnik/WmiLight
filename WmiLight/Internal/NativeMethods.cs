@@ -121,8 +121,20 @@
             ref VARIANT value,
             out CimType valueType);
 
-        [DllImport("oleaut32.dll", SetLastError = true)]
+        [DllImport("oleaut32.dll")]
         public static extern HResult VariantClear(ref VARIANT variant);
+
+        [DllImport("oleaut32.dll")]
+        public static extern HResult SafeArrayGetLBound(IntPtr psa, uint nDim, out int plLbound);
+
+        [DllImport("oleaut32.dll")]
+        public static extern HResult SafeArrayGetUBound(IntPtr psa, uint nDim, out int plUbound);
+
+        [DllImport("oleaut32.dll")]
+        public static extern HResult SafeArrayGetElement(IntPtr psa, in int rgIndices, out IntPtr pv);
+
+        [DllImport("oleaut32.dll")]
+        public static extern uint SafeArrayGetDim(IntPtr psa);
 
         [DllImport("Propsys.dll")]
         public static extern uint VariantGetElementCount(ref VARIANT variant);
