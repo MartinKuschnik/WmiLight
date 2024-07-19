@@ -655,5 +655,253 @@ namespace WmiLight.UnitTests
                 System.String genericValue = wmiObject.GetPropertyValue<System.String>(PropertyName);
             }
         }
+
+        [TestMethod]
+        public void Win32_NetworkAdapter_AdapterType_Is_Equal_To_System_Management()
+        {
+            using (ManagementBaseObject msObject = WmiHelper.GetFirstSystemManagementObjects(@"root\cimv2", "Win32_NetworkAdapter"))
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_NetworkAdapter"))
+            {
+                WmiAssert.AreEqual<System.String>(msObject, wmiObject, "AdapterType");
+            }
+        }
+
+        [TestMethod]
+        public void Win32_NetworkAdapter_AdapterType_Is_String()
+        {
+            const string PropertyName = "AdapterType";
+
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_NetworkAdapter"))
+            {
+                object indexerValue = wmiObject[PropertyName];
+
+                if (indexerValue != null)
+                    Assert.IsInstanceOfType<System.String>(indexerValue, $"{nameof(WmiObject)}[\"{PropertyName}\"] returned an unexpected type.");
+
+                object noneGenericValue = wmiObject.GetPropertyValue(PropertyName);
+
+                if (noneGenericValue != null)
+                    Assert.IsInstanceOfType<System.String>(noneGenericValue, $"{nameof(WmiObject)}.{nameof(wmiObject.GetPropertyValue)}(\"{PropertyName}\") returned an unexpected type.");
+
+                System.String genericValue = wmiObject.GetPropertyValue<System.String>(PropertyName);
+            }
+        }
+
+        [TestMethod]
+        public void Win32_NetworkAdapter_AdapterTypeId_Is_Equal_To_System_Management()
+        {
+            using (ManagementBaseObject msObject = WmiHelper.GetFirstSystemManagementObjects(@"root\cimv2", "Win32_NetworkAdapter"))
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_NetworkAdapter"))
+            {
+                WmiAssert.AreEqual<System.UInt16>(msObject, wmiObject, "AdapterTypeId");
+            }
+        }
+
+        [TestMethod]
+        public void Win32_NetworkAdapter_AdapterTypeId_Is_UInt16()
+        {
+            const string PropertyName = "AdapterTypeId";
+
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_NetworkAdapter"))
+            {
+                object indexerValue = wmiObject[PropertyName];
+
+                if (indexerValue != null)
+                    Assert.IsInstanceOfType<System.UInt16>(indexerValue, $"{nameof(WmiObject)}[\"{PropertyName}\"] returned an unexpected type.");
+
+                object noneGenericValue = wmiObject.GetPropertyValue(PropertyName);
+
+                if (noneGenericValue != null)
+                    Assert.IsInstanceOfType<System.UInt16>(noneGenericValue, $"{nameof(WmiObject)}.{nameof(wmiObject.GetPropertyValue)}(\"{PropertyName}\") returned an unexpected type.");
+
+                System.UInt16 genericValue = wmiObject.GetPropertyValue<System.UInt16>(PropertyName);
+            }
+        }
+
+        [TestMethod]
+        public void Win32_NetworkAdapter_GUID_Is_Equal_To_System_Management()
+        {
+            using (ManagementBaseObject msObject = WmiHelper.GetFirstSystemManagementObjects(@"root\cimv2", "Win32_NetworkAdapter"))
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_NetworkAdapter"))
+            {
+                WmiAssert.AreEqual<System.String>(msObject, wmiObject, "GUID");
+            }
+        }
+
+        [TestMethod]
+        public void Win32_NetworkAdapter_GUID_Is_String()
+        {
+            const string PropertyName = "GUID";
+
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_NetworkAdapter"))
+            {
+                object indexerValue = wmiObject[PropertyName];
+
+                if (indexerValue != null)
+                    Assert.IsInstanceOfType<System.String>(indexerValue, $"{nameof(WmiObject)}[\"{PropertyName}\"] returned an unexpected type.");
+
+                object noneGenericValue = wmiObject.GetPropertyValue(PropertyName);
+
+                if (noneGenericValue != null)
+                    Assert.IsInstanceOfType<System.String>(noneGenericValue, $"{nameof(WmiObject)}.{nameof(wmiObject.GetPropertyValue)}(\"{PropertyName}\") returned an unexpected type.");
+
+                System.String genericValue = wmiObject.GetPropertyValue<System.String>(PropertyName);
+            }
+        }
+
+        [TestMethod]
+        public void Win32_NetworkAdapter_MACAddress_Is_Equal_To_System_Management()
+        {
+            using (ManagementBaseObject msObject = WmiHelper.GetFirstSystemManagementObjects(@"root\cimv2", "Win32_NetworkAdapter"))
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_NetworkAdapter"))
+            {
+                WmiAssert.AreEqual<System.String>(msObject, wmiObject, "MACAddress");
+            }
+        }
+
+        [TestMethod]
+        public void Win32_NetworkAdapter_MACAddress_Is_String()
+        {
+            const string PropertyName = "MACAddress";
+
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_NetworkAdapter"))
+            {
+                object indexerValue = wmiObject[PropertyName];
+
+                if (indexerValue != null)
+                    Assert.IsInstanceOfType<System.String>(indexerValue, $"{nameof(WmiObject)}[\"{PropertyName}\"] returned an unexpected type.");
+
+                object noneGenericValue = wmiObject.GetPropertyValue(PropertyName);
+
+                if (noneGenericValue != null)
+                    Assert.IsInstanceOfType<System.String>(noneGenericValue, $"{nameof(WmiObject)}.{nameof(wmiObject.GetPropertyValue)}(\"{PropertyName}\") returned an unexpected type.");
+
+                System.String genericValue = wmiObject.GetPropertyValue<System.String>(PropertyName);
+            }
+        }
+
+        [TestMethod]
+        public void Win32_NetworkAdapter_NetConnectionID_Is_Equal_To_System_Management()
+        {
+            using (ManagementBaseObject msObject = WmiHelper.GetFirstSystemManagementObjects(@"root\cimv2", "Win32_NetworkAdapter"))
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_NetworkAdapter"))
+            {
+                WmiAssert.AreEqual<System.String>(msObject, wmiObject, "NetConnectionID");
+            }
+        }
+
+        [TestMethod]
+        public void Win32_NetworkAdapter_NetConnectionID_Is_String()
+        {
+            const string PropertyName = "NetConnectionID";
+
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_NetworkAdapter"))
+            {
+                object indexerValue = wmiObject[PropertyName];
+
+                if (indexerValue != null)
+                    Assert.IsInstanceOfType<System.String>(indexerValue, $"{nameof(WmiObject)}[\"{PropertyName}\"] returned an unexpected type.");
+
+                object noneGenericValue = wmiObject.GetPropertyValue(PropertyName);
+
+                if (noneGenericValue != null)
+                    Assert.IsInstanceOfType<System.String>(noneGenericValue, $"{nameof(WmiObject)}.{nameof(wmiObject.GetPropertyValue)}(\"{PropertyName}\") returned an unexpected type.");
+
+                System.String genericValue = wmiObject.GetPropertyValue<System.String>(PropertyName);
+            }
+        }
+
+        [TestMethod]
+        public void Win32_NetworkAdapter_NetConnectionStatus_Is_Equal_To_System_Management()
+        {
+            using (ManagementBaseObject msObject = WmiHelper.GetFirstSystemManagementObjects(@"root\cimv2", "Win32_NetworkAdapter"))
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_NetworkAdapter"))
+            {
+                WmiAssert.AreEqual<System.UInt16>(msObject, wmiObject, "NetConnectionStatus");
+            }
+        }
+
+        [TestMethod]
+        public void Win32_NetworkAdapter_NetConnectionStatus_Is_UInt16()
+        {
+            const string PropertyName = "NetConnectionStatus";
+
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_NetworkAdapter"))
+            {
+                object indexerValue = wmiObject[PropertyName];
+
+                if (indexerValue != null)
+                    Assert.IsInstanceOfType<System.UInt16>(indexerValue, $"{nameof(WmiObject)}[\"{PropertyName}\"] returned an unexpected type.");
+
+                object noneGenericValue = wmiObject.GetPropertyValue(PropertyName);
+
+                if (noneGenericValue != null)
+                    Assert.IsInstanceOfType<System.UInt16>(noneGenericValue, $"{nameof(WmiObject)}.{nameof(wmiObject.GetPropertyValue)}(\"{PropertyName}\") returned an unexpected type.");
+
+                System.UInt16 genericValue = wmiObject.GetPropertyValue<System.UInt16>(PropertyName);
+            }
+        }
+
+        [TestMethod]
+        public void Win32_NetworkAdapter_NetEnabled_Is_Equal_To_System_Management()
+        {
+            using (ManagementBaseObject msObject = WmiHelper.GetFirstSystemManagementObjects(@"root\cimv2", "Win32_NetworkAdapter"))
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_NetworkAdapter"))
+            {
+                WmiAssert.AreEqual<System.Boolean>(msObject, wmiObject, "NetEnabled");
+            }
+        }
+
+        [TestMethod]
+        public void Win32_NetworkAdapter_NetEnabled_Is_Boolean()
+        {
+            const string PropertyName = "NetEnabled";
+
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_NetworkAdapter"))
+            {
+                object indexerValue = wmiObject[PropertyName];
+
+                if (indexerValue != null)
+                    Assert.IsInstanceOfType<System.Boolean>(indexerValue, $"{nameof(WmiObject)}[\"{PropertyName}\"] returned an unexpected type.");
+
+                object noneGenericValue = wmiObject.GetPropertyValue(PropertyName);
+
+                if (noneGenericValue != null)
+                    Assert.IsInstanceOfType<System.Boolean>(noneGenericValue, $"{nameof(WmiObject)}.{nameof(wmiObject.GetPropertyValue)}(\"{PropertyName}\") returned an unexpected type.");
+
+                System.Boolean genericValue = wmiObject.GetPropertyValue<System.Boolean>(PropertyName);
+            }
+        }
+
+        [TestMethod]
+        public void Win32_NetworkAdapter_Speed_Is_Equal_To_System_Management()
+        {
+            using (ManagementBaseObject msObject = WmiHelper.GetFirstSystemManagementObjects(@"root\cimv2", "Win32_NetworkAdapter"))
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_NetworkAdapter"))
+            {
+                WmiAssert.AreEqual<System.UInt64>(msObject, wmiObject, "Speed");
+            }
+        }
+
+        [TestMethod]
+        public void Win32_NetworkAdapter_Speed_Is_UInt64()
+        {
+            const string PropertyName = "Speed";
+
+            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_NetworkAdapter"))
+            {
+                object indexerValue = wmiObject[PropertyName];
+
+                if (indexerValue != null)
+                    Assert.IsInstanceOfType<System.UInt64>(indexerValue, $"{nameof(WmiObject)}[\"{PropertyName}\"] returned an unexpected type.");
+
+                object noneGenericValue = wmiObject.GetPropertyValue(PropertyName);
+
+                if (noneGenericValue != null)
+                    Assert.IsInstanceOfType<System.UInt64>(noneGenericValue, $"{nameof(WmiObject)}.{nameof(wmiObject.GetPropertyValue)}(\"{PropertyName}\") returned an unexpected type.");
+
+                System.UInt64 genericValue = wmiObject.GetPropertyValue<System.UInt64>(PropertyName);
+            }
+        }
 	}
 }

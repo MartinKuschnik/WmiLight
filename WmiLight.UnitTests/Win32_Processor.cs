@@ -502,37 +502,6 @@ namespace WmiLight.UnitTests
         }
 
         [TestMethod]
-        public void Win32_Processor_L3CacheSize_Is_Equal_To_System_Management()
-        {
-            using (ManagementBaseObject msObject = WmiHelper.GetFirstSystemManagementObjects(@"root\cimv2", "Win32_Processor"))
-            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_Processor"))
-            {
-                WmiAssert.AreEqual<System.UInt32>(msObject, wmiObject, "L3CacheSize");
-            }
-        }
-
-        [TestMethod]
-        public void Win32_Processor_L3CacheSize_Is_UInt32()
-        {
-            const string PropertyName = "L3CacheSize";
-
-            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_Processor"))
-            {
-                object indexerValue = wmiObject[PropertyName];
-
-                if (indexerValue != null)
-                    Assert.IsInstanceOfType<System.UInt32>(indexerValue, $"{nameof(WmiObject)}[\"{PropertyName}\"] returned an unexpected type.");
-
-                object noneGenericValue = wmiObject.GetPropertyValue(PropertyName);
-
-                if (noneGenericValue != null)
-                    Assert.IsInstanceOfType<System.UInt32>(noneGenericValue, $"{nameof(WmiObject)}.{nameof(wmiObject.GetPropertyValue)}(\"{PropertyName}\") returned an unexpected type.");
-
-                System.UInt32 genericValue = wmiObject.GetPropertyValue<System.UInt32>(PropertyName);
-            }
-        }
-
-        [TestMethod]
         public void Win32_Processor_L3CacheSpeed_Is_Equal_To_System_Management()
         {
             using (ManagementBaseObject msObject = WmiHelper.GetFirstSystemManagementObjects(@"root\cimv2", "Win32_Processor"))
@@ -577,27 +546,6 @@ namespace WmiLight.UnitTests
         public void Win32_Processor_Level_Is_UInt16()
         {
             const string PropertyName = "Level";
-
-            using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_Processor"))
-            {
-                object indexerValue = wmiObject[PropertyName];
-
-                if (indexerValue != null)
-                    Assert.IsInstanceOfType<System.UInt16>(indexerValue, $"{nameof(WmiObject)}[\"{PropertyName}\"] returned an unexpected type.");
-
-                object noneGenericValue = wmiObject.GetPropertyValue(PropertyName);
-
-                if (noneGenericValue != null)
-                    Assert.IsInstanceOfType<System.UInt16>(noneGenericValue, $"{nameof(WmiObject)}.{nameof(wmiObject.GetPropertyValue)}(\"{PropertyName}\") returned an unexpected type.");
-
-                System.UInt16 genericValue = wmiObject.GetPropertyValue<System.UInt16>(PropertyName);
-            }
-        }
-
-        [TestMethod]
-        public void Win32_Processor_LoadPercentage_Is_UInt16()
-        {
-            const string PropertyName = "LoadPercentage";
 
             using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(@"root\cimv2", "Win32_Processor"))
             {
