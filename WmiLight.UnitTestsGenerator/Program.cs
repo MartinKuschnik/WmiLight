@@ -46,10 +46,26 @@ namespace WmiLight.UnitTestsGenerator
                 new Tuple<string, string, string[]>( "root\\StandardCimv2","CIM_NetworkPort" , []),
                 new Tuple<string, string, string[]>( "root\\StandardCimv2","MSFT_NetAdapter" , []),
 
-                new Tuple<string, string, string[]>( "root\\virtualization\\v2","Msvm_SummaryInformation" , []),
+                new Tuple<string, string, string[]>( "root\\virtualization\\v2","Msvm_AffectedJobElement" , []),
                 new Tuple<string, string, string[]>( "root\\virtualization\\v2","Msvm_ComputerSystem" , []),
+                new Tuple<string, string, string[]>( "root\\virtualization\\v2","Msvm_DiskMergeSettingData" , []),
+                new Tuple<string, string, string[]>( "root\\virtualization\\v2","Msvm_ElementSettingData" , []),
+                new Tuple<string, string, string[]>( "root\\virtualization\\v2","Msvm_Error" , []),
+                new Tuple<string, string, string[]>( "root\\virtualization\\v2","Msvm_HostedDependency" , []),
+                new Tuple<string, string, string[]>( "root\\virtualization\\v2","Msvm_HostedService" , []),
+                new Tuple<string, string, string[]>( "root\\virtualization\\v2","Msvm_LastAppliedSnapshot" , []),
+                new Tuple<string, string, string[]>( "root\\virtualization\\v2","Msvm_OwningJobElement" , []),
+                new Tuple<string, string, string[]>( "root\\virtualization\\v2","Msvm_ServiceAffectsElement" , []),
+                new Tuple<string, string, string[]>( "root\\virtualization\\v2","Msvm_ServicingSettings" , []),
+                new Tuple<string, string, string[]>( "root\\virtualization\\v2","Msvm_SettingsDefineState" , []),
+                new Tuple<string, string, string[]>( "root\\virtualization\\v2","Msvm_SummaryInformation" , []),
+                new Tuple<string, string, string[]>( "root\\virtualization\\v2","Msvm_SystemExportSettingData" , []),
+                new Tuple<string, string, string[]>( "root\\virtualization\\v2","Msvm_SettingsDefineState" , []),
                 new Tuple<string, string, string[]>( "root\\virtualization\\v2","Msvm_VirtualSystemCapabilities" , []),
-                
+                new Tuple<string, string, string[]>( "root\\virtualization\\v2","Msvm_VirtualSystemExportSettingData" , []),
+
+
+
                 new Tuple<string, string, string[]>( "root\\Microsoft\\Windows\\Storage","MSFT_Volume" , []),
             };
 
