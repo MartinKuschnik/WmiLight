@@ -223,6 +223,13 @@ namespace WmiLight.Wbem
 
                         return new WbemClassObject(pWbemObject);
 
+                    case CimType.Reference:
+
+                        if (value.vt == VARENUM.VT_BSTR)
+                            return Marshal.PtrToStringBSTR(value.BStrVal);
+
+                        throw new NotSupportedException($"CimType Reference with VARENUM {value.vt} currently not supported.");
+
                     default:
                         throw new NotSupportedException($"CimType '{type}' currently not supported.");
                 }
