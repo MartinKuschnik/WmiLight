@@ -291,6 +291,60 @@ extern "C" {  // only need to export C interface if
 		return pClassObject->GetNames(nullptr, WBEM_FLAG_NONSYSTEM_ONLY, nullptr, pNames);
 	}
 
+	__declspec(dllexport) HRESULT GetMethod(
+		IWbemClassObject* pClassObject,
+		wchar_t* methodName,
+		IWbemClassObject** ppInSignature,
+		IWbemClassObject** ppOutSignature)
+	{
+		if (pClassObject == nullptr)
+			return E_POINTER;
+
+		return pClassObject->GetMethod(methodName, 0, ppInSignature, ppOutSignature);
+	}
+
+	__declspec(dllexport) HRESULT GetClass(
+		IWbemServices* wbemServices,
+		wchar_t* className,
+		IWbemContext* ctx,
+		IWbemClassObject** pClassDef)
+	{
+		if (wbemServices == nullptr)
+			return E_POINTER;
+
+		return wbemServices->GetObject(className, WBEM_FLAG_RETURN_WBEM_COMPLETE, ctx, pClassDef, nullptr);
+	}
+
+	__declspec(dllexport) HRESULT SpawnInstance(IWbemClassObject* pClassObject, IWbemClassObject** ppNewInstance)
+	{
+		if (pClassObject == nullptr)
+			return E_POINTER;
+
+		return pClassObject->SpawnInstance(0, ppNewInstance);
+	}
+
+	__declspec(dllexport) HRESULT Put(IWbemClassObject* pClassObject, wchar_t* wszName, VARIANT* pVal, CIMTYPE type)
+	{
+		if (pClassObject == nullptr)
+			return E_POINTER;
+
+		return pClassObject->Put(wszName, 0, pVal, type);
+	}
+
+	__declspec(dllexport) HRESULT ExecMethod(
+		IWbemServices* wbemServices,
+		wchar_t* classNameOrPath,
+		wchar_t* methodName,
+		IWbemContext* ctx,
+		IWbemClassObject* pInParams,
+		IWbemClassObject** pOutParams)
+	{
+		if (wbemServices == nullptr)
+			return E_POINTER;
+
+		return wbemServices->ExecMethod(classNameOrPath, methodName, 0, ctx, pInParams, pOutParams, nullptr);
+	}
+
 #ifdef __cplusplus
 }
 #endif

@@ -11,7 +11,14 @@
     #endregion
     internal static class NativeMethods
     {
-        private const string NATIVE_DLL_NAME = "WmiLight.Native.dll";
+        #region Constants
+
+        /// <summary>
+        /// Name of the native WmiLight DLL.
+        /// </summary>
+        private const string NATIVE_DLL_NAME = "WmiLight.Native.dll"; 
+
+        #endregion
 
         #region Delegates
 
@@ -35,17 +42,19 @@
 
         #region Methods
 
+        #region WmiLight.Native.dll
+
         [DllImport(NATIVE_DLL_NAME)]
         public static extern HResult CreateWbemLocator(out IntPtr pWbemLocator);
 
         [DllImport(NATIVE_DLL_NAME)]
-        public static extern HResult CreateWbemUnsecuredApartment(out IntPtr pUnsecuredApartment);        
+        public static extern HResult CreateWbemUnsecuredApartment(out IntPtr pUnsecuredApartment);
 
         [DllImport(NATIVE_DLL_NAME)]
         public static extern HResult ReleaseIUnknown(IntPtr pIUnknown);
 
         [DllImport(NATIVE_DLL_NAME)]
-        public static extern HResult AddRef(IntPtr pIUnknown);        
+        public static extern HResult AddRef(IntPtr pIUnknown);
 
         [DllImport(NATIVE_DLL_NAME)]
         public static extern HResult QueryInterface(IntPtr pIUnknown, Guid riid, out IntPtr ppvObject);
@@ -105,6 +114,12 @@
         public static extern HResult CancelAsyncCall(IntPtr pWbemServices, IntPtr pEventSinkProxy);
 
         [DllImport(NATIVE_DLL_NAME)]
+        public static extern HResult GetClass(IntPtr pWbemServices, [MarshalAs(UnmanagedType.LPWStr)] string className, IntPtr ctx, out IntPtr pObject);
+
+        [DllImport(NATIVE_DLL_NAME)]
+        public static extern HResult ExecMethod(IntPtr pWbemServices, [MarshalAs(UnmanagedType.LPWStr)] string classNameOrPath, [MarshalAs(UnmanagedType.LPWStr)] string methodName, IntPtr ctx, IntPtr inParams, out IntPtr outParams);
+
+        [DllImport(NATIVE_DLL_NAME)]
         public static extern HResult CreateEventSinkStub(IntPtr pUnsecApp, IntPtr pEventSink, Indicate indicateFunction, SetStatus setStatusFunction, out IntPtr eventSinkStub);
 
         [DllImport(NATIVE_DLL_NAME)]
@@ -121,6 +136,25 @@
             ref VARIANT value,
             out CimType valueType);
 
+        [DllImport(NATIVE_DLL_NAME)]
+        public static extern HResult GetMethod(IntPtr pClassObject, [MarshalAs(UnmanagedType.LPWStr)] string methodName, out IntPtr pInSignature, out IntPtr pOutSignature);
+
+        [DllImport(NATIVE_DLL_NAME)]
+        public static extern HResult SpawnInstance(IntPtr pClassObject, out IntPtr pNewInstance);
+
+        [DllImport(NATIVE_DLL_NAME)]
+        public static extern HResult Put(IntPtr pClassObject, [MarshalAs(UnmanagedType.LPWStr)] string wszName, ref VARIANT pvar, CimType cimType);
+
+        [DllImport(NATIVE_DLL_NAME)]
+        public static extern HResult GetType(IntPtr pClassObject, [MarshalAs(UnmanagedType.LPWStr)] string propertyName, out CimType cimType);
+
+        [DllImport(NATIVE_DLL_NAME)]
+        public static extern HResult GetNames(IntPtr pClassObject, [MarshalAs(UnmanagedType.SafeArray, SafeArraySubType = VarEnum.VT_BSTR)] out string[] pNames);
+
+        #endregion
+
+        #region oleaut32.dll
+
         [DllImport("oleaut32.dll")]
         public static extern HResult VariantClear(ref VARIANT variant);
 
@@ -136,17 +170,17 @@
         [DllImport("oleaut32.dll")]
         public static extern uint SafeArrayGetDim(IntPtr psa);
 
+        #endregion
+
+        #region Propsys.dll
+
         [DllImport("Propsys.dll")]
         public static extern uint VariantGetElementCount(ref VARIANT variant);
 
         [DllImport("Propsys.dll")]
         public static extern HResult InitVariantFromVariantArrayElem(ref VARIANT variant, uint iElem, ref VARIANT pvar);
 
-        [DllImport(NATIVE_DLL_NAME)]
-        public static extern HResult GetType(IntPtr pClassObject, [MarshalAs(UnmanagedType.LPWStr)] string propertyName, out CimType cimType);
-
-        [DllImport(NATIVE_DLL_NAME)]
-        public static extern HResult GetNames(IntPtr pClassObject, [MarshalAs(UnmanagedType.SafeArray, SafeArraySubType = VarEnum.VT_BSTR)] out string[] pNames);
+        #endregion
 
         #endregion
     }
