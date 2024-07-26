@@ -1,6 +1,4 @@
-﻿using System.Management;
-
-namespace WmiLight.UnitTests
+﻿namespace WmiLight.UnitTests
 {
     [TestClass]
     public class Msvm_VirtualSystemCapabilities
@@ -25,6 +23,5 @@ namespace WmiLight.UnitTests
                 WmiObject[] genericValue = wmiObject.GetPropertyValue<WmiObject[]>(PropertyName);
             }
         }
-
     }
 }
