@@ -199,7 +199,7 @@
 
         #region Description
         /// <summary>
-        /// Explicit conversion from <see cref="HResult"/> to <see cref="Int32"/>.
+        /// Implicit conversion from <see cref="HResult"/> to <see cref="Int32"/>.
         /// </summary>
         /// <param name="hr">The <see cref="HResult"/> value to convert to <see cref="Int32"/>.</param>
         /// <returns>The <see cref="Int32"/> value for the <see cref="HResult"/>.</returns>
@@ -211,7 +211,7 @@
 
         #region Description
         /// <summary>
-        /// Explicit conversion from <see cref="Enum"/> to <see cref="HResult"/>.
+        /// Implicit conversion from <see cref="Enum"/> to <see cref="HResult"/>.
         /// </summary>
         /// <param name="enum">The <see cref="Enum"/> value to convert to <see cref="HResult"/>.</param>
         /// <returns>The <see cref="HResult"/> for the <see cref="Enum"/>.</returns>
@@ -223,7 +223,7 @@
 
         #region Description
         /// <summary>
-        /// Explicit conversion from <see cref="Int32"/> to <see cref="HResult"/>.
+        /// Implicit conversion from <see cref="Int32"/> to <see cref="HResult"/>.
         /// </summary>
         /// <param name="intValue">The <see cref="Int32"/> value to convert to <see cref="HResult"/>.</param>
         /// <returns>The <see cref="Int32"/> value as <see cref="HResult"/>.</returns>
