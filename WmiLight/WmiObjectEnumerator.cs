@@ -16,6 +16,13 @@
 
         #region Description
         /// <summary>
+        /// The native <see cref="WbemServices"/> object.
+        /// </summary>
+        #endregion
+        private readonly WbemServices wbemServices;
+
+        #region Description
+        /// <summary>
         /// The native <see cref="WbemClassObjectEnumerator"/> object.
         /// </summary>
         #endregion
@@ -36,14 +43,20 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="WmiObjectEnumerator"/> class.
         /// </summary>
+        /// <param name="wbemServices">The native <see cref="WbemServices"/> object.</param>
         /// <param name="enumerator">The the native enumerator.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="wbemServices"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="enumerator"/> is null.</exception>
         #endregion
-        internal WmiObjectEnumerator(WbemClassObjectEnumerator enumerator)
+        internal WmiObjectEnumerator(WbemServices wbemServices, WbemClassObjectEnumerator enumerator)
         {
+            if (wbemServices == null)
+                throw new ArgumentNullException(nameof(wbemServices));
+
             if (enumerator == null)
                 throw new ArgumentNullException(nameof(enumerator));
 
+            this.wbemServices = wbemServices;
             this.wbemClassObjectEnumerator = enumerator;
 
             enumerator.Reset();
@@ -87,7 +100,7 @@
 
             if (this.wbemClassObjectEnumerator.Next(out WbemClassObject currentWmiObject))
             {
-                this.Current = new WmiObject(currentWmiObject);
+                this.Current = new WmiObject(this.wbemServices, currentWmiObject);
                 return true;
             }
 

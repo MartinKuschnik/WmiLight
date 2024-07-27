@@ -92,6 +92,34 @@ namespace WmiLight.Wbem
                 throw (Exception)hResult;
         }
 
+        internal WbemClassObject GetClass(string className)
+        {
+            if (this.Disposed)
+                throw new ObjectDisposedException(nameof(WbemServices));
+
+            IntPtr pClassDef;
+
+            HResult hResult = NativeMethods.GetClass(this, className, IntPtr.Zero, out pClassDef);
+
+            if (hResult.Failed)
+                throw (Exception)hResult;
+
+            return new WbemClassObject(pClassDef);
+        }
+
+        internal void ExecuteMethod(string classNameOrPath, string methodName, IntPtr inParams, out WbemClassObject outParams)
+        {
+            if (this.Disposed)
+                throw new ObjectDisposedException(nameof(WbemServices));
+
+            HResult hResult = NativeMethods.ExecMethod(this, classNameOrPath, methodName, IntPtr.Zero, inParams, out IntPtr pOutParams);
+
+            if (hResult.Failed)
+                throw (Exception)hResult;
+
+            outParams = new WbemClassObject(pOutParams);
+        }
+
         #endregion
     }
 }
