@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
-    using System.Security.Cryptography;
     using WmiLight.Wbem;
 
     #region Description
@@ -14,9 +13,7 @@
     #endregion
     public class WmiObject : IDisposable
     {
-
         #region Fields
-
 
         #region Description
         /// <summary>
@@ -233,6 +230,21 @@
         #endregion
 
         #region Functions
+
+        #region Description
+        /// <summary>
+        /// Gets a WMI method for this class.
+        /// </summary>
+        /// <param name="methodName">The WMI method name.</param>
+        /// <returns>The requested Method.</returns>
+        /// <exception cref="System.ArgumentNullException"><paramref name="methodName"/> is null.</exception>
+        #endregion
+        public WmiMethod GetMethod(string methodName)
+        {
+            WmiClass wmiClass = new WmiClass(this.wbemServices.GetClass(this.Class));
+
+            return wmiClass.GetMethod(methodName);
+        }
 
         #region Description
         /// <summary>
