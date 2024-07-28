@@ -20,6 +20,7 @@ namespace WmiLight.UnitTests
                 }
             }
         }
+
         internal static WmiObject GetFirstWmiLightObjects(string path, string @class)
         {
             using (WmiConnection conncetion = new WmiConnection(path))
@@ -31,6 +32,16 @@ namespace WmiLight.UnitTests
 
                     return enumerator.Current;
                 }
+            }
+        }
+        internal static WmiObject GetFirstWmiLightObjects(WmiConnection conncetion, string @class)
+        {
+            using (WmiObjectEnumerator enumerator = conncetion.ExecuteQuery(new WmiQuery(conncetion, $"SELECT * FROM {@class}")))
+            {
+                if (!enumerator.MoveNext())
+                    Assert.Inconclusive();
+
+                return enumerator.Current;
             }
         }
     }

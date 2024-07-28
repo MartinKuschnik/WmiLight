@@ -58,15 +58,13 @@ namespace WmiLight.UnitTestsGenerator
                 new Tuple<string, string, string[]>( "root\\virtualization\\v2","Msvm_ServiceAffectsElement" , []),
                 new Tuple<string, string, string[]>( "root\\virtualization\\v2","Msvm_ServicingSettings" , []),
                 new Tuple<string, string, string[]>( "root\\virtualization\\v2","Msvm_SettingsDefineState" , []),
-                new Tuple<string, string, string[]>( "root\\virtualization\\v2","Msvm_SummaryInformation" , []),
+                new Tuple<string, string, string[]>( "root\\virtualization\\v2","Msvm_SummaryInformation" , ["Snapshots"]),
                 new Tuple<string, string, string[]>( "root\\virtualization\\v2","Msvm_SystemExportSettingData" , []),
                 new Tuple<string, string, string[]>( "root\\virtualization\\v2","Msvm_SettingsDefineState" , []),
                 new Tuple<string, string, string[]>( "root\\virtualization\\v2","Msvm_VirtualSystemCapabilities" , []),
                 new Tuple<string, string, string[]>( "root\\virtualization\\v2","Msvm_VirtualSystemExportSettingData" , []),
 
-
-
-                new Tuple<string, string, string[]>( "root\\Microsoft\\Windows\\Storage","MSFT_Volume" , []),
+                new Tuple<string, string, string[]>( "root\\Microsoft\\Windows\\Storage","MSFT_Volume" , ["SizeRemaining"]),
             };
 
 
@@ -74,7 +72,7 @@ namespace WmiLight.UnitTestsGenerator
             {
                 using (StreamWriter outputFile = new StreamWriter(Path.Combine(Output_Folder, $"{WMI_CLASS}.cs")))
                 {
-                    outputFile.Write($"using System.Management;\r\n\r\nnamespace WmiLight.UnitTests\r\n{{\r\n\t[TestClass]\r\n\tpublic class {WMI_CLASS}\r\n\t{{");
+                    outputFile.Write($"using System.Management;\r\n\r\nnamespace WmiLight.UnitTests.Generated\r\n{{\r\n\t[TestClass]\r\n\tpublic class {WMI_CLASS}\r\n\t{{");
 
                     ManagementScope scope = new ManagementScope(WMI_NAMESPACE);
                     scope.Connect();

@@ -360,15 +360,208 @@
         /// </summary>
         /// <param name="query">The query which will be executed.</param>
         /// <returns>An object collection that contains the result set of the query.</returns>
-        /// <exception cref="System.ObjectDisposedException">Object already disposed.</exception>
         /// <exception cref="System.ArgumentNullException"><paramref name="query"/> is null.</exception>
+        /// <exception cref="System.ObjectDisposedException">Object already disposed.</exception>
         #endregion
         public WmiObjectEnumerator ExecuteQuery(WmiQuery query)
         {
             if (query == null)
                 throw new ArgumentNullException(nameof(query));
 
-            return new WmiObjectEnumerator(this.InternalExecuteQuery(query));
+            if (this.isDisposed)
+                throw new ObjectDisposedException(nameof(WmiConnection));
+
+            this.Open();
+
+            return new WmiObjectEnumerator(this.wbemServices, this.InternalExecuteQuery(query));
+        }
+
+        #region Description
+        /// <summary>
+        /// Gets a WMI method.
+        /// </summary>
+        /// <param name="className">The name of the requested WMI method.</param>
+        /// <returns>The requested WMI method.</returns>
+        /// <exception cref="System.ArgumentNullException">The <paramref name="className"/> parameter is <c>null</c>.</exception>
+        /// <exception cref="System.ObjectDisposedException">Object already disposed.</exception>
+        #endregion
+        public WmiClass GetClass(string className)
+        {
+            if (className is null)
+                throw new ArgumentNullException(nameof(className));
+
+            if (this.isDisposed)
+                throw new ObjectDisposedException(nameof(WmiConnection));
+
+            this.Open();
+
+            return new WmiClass(this.wbemServices.GetClass(className));
+        }
+
+        #region Description
+        /// <summary>
+        /// Executed a static WMI method without in parameters.
+        /// </summary>
+        /// <param name="method">The method that should be executed.</param>
+        /// <param name="outParameters">The out parameters of the WMI method.</param>
+        /// <returns>The value returned by the method.</returns>
+        /// <exception cref="System.ArgumentNullException">The <paramref name="method"/> parameter is <c>null</c>.</exception>
+        /// <exception cref="System.ObjectDisposedException">Object already disposed.</exception>
+        #endregion
+        public object ExecuteMethod(WmiMethod method, out WmiMethodParameters outParameters)
+        {
+            if (this.isDisposed)
+                throw new ObjectDisposedException(nameof(WmiConnection));
+
+            return ExecuteMethod<object>(method.Class.Name, method.Name, IntPtr.Zero, out outParameters);
+        }
+
+        #region Description
+        /// <summary>
+        /// Executed a static WMI method without in parameters.
+        /// </summary>
+        /// <param name="method">The method that should be executed.</param>
+        /// <param name="outParameters">The out parameters of the WMI method.</param>
+        /// <returns>The value returned by the method.</returns>
+        /// <exception cref="System.ArgumentNullException">The <paramref name="method"/> parameter is <c>null</c>.</exception>
+        /// <exception cref="System.ObjectDisposedException">Object already disposed.</exception>
+        #endregion
+        public TResult ExecuteMethod<TResult>(WmiMethod method, out WmiMethodParameters outParameters)
+        {
+            if (this.isDisposed)
+                throw new ObjectDisposedException(nameof(WmiConnection));
+
+            return ExecuteMethod<TResult>(method.Class.Name, method.Name, IntPtr.Zero, out outParameters);
+        }
+
+        #region Description
+        /// <summary>
+        /// Executed a static WMI method.
+        /// </summary>
+        /// <param name="method">The method that should be executed.</param>
+        /// <param name="inParameters">The method in parameters.</param>
+        /// <param name="outParameters">The out parameters of the WMI method.</param>
+        /// <returns>The value returned by the method.</returns>
+        /// <exception cref="System.ArgumentNullException">The <paramref name="method"/> parameter is <c>null</c>.</exception>
+        /// <exception cref="System.ObjectDisposedException">Object already disposed.</exception>
+        #endregion
+        public object ExecuteMethod(WmiMethod method, WmiMethodParameters inParameters, out WmiMethodParameters outParameters)
+        {
+            if (inParameters is null)
+                return this.ExecuteMethod<object>(method, out outParameters);
+
+            return ExecuteMethod<object>(method.Class.Name, method.Name, inParameters, out outParameters);
+        }
+
+        #region Description
+        /// <summary>
+        /// Executed a static WMI method.
+        /// </summary>
+        /// <param name="method">The method that should be executed.</param>
+        /// <param name="inParameters">The method in parameters.</param>
+        /// <param name="outParameters">The out parameters of the WMI method.</param>
+        /// <returns>The value returned by the method.</returns>
+        /// <exception cref="System.ArgumentNullException">The <paramref name="method"/> parameter is <c>null</c>.</exception>
+        /// <exception cref="System.ObjectDisposedException">Object already disposed.</exception>
+        #endregion
+        public TResult ExecuteMethod<TResult>(WmiMethod method, WmiMethodParameters inParameters, out WmiMethodParameters outParameters)
+        {
+            if (inParameters is null)
+                return this.ExecuteMethod<TResult>(method, out outParameters);
+
+            return ExecuteMethod<TResult>(method.Class.Name, method.Name, inParameters, out outParameters);
+        }
+
+        #region Description
+        /// <summary>
+        /// Executed a none-static WMI method without in parameters.
+        /// </summary>
+        /// <param name="method">The method that should be executed.</param>
+        /// <param name="instance">The WMI class instance.</param>
+        /// <param name="outParameters">The out parameters of the WMI method.</param>
+        /// <returns>The value returned by the method.</returns>
+        /// <exception cref="System.ArgumentNullException">The <paramref name="method"/> parameter is <c>null</c>.</exception>
+        /// <exception cref="System.ObjectDisposedException">Object already disposed.</exception>
+        #endregion
+        public object ExecuteMethod(WmiMethod method, WmiObject instance, out WmiMethodParameters outParameters)
+        {
+            if (this.isDisposed)
+                throw new ObjectDisposedException(nameof(WmiConnection));
+
+            return ExecuteMethod<object>(instance.Path, method.Name, IntPtr.Zero, out outParameters);
+        }
+
+        #region Description
+        /// <summary>
+        /// Executed a none-static WMI method without in parameters.
+        /// </summary>
+        /// <param name="method">The method that should be executed.</param>
+        /// <param name="instance">The WMI class instance.</param>
+        /// <param name="outParameters">The out parameters of the WMI method.</param>
+        /// <returns>The value returned by the method.</returns>
+        /// <exception cref="System.ArgumentNullException">The <paramref name="method"/> parameter is <c>null</c>.</exception>
+        /// <exception cref="System.ObjectDisposedException">Object already disposed.</exception>
+        #endregion
+        public TResult ExecuteMethod<TResult>(WmiMethod method, WmiObject instance, out WmiMethodParameters outParameters)
+        {
+            if (this.isDisposed)
+                throw new ObjectDisposedException(nameof(WmiConnection));
+
+            return ExecuteMethod<TResult>(instance.Path, method.Name, IntPtr.Zero, out outParameters);
+        }
+
+        #region Description
+        /// <summary>
+        /// Executed a none-static WMI method.
+        /// </summary>
+        /// <param name="method">The method that should be executed.</param>
+        /// <param name="instance">The WMI class instance.</param>
+        /// <param name="inParameters">The method in parameters.</param>
+        /// <param name="outParameters">The out parameters of the WMI method.</param>
+        /// <returns>The value returned by the method.</returns>
+        /// <exception cref="System.ArgumentNullException">The <paramref name="method"/> parameter is <c>null</c>.</exception>
+        /// <exception cref="System.ObjectDisposedException">Object already disposed.</exception>
+        #endregion
+        public object ExecuteMethod(WmiMethod method, WmiObject instance, WmiMethodParameters inParameters, out WmiMethodParameters outParameters)
+        {
+            if (inParameters is null)
+                return this.ExecuteMethod<object>(method, instance, out outParameters);
+
+            return ExecuteMethod<object>(instance.Path, method.Name, inParameters, out outParameters);
+        }
+
+        #region Description
+        /// <summary>
+        /// Executed a none-static WMI method.
+        /// </summary>
+        /// <param name="method">The method that should be executed.</param>
+        /// <param name="instance">The WMI class instance.</param>
+        /// <param name="inParameters">The method in parameters.</param>
+        /// <param name="outParameters">The out parameters of the WMI method.</param>
+        /// <returns>The value returned by the method.</returns>
+        /// <exception cref="System.ArgumentNullException">The <paramref name="method"/> parameter is <c>null</c>.</exception>
+        /// <exception cref="System.ObjectDisposedException">Object already disposed.</exception>
+        #endregion
+        public TResult ExecuteMethod<TResult>(WmiMethod method, WmiObject instance, WmiMethodParameters inParameters, out WmiMethodParameters outParameters)
+        {
+            if (inParameters is null)
+                return this.ExecuteMethod<TResult>(method, instance, out outParameters);
+
+            return ExecuteMethod<TResult>(instance.Path, method.Name, inParameters, out outParameters);
+        }
+
+        private TResult ExecuteMethod<TResult>(string classNameOrPath, string methodName, IntPtr inParameters, out WmiMethodParameters outParameters)
+        {
+            if (this.isDisposed)
+                throw new ObjectDisposedException(nameof(WmiConnection));
+
+            this.Open();
+
+            this.wbemServices.ExecuteMethod(classNameOrPath, methodName, inParameters, out WbemClassObject wbemOutParams);
+
+            outParameters = new WmiMethodParameters(wbemOutParams);
+
+            return outParameters.GetPropertyValue<TResult>("ReturnValue");
         }
 
         internal WmiEventSubscription ExecNotificationQueryAsync(string query, Action<WmiObject> action)
@@ -423,8 +616,6 @@
 
             if (query == null)
                 throw new ArgumentNullException(nameof(query));
-
-            this.Open();
 
             WbemClassObjectEnumeratorBehaviorOption behaviorOption = (WbemClassObjectEnumeratorBehaviorOption)query.EnumeratorBehaviorOption;
 

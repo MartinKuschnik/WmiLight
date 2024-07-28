@@ -36,7 +36,7 @@
         private void OnObjectSinkIndicated(object sender, WbemObjectSinkIndicatedEventArgs e)
         {
             for (int i = 0; i < e.Objects.Length; i++)
-                this.callback.Invoke(new WmiObject(e.Objects[i]));
+                this.callback.Invoke(new WmiObject(this.service, e.Objects[i]));
         }
 
         /// <inheritdoc />

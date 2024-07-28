@@ -13,91 +13,15 @@
     #endregion
     public class WmiObject : IDisposable
     {
-        #region Constants
-
-        #region Description
-        /// <summary>
-        /// The property key for the <see cref="WmiObject.Genus"/> property.
-        /// </summary>
-        #endregion
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private const string GenusPropertyName = "__genus";
-
-        #region Description
-        /// <summary>
-        /// The property key for the <see cref="WmiObject.Class"/> property.
-        /// </summary>
-        #endregion
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private const string ClassPropertyName = "__class";
-
-        #region Description
-        /// <summary>
-        /// The property key for the <see cref="WmiObject.SuperClass"/> property.
-        /// </summary>
-        #endregion
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private const string SuperClassPropertyName = "__superclass";
-
-        #region Description
-        /// <summary>
-        /// The property key for the <see cref="WmiObject.Dynasty"/> property.
-        /// </summary>
-        #endregion
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private const string DynastyPropertyName = "__dynasty";
-
-        #region Description
-        /// <summary>
-        /// The property key for the <see cref="WmiObject.Relpath"/> property.
-        /// </summary>
-        #endregion
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private const string RelpathPropertyName = "__relpath";
-
-        #region Description
-        /// <summary>
-        /// The property key for the <see cref="WmiObject.PropertyCount"/> property.
-        /// </summary>
-        #endregion
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private const string PropertyCountPropertyName = "__property_count";
-
-        #region Description
-        /// <summary>
-        /// The property key for the <see cref="WmiObject.Derivation"/> property.
-        /// </summary>
-        #endregion
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private const string DerivationPropertyName = "__derivation";
-
-        #region Description
-        /// <summary>
-        /// The property key for the <see cref="WmiObject.Server"/> property.
-        /// </summary>
-        #endregion
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private const string ServerPropertyName = "__server";
-
-        #region Description
-        /// <summary>
-        /// The property key for the <see cref="WmiObject.Namespace"/> property.
-        /// </summary>
-        #endregion
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private const string NamespacePropertyName = "__namespace";
-
-        #region Description
-        /// <summary>
-        /// The property key for the <see cref="WmiObject.Path"/> property.
-        /// </summary>
-        #endregion
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private const string PathPropertyName = "__path";
-
-        #endregion
-
         #region Fields
+
+        #region Description
+        /// <summary>
+        /// The native <see cref="WbemServices"/> object.
+        /// </summary>
+        #endregion
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private readonly WbemServices wbemServices;
 
         #region Description
         /// <summary>
@@ -123,13 +47,18 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="WmiObject"/> class.
         /// </summary>
+        /// <param name="wbemServices">The native <see cref="WbemServices"/> object.</param>
         /// <param name="wmiObject">The native <see cref="WbemClassObject"/> object.</param>
         #endregion
-        internal WmiObject(WbemClassObject wmiObject)
+        internal WmiObject(WbemServices wbemServices, WbemClassObject wmiObject)
         {
+            if (wbemServices == null)
+                throw new ArgumentNullException(nameof(wbemServices));
+
             if (wmiObject == null)
                 throw new ArgumentNullException(nameof(wmiObject));
 
+            this.wbemServices = wbemServices;
             this.wbemClassObject = wmiObject;
         }
 
@@ -146,7 +75,7 @@
         {
             get
             {
-                return (WmiObjectGenus)this.GetPropertyValue(WmiObject.GenusPropertyName);
+                return (WmiObjectGenus)this.GetPropertyValue(WmiObjectProperty.Genus);
             }
         }
 
@@ -159,7 +88,7 @@
         {
             get
             {
-                return (string)this.GetPropertyValue(WmiObject.ClassPropertyName);
+                return (string)this.GetPropertyValue(WmiObjectProperty.Class);
             }
         }
 
@@ -172,7 +101,7 @@
         {
             get
             {
-                return (string)this.GetPropertyValue(WmiObject.SuperClassPropertyName);
+                return (string)this.GetPropertyValue(WmiObjectProperty.SuperClass);
             }
         }
 
@@ -186,7 +115,7 @@
         {
             get
             {
-                return (string)this.GetPropertyValue(WmiObject.DynastyPropertyName);
+                return (string)this.GetPropertyValue(WmiObjectProperty.Dynasty);
             }
         }
 
@@ -199,7 +128,7 @@
         {
             get
             {
-                return (string)this.GetPropertyValue(WmiObject.RelpathPropertyName);
+                return (string)this.GetPropertyValue(WmiObjectProperty.Relpath);
             }
         }
 
@@ -212,7 +141,7 @@
         {
             get
             {
-                return (int)this.GetPropertyValue(WmiObject.PropertyCountPropertyName);
+                return (int)this.GetPropertyValue(WmiObjectProperty.PropertyCount);
             }
         }
 
@@ -226,7 +155,7 @@
         {
             get
             {
-                return (string[])this.GetPropertyValue(WmiObject.DerivationPropertyName);
+                return (string[])this.GetPropertyValue(WmiObjectProperty.Derivation);
             }
         }
 
@@ -239,7 +168,7 @@
         {
             get
             {
-                return (string)this.GetPropertyValue(WmiObject.ServerPropertyName);
+                return (string)this.GetPropertyValue(WmiObjectProperty.Server);
             }
         }
 
@@ -252,7 +181,7 @@
         {
             get
             {
-                return (string)this.GetPropertyValue(WmiObject.NamespacePropertyName);
+                return (string)this.GetPropertyValue(WmiObjectProperty.Namespace);
             }
         }
 
@@ -265,7 +194,7 @@
         {
             get
             {
-                return (string)this.GetPropertyValue(WmiObject.PathPropertyName);
+                return (string)this.GetPropertyValue(WmiObjectProperty.Path);
             }
         }
 
@@ -304,6 +233,21 @@
 
         #region Description
         /// <summary>
+        /// Gets a WMI method for this class.
+        /// </summary>
+        /// <param name="methodName">The WMI method name.</param>
+        /// <returns>The requested Method.</returns>
+        /// <exception cref="System.ArgumentNullException"><paramref name="methodName"/> is null.</exception>
+        #endregion
+        public WmiMethod GetMethod(string methodName)
+        {
+            WmiClass wmiClass = new WmiClass(this.wbemServices.GetClass(this.Class));
+
+            return wmiClass.GetMethod(methodName);
+        }
+
+        #region Description
+        /// <summary>
         /// Gets the names of all properties in the object.
         /// </summary>
         /// <returns>The names of all properties.</returns>
@@ -328,14 +272,14 @@
             object obj = this.wbemClassObject.Get(propertyName);
 
             if (obj is WbemClassObject wbemClassObject)
-                return new WmiObject(wbemClassObject);
+                return new WmiObject(this.wbemServices, wbemClassObject);
 
             if (obj is WbemClassObject[] wbemClassObjectArray)
             {
                 WmiObject[] wmiObjects = new WmiObject[wbemClassObjectArray.Length];
 
                 for (int i = 0; i < wmiObjects.Length; i++)
-                    wmiObjects[i] = new WmiObject(wbemClassObjectArray[i]);
+                    wmiObjects[i] = new WmiObject(this.wbemServices, wbemClassObjectArray[i]);
 
                 return wmiObjects;
 
@@ -359,7 +303,7 @@
 
             if (typeof(TResult) == typeof(WmiObject))
             {
-                return (TResult)(object)new WmiObject(wbemClassObject.Get<WbemClassObject>(propertyName));
+                return (TResult)(object)new WmiObject(this.wbemServices, wbemClassObject.Get<WbemClassObject>(propertyName));
             }
 
             if (typeof(TResult) == typeof(WmiObject[]))
@@ -369,12 +313,101 @@
                 WmiObject[] wmiObjects = new WmiObject[wbemClassObjectArray.Length];
 
                 for (int i = 0; i < wmiObjects.Length; i++)
-                    wmiObjects[i] = new WmiObject(wbemClassObjectArray[i]);
+                    wmiObjects[i] = new WmiObject(this.wbemServices, wbemClassObjectArray[i]);
 
                 return (TResult)(object)wmiObjects;
             }
 
             return wbemClassObject.Get<TResult>(propertyName);
+        }
+
+        #region Description
+        /// <summary>
+        /// Executes a static WMI method.
+        /// </summary>
+        /// <param name="method">The method that should be executed.</param>
+        /// <param name="outParameters">The out parameters returned by the method.</param>
+        /// <returns>The return value of the method.</returns>
+        /// <exception cref="ArgumentNullException">The <paramref name="method"/> parameter is <c>null</c>.</exception>
+        #endregion
+        public object ExecuteMethod(WmiMethod method, out WmiMethodParameters outParameters)
+        {
+            if (method is null)
+                throw new ArgumentNullException(nameof(method));
+
+            return this.ExecuteMethod<object>(method.Name, IntPtr.Zero, out outParameters);
+        }
+
+        #region Description
+        /// <summary>
+        /// Executes a static WMI method.
+        /// </summary>
+        /// <typeparam name="TReturnValue">The return value type.</typeparam>
+        /// <param name="method">The method that should be executed.</param>
+        /// <param name="outParameters">The out parameters returned by the method.</param>
+        /// <returns>The return value of the method.</returns>
+        /// <exception cref="ArgumentNullException">The <paramref name="method"/> parameter is <c>null</c>.</exception>
+        #endregion
+        public TReturnValue ExecuteMethod<TReturnValue>(WmiMethod method, out WmiMethodParameters outParameters)
+        {
+            if (method is null)
+                throw new ArgumentNullException(nameof(method));
+
+            return this.ExecuteMethod<TReturnValue>(method.Name, IntPtr.Zero, out outParameters);
+        }
+
+        #region Description
+        /// <summary>
+        /// Executes a static WMI method.
+        /// </summary>
+        /// <param name="method">The method that should be executed.</param>
+        /// <param name="inParameters">The parameters for the method.</param>
+        /// <param name="outParameters">The out parameters returned by the method.</param>
+        /// <returns>The return value of the method.</returns>
+        /// <exception cref="ArgumentNullException">The <paramref name="method"/> parameter is <c>null</c>.</exception>
+
+        #endregion
+        public object ExecuteMethod(WmiMethod method, WmiMethodParameters inParameters, out WmiMethodParameters outParameters)
+        {
+            if (method is null)
+                throw new ArgumentNullException(nameof(method));
+
+            if (inParameters is null)
+                return this.ExecuteMethod<object>(method, out outParameters);
+
+            return this.ExecuteMethod<object>(method.Name, inParameters, out outParameters);
+        }
+
+        #region Description
+        /// <summary>
+        /// Executes a static WMI method.
+        /// </summary>
+        /// <typeparam name="TReturnValue">The return value type.</typeparam>
+        /// <param name="method">The method that should be executed.</param>
+        /// <param name="inParameters">The parameters for the method.</param>
+        /// <param name="outParameters">The out parameters returned by the method.</param>
+        /// <returns>The return value of the method.</returns>
+        /// <exception cref="ArgumentNullException">The <paramref name="method"/> parameter is <c>null</c>.</exception>
+
+        #endregion
+        public TReturnValue ExecuteMethod<TReturnValue>(WmiMethod method, WmiMethodParameters inParameters, out WmiMethodParameters outParameters)
+        {
+            if (method is null)
+                throw new ArgumentNullException(nameof(method));
+
+            if (inParameters is null)
+                return this.ExecuteMethod<TReturnValue>(method, out outParameters);
+
+            return this.ExecuteMethod<TReturnValue>(method.Name, inParameters, out outParameters);
+        }
+
+        private TReturnValue ExecuteMethod<TReturnValue>(string method, IntPtr inParameters, out WmiMethodParameters outParameters)
+        {
+            this.wbemServices.ExecuteMethod(this.Path, method, inParameters, out WbemClassObject wbemOutParams);
+
+            outParameters = new WmiMethodParameters(wbemOutParams);
+
+            return outParameters.GetPropertyValue<TReturnValue>("ReturnValue");
         }
 
         #region Description

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Reflection;
 
 namespace WmiLight
 {
@@ -111,6 +110,29 @@ namespace WmiLight
                 throw new ArgumentNullException(nameof(query));
 
             return connection.ExecuteQuery(connection.CreateQuery(query));
+        }
+
+        #region Description
+        /// <summary>
+        /// Gets a WMI method of a specified WMI class.
+        /// </summary>
+        /// <param name="connection">the extended <see cref="WmiConnection"/> object.</param>
+        /// <param name="className">The WMI class name.</param>
+        /// <param name="methodName">The WMI method name.</param>
+        /// <returns>The requested Method.</returns>
+        /// <exception cref="System.ObjectDisposedException">Object already disposed.</exception>
+        /// <exception cref="System.ArgumentNullException"><paramref name="className"/> is null.</exception>
+        /// <exception cref="System.ArgumentNullException"><paramref name="methodName"/> is null.</exception>
+        #endregion
+        public static WmiMethod GetMethod(this WmiConnection connection, string className, string methodName)
+        {
+            if (className is null)
+                throw new ArgumentNullException(nameof(className));
+
+            if (methodName is null)
+                throw new ArgumentNullException(nameof(methodName));
+
+            return connection.GetClass(className).GetMethod(methodName);
         }
     }
 }
