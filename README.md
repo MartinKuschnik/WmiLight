@@ -58,6 +58,51 @@ using (WmiConnection con = new WmiConnection(@"\\MACHINENAME\root\cimv2", opt))
     }
 }
 ```
+
+Calling a static WMI method:
+
+```c#
+using (WmiConnection connection = new WmiConnection())
+using (WmiMethod createMethod = connection.GetMethod("Win32_Process", "Create"))
+using (WmiMethodParameters methodParams = createMethod.CreateInParameters())
+{
+    methodParams.SetPropertyValue("CommandLine", "cmd.exe");
+  
+    uint result = connection.ExecuteMethod<uint>(createMethod, methodParams, out WmiMethodParameters outParams);
+  
+    if (result != 0)
+            throw new Exception($"Win32_Process::Create(...) failed with {result}");
+  
+    uint processId =  outParams.GetPropertyValue<uint>("ProcessId");
+
+    // ...
+}
+```
+
+And the following code shows how to call a non-static WMI method:
+
+```c#
+using (WmiConnection connection = new WmiConnection())
+{
+    foreach (WmiObject process in connection.CreateQuery("SELECT * FROM Win32_Process"))
+    {
+        if (process.GetPropertyValue<string>("Name") == "cmd.exe")
+        {
+            using (WmiMethod terminateMethod = process.GetMethod("Terminate"))
+            using (WmiMethodParameters parameters = terminateMethod.CreateInParameters())
+            {
+                parameters.SetPropertyValue("Reason", 20);
+
+                uint result = process.ExecuteMethod<uint>(terminateMethod, parameters, out WmiMethodParameters terminateOutParameters2);
+
+                if (result != 0)
+                    throw new Exception($"Win32_Process::Terminate(...) failed with {result}");
+            }
+        }
+    }
+}
+```
+
 Get a notification if a process has started:
 ```C#
 var opt = new WmiConnectionOptions() { EnablePackageEncryption = true };
@@ -72,7 +117,7 @@ using (WmiConnection connection = new WmiConnection(@"\\MACHINENAME\root\cimv2",
     }
 }
 ```
-ALternative way to get a notification if a process has started:
+Alternative way to get a notification if a process has started:
 ```C#
 var opt = new WmiConnectionOptions() { EnablePackageEncryption = true };
 
