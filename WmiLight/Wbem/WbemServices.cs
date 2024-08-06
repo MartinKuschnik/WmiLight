@@ -107,6 +107,17 @@ namespace WmiLight.Wbem
             return new WbemClassObject(pClassDef);
         }
 
+        internal void DeleteInstance(string strObjectPath)
+        {
+            if (this.Disposed)
+                throw new ObjectDisposedException(nameof(WbemServices));
+
+            HResult hResult = NativeMethods.DeleteInstance(this, strObjectPath, IntPtr.Zero);
+
+            if (hResult.Failed)
+                throw (Exception)hResult;
+        }
+
         internal void ExecuteMethod(string classNameOrPath, string methodName, IntPtr inParams, out WbemClassObject outParams)
         {
             if (this.Disposed)
