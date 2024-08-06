@@ -345,6 +345,14 @@ extern "C" {  // only need to export C interface if
 		return wbemServices->ExecMethod(classNameOrPath, methodName, 0, ctx, pInParams, pOutParams, nullptr);
 	}
 
+	__declspec(dllexport) HRESULT DeleteInstance(IWbemServices* wbemServices, wchar_t* strObjectPath, IWbemContext* ctx)
+	{
+		if (wbemServices == nullptr)
+			return E_POINTER;
+
+		return wbemServices->DeleteInstance(strObjectPath, 0, ctx, nullptr);
+	}
+
 #ifdef __cplusplus
 }
 #endif

@@ -398,6 +398,28 @@
             return new WmiClass(this.wbemServices.GetClass(className));
         }
 
+
+        #region Description
+        /// <summary>
+        /// Deletes an instance of an existing WMI class.
+        /// </summary>
+        /// <param name="instance">The instance to delete.</param>
+        /// <exception cref="System.ArgumentNullException">The <paramref name="instance"/> parameter is <c>null</c>.</exception>
+        /// <exception cref="System.ObjectDisposedException">Object already disposed.</exception>
+        #endregion
+        public void DeleteInstance(WmiObject instance)
+        {
+            if (instance is null)
+                throw new ArgumentNullException(nameof(instance));
+
+            if (this.isDisposed)
+                throw new ObjectDisposedException(nameof(WmiConnection));
+
+            this.Open();
+
+            this.wbemServices.DeleteInstance(instance.Path);
+        }
+
         #region Description
         /// <summary>
         /// Executed a static WMI method without in parameters.
