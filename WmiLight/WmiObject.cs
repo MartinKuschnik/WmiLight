@@ -310,6 +310,9 @@
             {
                 WbemClassObject[] wbemClassObjectArray = wbemClassObject.Get<WbemClassObject[]>(propertyName);
 
+                if (wbemClassObjectArray is null)
+                    return (TResult)(object)null;
+
                 WmiObject[] wmiObjects = new WmiObject[wbemClassObjectArray.Length];
 
                 for (int i = 0; i < wmiObjects.Length; i++)
