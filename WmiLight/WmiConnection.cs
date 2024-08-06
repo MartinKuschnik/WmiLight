@@ -398,7 +398,6 @@
             return new WmiClass(this.wbemServices.GetClass(className));
         }
 
-
         #region Description
         /// <summary>
         /// Deletes an instance of an existing WMI class.
