@@ -16,10 +16,8 @@ namespace WmiLight.Wbem
 
         ~IUnknown()
         {
-            HResult hResult = NativeMethods.ReleaseIUnknown(this.nativePointer);
-
-            if (hResult.Failed)
-                throw (Exception)hResult;
+            // do not throw any exception in destructor
+            NativeMethods.ReleaseIUnknown(this.nativePointer);
         }
 
         public static implicit operator IntPtr(IUnknown iUnknown) => iUnknown.nativePointer;
