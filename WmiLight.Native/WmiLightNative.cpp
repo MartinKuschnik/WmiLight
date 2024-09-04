@@ -56,23 +56,7 @@ extern "C" {  // only need to export C interface if
 		return CoCreateInstance(CLSID_UnsecuredApartment, nullptr, CLSCTX_LOCAL_SERVER, IID_IUnsecuredApartment, reinterpret_cast<void**>(unsecuredApartment));
 	}
 
-	__declspec(dllexport) HRESULT AddRef(IUnknown* pIUnknown)
-	{
-		if (pIUnknown == nullptr)
-			return E_POINTER;
 
-		pIUnknown->AddRef();
-
-		return S_OK;
-	}
-
-	__declspec(dllexport) HRESULT QueryInterface(IUnknown* pIUnknown, REFIID riid, void** ppvObject)
-	{
-		if (pIUnknown == nullptr)
-			return E_POINTER;
-
-		return pIUnknown->QueryInterface(riid, ppvObject);
-	}
 
 	__declspec(dllexport) HRESULT ConnectServer(
 		IWbemLocator* wbemLocator,

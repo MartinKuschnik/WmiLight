@@ -74,7 +74,7 @@
                                 // in accordance with COM rules. If the objects are only used for the duration of the Indicate call,
                                 // then you do not need to call AddRef on each object pointer.
 
-                                NativeMethods.AddRef(pWbemClassObject);
+                                Marshal.AddRef(pWbemClassObject);
 
                                 objects[i] = new WbemClassObject(pWbemClassObject);
                             }

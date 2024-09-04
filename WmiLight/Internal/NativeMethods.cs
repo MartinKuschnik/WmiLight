@@ -51,12 +51,6 @@
         public static extern HResult CreateWbemUnsecuredApartment(out IntPtr pUnsecuredApartment);
 
         [DllImport(NATIVE_DLL_NAME)]
-        public static extern HResult AddRef(IntPtr pIUnknown);
-
-        [DllImport(NATIVE_DLL_NAME)]
-        public static extern HResult QueryInterface(IntPtr pIUnknown, Guid riid, out IntPtr ppvObject);
-
-        [DllImport(NATIVE_DLL_NAME)]
         public static extern HResult ConnectServer(
             IntPtr pWbemLocator,
             [MarshalAs(UnmanagedType.LPWStr)]
