@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.ConstrainedExecution;
+using System.Runtime.InteropServices;
 
 namespace WmiLight.Wbem
 {
@@ -16,8 +17,8 @@ namespace WmiLight.Wbem
 
         ~IUnknown()
         {
-            // do not throw any exception in destructor
-            NativeMethods.ReleaseIUnknown(this.nativePointer);
+            if (this.nativePointer != IntPtr.Zero)
+                Marshal.Release(this.nativePointer);
         }
 
         public static implicit operator IntPtr(IUnknown iUnknown) => iUnknown.nativePointer;
@@ -31,7 +32,8 @@ namespace WmiLight.Wbem
             {
                 disposed = true;
 
-                NativeMethods.ReleaseIUnknown(this.nativePointer);
+                if (this.nativePointer != IntPtr.Zero)
+                    Marshal.Release(this.nativePointer);
 
                 GC.SuppressFinalize(this);
             }
