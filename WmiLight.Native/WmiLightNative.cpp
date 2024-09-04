@@ -56,16 +56,6 @@ extern "C" {  // only need to export C interface if
 		return CoCreateInstance(CLSID_UnsecuredApartment, nullptr, CLSCTX_LOCAL_SERVER, IID_IUnsecuredApartment, reinterpret_cast<void**>(unsecuredApartment));
 	}
 
-	__declspec(dllexport) HRESULT ReleaseIUnknown(IUnknown* pIUnknown)
-	{
-		if (pIUnknown == nullptr)
-			return E_POINTER;
-
-		pIUnknown->Release();
-
-		return S_OK;
-	}
-
 	__declspec(dllexport) HRESULT AddRef(IUnknown* pIUnknown)
 	{
 		if (pIUnknown == nullptr)

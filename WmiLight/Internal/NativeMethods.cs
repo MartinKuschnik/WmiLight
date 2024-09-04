@@ -51,9 +51,6 @@
         public static extern HResult CreateWbemUnsecuredApartment(out IntPtr pUnsecuredApartment);
 
         [DllImport(NATIVE_DLL_NAME)]
-        public static extern HResult ReleaseIUnknown(IntPtr pIUnknown);
-
-        [DllImport(NATIVE_DLL_NAME)]
         public static extern HResult AddRef(IntPtr pIUnknown);
 
         [DllImport(NATIVE_DLL_NAME)]
