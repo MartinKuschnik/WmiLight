@@ -46,19 +46,19 @@ extern "C" {  // only need to export C interface if
 		WbemClassObjectEnumeratorBehaviorOption_UseAmendedQualifiers = 0x00020000
 	};
 
-	__declspec(dllexport) HRESULT CreateWbemLocator(IWbemLocator** locator)
+	__declspec(dllexport) HRESULT _stdcall CreateWbemLocator(IWbemLocator** locator)
 	{
 		return CoCreateInstance(CLSID_WbemLocator, nullptr, CLSCTX_INPROC_SERVER, IID_IWbemLocator, reinterpret_cast<LPVOID*>(locator));
 	}
 
-	__declspec(dllexport) HRESULT CreateWbemUnsecuredApartment(IWbemUnsecuredApartment** unsecuredApartment)
+	__declspec(dllexport) HRESULT _stdcall CreateWbemUnsecuredApartment(IWbemUnsecuredApartment** unsecuredApartment)
 	{
 		return CoCreateInstance(CLSID_UnsecuredApartment, nullptr, CLSCTX_LOCAL_SERVER, IID_IUnsecuredApartment, reinterpret_cast<void**>(unsecuredApartment));
 	}
 
 
 
-	__declspec(dllexport) HRESULT ConnectServer(
+	__declspec(dllexport) HRESULT _stdcall ConnectServer(
 		IWbemLocator* wbemLocator,
 		wchar_t* networkResource,
 		wchar_t* userName,
@@ -85,7 +85,7 @@ extern "C" {  // only need to export C interface if
 	}
 
 
-	__declspec(dllexport) HRESULT SetProxy(
+	__declspec(dllexport) HRESULT _stdcall SetProxy(
 		IUnknown* pIUnknown,
 		wchar_t* username,
 		wchar_t* password,
@@ -134,7 +134,7 @@ extern "C" {  // only need to export C interface if
 		);
 	}
 
-	__declspec(dllexport) HRESULT ExecQuery(
+	__declspec(dllexport) HRESULT _stdcall ExecQuery(
 		IWbemServices* wbemServices,
 		wchar_t* ueryLanguage,
 		wchar_t* query,
@@ -148,7 +148,7 @@ extern "C" {  // only need to export C interface if
 		return wbemServices->ExecQuery(ueryLanguage, query, behaviorOption, ctx, pEnumerator);
 	}
 
-	__declspec(dllexport) HRESULT CreateEventSinkStub(
+	__declspec(dllexport) HRESULT _stdcall CreateEventSinkStub(
 		IWbemUnsecuredApartment* pUnsecApp,
 		void* pEventSink,
 		EventSinkProxy::IndicateFunction indicateFunction,
@@ -185,7 +185,7 @@ extern "C" {  // only need to export C interface if
 		return hr;
 	}
 
-	__declspec(dllexport) HRESULT CancelAsyncCall(IWbemServices* wbemServices, IWbemObjectSink* pEventSinkProxy)
+	__declspec(dllexport) HRESULT _stdcall CancelAsyncCall(IWbemServices* wbemServices, IWbemObjectSink* pEventSinkProxy)
 	{
 		if (wbemServices == nullptr || pEventSinkProxy == nullptr)
 			return E_POINTER;
@@ -193,7 +193,7 @@ extern "C" {  // only need to export C interface if
 		return wbemServices->CancelAsyncCall(pEventSinkProxy);
 	}
 
-	__declspec(dllexport) HRESULT ExecNotificationQueryAsync(IWbemServices* wbemServices, wchar_t* ueryLanguage, wchar_t* query, IWbemContext* ctx, IWbemObjectSink* pStubSink)
+	__declspec(dllexport) HRESULT _stdcall ExecNotificationQueryAsync(IWbemServices* wbemServices, wchar_t* ueryLanguage, wchar_t* query, IWbemContext* ctx, IWbemObjectSink* pStubSink)
 	{
 		if (wbemServices == nullptr)
 			return E_POINTER;
@@ -201,7 +201,7 @@ extern "C" {  // only need to export C interface if
 		return wbemServices->ExecNotificationQueryAsync(ueryLanguage, query, 0, ctx, pStubSink);
 	}
 
-	__declspec(dllexport) HRESULT Next(
+	__declspec(dllexport) HRESULT _stdcall Next(
 		IEnumWbemClassObject* pEnumerator,
 		IWbemClassObject** pClassObject)
 	{
@@ -213,7 +213,7 @@ extern "C" {  // only need to export C interface if
 		return pEnumerator->Next(WBEM_INFINITE, 1, pClassObject, &uReturn);
 	}
 
-	__declspec(dllexport) HRESULT Reset(
+	__declspec(dllexport) HRESULT _stdcall Reset(
 		IEnumWbemClassObject* pEnumerator)
 	{
 		if (pEnumerator == nullptr)
@@ -222,7 +222,7 @@ extern "C" {  // only need to export C interface if
 		return pEnumerator->Reset();
 	}
 
-	__declspec(dllexport) HRESULT Get(
+	__declspec(dllexport) HRESULT _stdcall Get(
 		IWbemClassObject* pClassObject,
 		wchar_t* propertyName,
 		VARIANT* value,
@@ -244,7 +244,7 @@ extern "C" {  // only need to export C interface if
 		return hr;
 	}
 
-	__declspec(dllexport) HRESULT GetType(
+	__declspec(dllexport) HRESULT _stdcall GetType(
 		IWbemClassObject* pClassObject,
 		wchar_t* propertyName,
 		CIMTYPE* cimType)
@@ -255,7 +255,7 @@ extern "C" {  // only need to export C interface if
 		return pClassObject->Get(propertyName, 0 /*reserved*/, nullptr, cimType, NULL);
 	}
 
-	__declspec(dllexport) HRESULT GetNames(
+	__declspec(dllexport) HRESULT _stdcall GetNames(
 		IWbemClassObject* pClassObject,
 		SAFEARRAY** pNames)
 	{
@@ -265,7 +265,7 @@ extern "C" {  // only need to export C interface if
 		return pClassObject->GetNames(nullptr, WBEM_FLAG_NONSYSTEM_ONLY, nullptr, pNames);
 	}
 
-	__declspec(dllexport) HRESULT GetMethod(
+	__declspec(dllexport) HRESULT _stdcall GetMethod(
 		IWbemClassObject* pClassObject,
 		wchar_t* methodName,
 		IWbemClassObject** ppInSignature,
@@ -277,7 +277,7 @@ extern "C" {  // only need to export C interface if
 		return pClassObject->GetMethod(methodName, 0, ppInSignature, ppOutSignature);
 	}
 
-	__declspec(dllexport) HRESULT GetClass(
+	__declspec(dllexport) HRESULT _stdcall GetClass(
 		IWbemServices* wbemServices,
 		wchar_t* className,
 		IWbemContext* ctx,
@@ -289,7 +289,7 @@ extern "C" {  // only need to export C interface if
 		return wbemServices->GetObject(className, WBEM_FLAG_RETURN_WBEM_COMPLETE, ctx, pClassDef, nullptr);
 	}
 
-	__declspec(dllexport) HRESULT SpawnInstance(IWbemClassObject* pClassObject, IWbemClassObject** ppNewInstance)
+	__declspec(dllexport) HRESULT _stdcall SpawnInstance(IWbemClassObject* pClassObject, IWbemClassObject** ppNewInstance)
 	{
 		if (pClassObject == nullptr)
 			return E_POINTER;
@@ -297,7 +297,7 @@ extern "C" {  // only need to export C interface if
 		return pClassObject->SpawnInstance(0, ppNewInstance);
 	}
 
-	__declspec(dllexport) HRESULT Put(IWbemClassObject* pClassObject, wchar_t* wszName, VARIANT* pVal, CIMTYPE type)
+	__declspec(dllexport) HRESULT _stdcall Put(IWbemClassObject* pClassObject, wchar_t* wszName, VARIANT* pVal, CIMTYPE type)
 	{
 		if (pClassObject == nullptr)
 			return E_POINTER;
@@ -305,7 +305,7 @@ extern "C" {  // only need to export C interface if
 		return pClassObject->Put(wszName, 0, pVal, type);
 	}
 
-	__declspec(dllexport) HRESULT ExecMethod(
+	__declspec(dllexport) HRESULT _stdcall ExecMethod(
 		IWbemServices* wbemServices,
 		wchar_t* classNameOrPath,
 		wchar_t* methodName,
@@ -319,7 +319,7 @@ extern "C" {  // only need to export C interface if
 		return wbemServices->ExecMethod(classNameOrPath, methodName, 0, ctx, pInParams, pOutParams, nullptr);
 	}
 
-	__declspec(dllexport) HRESULT DeleteInstance(IWbemServices* wbemServices, wchar_t* strObjectPath, IWbemContext* ctx)
+	__declspec(dllexport) HRESULT _stdcall DeleteInstance(IWbemServices* wbemServices, wchar_t* strObjectPath, IWbemContext* ctx)
 	{
 		if (wbemServices == nullptr)
 			return E_POINTER;

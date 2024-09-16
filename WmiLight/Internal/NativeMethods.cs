@@ -44,13 +44,13 @@
 
         #region WmiLight.Native.dll
 
-        [DllImport(NATIVE_DLL_NAME)]
+        [DllImport(NATIVE_DLL_NAME, CallingConvention = CallingConvention.StdCall)]
         public static extern HResult CreateWbemLocator(out IntPtr pWbemLocator);
 
-        [DllImport(NATIVE_DLL_NAME)]
+        [DllImport(NATIVE_DLL_NAME, CallingConvention = CallingConvention.StdCall)]
         public static extern HResult CreateWbemUnsecuredApartment(out IntPtr pUnsecuredApartment);
 
-        [DllImport(NATIVE_DLL_NAME)]
+        [DllImport(NATIVE_DLL_NAME, CallingConvention = CallingConvention.StdCall)]
         public static extern HResult ConnectServer(
             IntPtr pWbemLocator,
             [MarshalAs(UnmanagedType.LPWStr)]
@@ -68,7 +68,7 @@
             IntPtr pCtx,
             out IntPtr pWbemServices);
 
-        [DllImport(NATIVE_DLL_NAME)]
+        [DllImport(NATIVE_DLL_NAME, CallingConvention = CallingConvention.StdCall)]
         public static extern HResult SetProxy(
             IntPtr pIUnknown,
             [MarshalAs(UnmanagedType.LPWStr)]
@@ -80,7 +80,7 @@
             ImpersonationLevel impersonationLevel,
             AuthenticationLevel authenticationLevel);
 
-        [DllImport(NATIVE_DLL_NAME)]
+        [DllImport(NATIVE_DLL_NAME, CallingConvention = CallingConvention.StdCall)]
         public static extern HResult ExecQuery(
             IntPtr pWbemServices,
             [MarshalAs(UnmanagedType.LPWStr)]
@@ -91,7 +91,7 @@
             IntPtr ctx,
             out IntPtr pEnumerator);
 
-        [DllImport(NATIVE_DLL_NAME)]
+        [DllImport(NATIVE_DLL_NAME, CallingConvention = CallingConvention.StdCall)]
         public static extern HResult ExecNotificationQueryAsync(
             IntPtr pWbemServices,
             [MarshalAs(UnmanagedType.LPWStr)]
@@ -101,28 +101,28 @@
             IntPtr ctx,
             IntPtr pEventSinkProxy);
 
-        [DllImport(NATIVE_DLL_NAME)]
+        [DllImport(NATIVE_DLL_NAME, CallingConvention = CallingConvention.StdCall)]
         public static extern HResult CancelAsyncCall(IntPtr pWbemServices, IntPtr pEventSinkProxy);
 
-        [DllImport(NATIVE_DLL_NAME)]
+        [DllImport(NATIVE_DLL_NAME, CallingConvention = CallingConvention.StdCall)]
         public static extern HResult GetClass(IntPtr pWbemServices, [MarshalAs(UnmanagedType.LPWStr)] string className, IntPtr ctx, out IntPtr pObject);
 
-        [DllImport(NATIVE_DLL_NAME)]
+        [DllImport(NATIVE_DLL_NAME, CallingConvention = CallingConvention.StdCall)]
         public static extern HResult ExecMethod(IntPtr pWbemServices, [MarshalAs(UnmanagedType.LPWStr)] string classNameOrPath, [MarshalAs(UnmanagedType.LPWStr)] string methodName, IntPtr ctx, IntPtr inParams, out IntPtr outParams);
 
-        [DllImport(NATIVE_DLL_NAME)]
+        [DllImport(NATIVE_DLL_NAME, CallingConvention = CallingConvention.StdCall)]
         public static extern HResult DeleteInstance(IntPtr pWbemServices, [MarshalAs(UnmanagedType.LPWStr)] string strObjectPath, IntPtr ctx);
         
-        [DllImport(NATIVE_DLL_NAME)]
+        [DllImport(NATIVE_DLL_NAME, CallingConvention = CallingConvention.StdCall)]
         public static extern HResult CreateEventSinkStub(IntPtr pUnsecApp, IntPtr pEventSink, Indicate indicateFunction, SetStatus setStatusFunction, out IntPtr eventSinkStub);
 
-        [DllImport(NATIVE_DLL_NAME)]
+        [DllImport(NATIVE_DLL_NAME, CallingConvention = CallingConvention.StdCall)]
         public static extern HResult Next(IntPtr pEnumerator, out IntPtr pClassObject);
 
-        [DllImport(NATIVE_DLL_NAME)]
+        [DllImport(NATIVE_DLL_NAME, CallingConvention = CallingConvention.StdCall)]
         public static extern HResult Reset(IntPtr pEnumerator);
 
-        [DllImport(NATIVE_DLL_NAME)]
+        [DllImport(NATIVE_DLL_NAME, CallingConvention = CallingConvention.StdCall)]
         public static extern HResult Get(
             IntPtr pClassObject,
             [MarshalAs(UnmanagedType.LPWStr)]
@@ -130,48 +130,48 @@
             ref VARIANT value,
             out CimType valueType);
 
-        [DllImport(NATIVE_DLL_NAME)]
+        [DllImport(NATIVE_DLL_NAME, CallingConvention = CallingConvention.StdCall)]
         public static extern HResult GetMethod(IntPtr pClassObject, [MarshalAs(UnmanagedType.LPWStr)] string methodName, out IntPtr pInSignature, out IntPtr pOutSignature);
 
-        [DllImport(NATIVE_DLL_NAME)]
+        [DllImport(NATIVE_DLL_NAME, CallingConvention = CallingConvention.StdCall)]
         public static extern HResult SpawnInstance(IntPtr pClassObject, out IntPtr pNewInstance);
 
-        [DllImport(NATIVE_DLL_NAME)]
+        [DllImport(NATIVE_DLL_NAME, CallingConvention = CallingConvention.StdCall)]
         public static extern HResult Put(IntPtr pClassObject, [MarshalAs(UnmanagedType.LPWStr)] string wszName, ref VARIANT pvar, CimType cimType);
 
-        [DllImport(NATIVE_DLL_NAME)]
+        [DllImport(NATIVE_DLL_NAME, CallingConvention = CallingConvention.StdCall)]
         public static extern HResult GetType(IntPtr pClassObject, [MarshalAs(UnmanagedType.LPWStr)] string propertyName, out CimType cimType);
 
-        [DllImport(NATIVE_DLL_NAME)]
+        [DllImport(NATIVE_DLL_NAME, CallingConvention = CallingConvention.StdCall)]
         public static extern HResult GetNames(IntPtr pClassObject, [MarshalAs(UnmanagedType.SafeArray, SafeArraySubType = VarEnum.VT_BSTR)] out string[] pNames);
 
         #endregion
 
         #region oleaut32.dll
 
-        [DllImport("oleaut32.dll")]
+        [DllImport("oleaut32.dll", CallingConvention = CallingConvention.StdCall)]
         public static extern HResult VariantClear(ref VARIANT variant);
 
-        [DllImport("oleaut32.dll")]
+        [DllImport("oleaut32.dll", CallingConvention = CallingConvention.StdCall)]
         public static extern HResult SafeArrayGetLBound(IntPtr psa, uint nDim, out int plLbound);
 
-        [DllImport("oleaut32.dll")]
+        [DllImport("oleaut32.dll", CallingConvention = CallingConvention.StdCall)]
         public static extern HResult SafeArrayGetUBound(IntPtr psa, uint nDim, out int plUbound);
 
-        [DllImport("oleaut32.dll")]
+        [DllImport("oleaut32.dll", CallingConvention = CallingConvention.StdCall)]
         public static extern HResult SafeArrayGetElement(IntPtr psa, in int rgIndices, out IntPtr pv);
 
-        [DllImport("oleaut32.dll")]
+        [DllImport("oleaut32.dll", CallingConvention = CallingConvention.StdCall)]
         public static extern uint SafeArrayGetDim(IntPtr psa);
 
         #endregion
 
         #region Propsys.dll
 
-        [DllImport("Propsys.dll")]
+        [DllImport("Propsys.dll", CallingConvention = CallingConvention.StdCall)]
         public static extern uint VariantGetElementCount(ref VARIANT variant);
 
-        [DllImport("Propsys.dll")]
+        [DllImport("Propsys.dll", CallingConvention = CallingConvention.StdCall)]
         public static extern HResult InitVariantFromVariantArrayElem(ref VARIANT variant, uint iElem, ref VARIANT pvar);
 
         #endregion
