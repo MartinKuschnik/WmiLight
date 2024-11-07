@@ -7,7 +7,7 @@
 
 		<IsPackable>false</IsPackable>
 		<IsTestProject>true</IsTestProject>
-		<Platforms>x64;x86;ARM64</Platforms>
+		<Platforms>x64;x86;ARM64;ARM32</Platforms>
 
 	</PropertyGroup>
 
