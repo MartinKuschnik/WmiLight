@@ -110,13 +110,13 @@ jobs:
             New-Item 'nuget-packages\unpacked\runtimes\win-x64\native\' -Type Directory
             New-Item 'nuget-packages\unpacked\runtimes\win-x86\native\' -Type Directory
             New-Item 'nuget-packages\unpacked\runtimes\win-arm64\native\' -Type Directory
-            New-Item 'nuget-packages\unpacked\runtimes\win-arm32\native\' -Type Directory
+            New-Item 'nuget-packages\unpacked\runtimes\win-arm\native\' -Type Directory
             
             # create folders native libs
             New-Item 'nuget-packages\unpacked\lib\native\win-x64\' -Type Directory
             New-Item 'nuget-packages\unpacked\lib\native\win-x86\' -Type Directory
             New-Item 'nuget-packages\unpacked\lib\native\win-arm64\' -Type Directory
-            New-Item 'nuget-packages\unpacked\lib\native\win-arm32\' -Type Directory
+            New-Item 'nuget-packages\unpacked\lib\native\win-arm\' -Type Directory
                         
             # create folders for WmiLight.props and WmiLight.targets
             New-Item 'nuget-packages\unpacked\build\' -Type Directory
@@ -125,7 +125,7 @@ jobs:
             Copy-Item 'WmiLight.Native\bin\${{env.BUILD_CONFIGURATION}}\x64\WmiLight.Native.dll' 'nuget-packages\unpacked\runtimes\win-x64\native\'
             Copy-Item 'WmiLight.Native\bin\${{env.BUILD_CONFIGURATION}}\x86\WmiLight.Native.dll' 'nuget-packages\unpacked\runtimes\win-x86\native\'
             Copy-Item 'WmiLight.Native\bin\${{env.BUILD_CONFIGURATION}}\arm64\WmiLight.Native.dll' 'nuget-packages\unpacked\runtimes\win-arm64\native\'
-            Copy-Item 'WmiLight.Native\bin\${{env.BUILD_CONFIGURATION}}\arm32\WmiLight.Native.dll' 'nuget-packages\unpacked\runtimes\win-arm32\native\'
+            Copy-Item 'WmiLight.Native\bin\${{env.BUILD_CONFIGURATION}}\arm32\WmiLight.Native.dll' 'nuget-packages\unpacked\runtimes\win-arm\native\'
             
             # copy native libs and .pdb files for static linking
             Copy-Item 'WmiLight.Native\bin\${{env.BUILD_CONFIGURATION}}\x64\WmiLight.Native.lib' 'nuget-packages\unpacked\lib\native\win-x64\'
@@ -134,8 +134,8 @@ jobs:
             Copy-Item 'WmiLight.Native\bin\${{env.BUILD_CONFIGURATION}}\x86\WmiLight.Native.pdb' 'nuget-packages\unpacked\lib\native\win-x86\'
             Copy-Item 'WmiLight.Native\bin\${{env.BUILD_CONFIGURATION}}\arm64\WmiLight.Native.lib' 'nuget-packages\unpacked\lib\native\win-arm64\'
             Copy-Item 'WmiLight.Native\bin\${{env.BUILD_CONFIGURATION}}\arm64\WmiLight.Native.pdb' 'nuget-packages\unpacked\lib\native\win-arm64\'
-            Copy-Item 'WmiLight.Native\bin\${{env.BUILD_CONFIGURATION}}\arm32\WmiLight.Native.lib' 'nuget-packages\unpacked\lib\native\win-arm32\'
-            Copy-Item 'WmiLight.Native\bin\${{env.BUILD_CONFIGURATION}}\arm32\WmiLight.Native.pdb' 'nuget-packages\unpacked\lib\native\win-arm32\'
+            Copy-Item 'WmiLight.Native\bin\${{env.BUILD_CONFIGURATION}}\arm32\WmiLight.Native.lib' 'nuget-packages\unpacked\lib\native\win-arm\'
+            Copy-Item 'WmiLight.Native\bin\${{env.BUILD_CONFIGURATION}}\arm32\WmiLight.Native.pdb' 'nuget-packages\unpacked\lib\native\win-arm\'
 
             # copy WmiLight.props and WmiLight.targets
             Copy-Item 'WmiLight\.nuget\.build\WmiLight.props' 'nuget-packages\unpacked\build\'
