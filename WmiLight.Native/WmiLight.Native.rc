@@ -65,7 +65,7 @@ BEGIN
 #elif _x64
     VALUE "FileDescription", "The native (x64) part of the WmiLight lib."
 #elif _arm64
-    VALUE "FileDescription", "The native (ARM64) part of the WmiLight lib."
+    VALUE "FileDescription", "The native (arm64) part of the WmiLight lib."
 #else
     VALUE "FileDescription", "The native part of the WmiLight lib."
 #endif
