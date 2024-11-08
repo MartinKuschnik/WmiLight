@@ -55,10 +55,6 @@ jobs:
       # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
       run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:ConfigurationType=DynamicLibrary /p:Platform=arm64 WmiLight.Native\WmiLight.Native.vcxproj
       
-    - name: Build Native dynamic Lib (arm32)  
-      # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
-      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:ConfigurationType=DynamicLibrary /p:Platform=arm WmiLight.Native\WmiLight.Native.vcxproj
-      
     - name: Build Native static Lib (x64, NoOp) 
       # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
       run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:ConfigurationType=StaticLibrary /p:WholeProgramOptimization=false /p:Platform=x64 WmiLight.Native\WmiLight.Native.vcxproj
@@ -71,10 +67,6 @@ jobs:
       # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
       run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:ConfigurationType=StaticLibrary /p:WholeProgramOptimization=false /p:Platform=arm64 WmiLight.Native\WmiLight.Native.vcxproj
       
-    - name: Build Native static Lib (arm32, NoOp) 
-      # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
-      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:ConfigurationType=StaticLibrary /p:WholeProgramOptimization=false /p:Platform=arm WmiLight.Native\WmiLight.Native.vcxproj
-      
     - name: Run Unit Tests (x64)
       run: dotnet test -property:Platform=x64 --configuration ${{env.BUILD_CONFIGURATION}} .\WmiLight.UnitTests\WmiLight.UnitTests.csproj
       
@@ -84,10 +76,6 @@ jobs:
     - name: Run Unit Tests (arm64)
       run: echo "::warning Unit Tests are disabled for Arm64 because there is no machine to run tests at Arm64 architecture."
       #run: dotnet test -property:Platform=arm64 --configuration ${{env.BUILD_CONFIGURATION}} .\WmiLight.UnitTests\WmiLight.UnitTests.csproj
-            
-    - name: Run Unit Tests (arm32)
-      run: echo "::warning Unit Tests are disabled for Arm64 because there is no machine to run tests at Arm64 architecture."
-      #run: dotnet test -property:Platform=arm32 --configuration ${{env.BUILD_CONFIGURATION}} .\WmiLight.UnitTests\WmiLight.UnitTests.csproj
             
     - name: Pack with dotnet
       run: dotnet pack WmiLight\WmiLight.csproj --configuration ${{env.BUILD_CONFIGURATION}} --output nuget-packages --no-build      
@@ -110,13 +98,11 @@ jobs:
             New-Item 'nuget-packages\unpacked\runtimes\win-x64\native\' -Type Directory
             New-Item 'nuget-packages\unpacked\runtimes\win-x86\native\' -Type Directory
             New-Item 'nuget-packages\unpacked\runtimes\win-arm64\native\' -Type Directory
-            New-Item 'nuget-packages\unpacked\runtimes\win-arm\native\' -Type Directory
             
             # create folders native libs
             New-Item 'nuget-packages\unpacked\lib\native\win-x64\' -Type Directory
             New-Item 'nuget-packages\unpacked\lib\native\win-x86\' -Type Directory
             New-Item 'nuget-packages\unpacked\lib\native\win-arm64\' -Type Directory
-            New-Item 'nuget-packages\unpacked\lib\native\win-arm\' -Type Directory
                         
             # create folders for WmiLight.props and WmiLight.targets
             New-Item 'nuget-packages\unpacked\build\' -Type Directory
@@ -125,7 +111,6 @@ jobs:
             Copy-Item 'WmiLight.Native\bin\${{env.BUILD_CONFIGURATION}}\x64\WmiLight.Native.dll' 'nuget-packages\unpacked\runtimes\win-x64\native\'
             Copy-Item 'WmiLight.Native\bin\${{env.BUILD_CONFIGURATION}}\x86\WmiLight.Native.dll' 'nuget-packages\unpacked\runtimes\win-x86\native\'
             Copy-Item 'WmiLight.Native\bin\${{env.BUILD_CONFIGURATION}}\arm64\WmiLight.Native.dll' 'nuget-packages\unpacked\runtimes\win-arm64\native\'
-            Copy-Item 'WmiLight.Native\bin\${{env.BUILD_CONFIGURATION}}\arm32\WmiLight.Native.dll' 'nuget-packages\unpacked\runtimes\win-arm\native\'
             
             # copy native libs and .pdb files for static linking
             Copy-Item 'WmiLight.Native\bin\${{env.BUILD_CONFIGURATION}}\x64\WmiLight.Native.lib' 'nuget-packages\unpacked\lib\native\win-x64\'
@@ -134,8 +119,6 @@ jobs:
             Copy-Item 'WmiLight.Native\bin\${{env.BUILD_CONFIGURATION}}\x86\WmiLight.Native.pdb' 'nuget-packages\unpacked\lib\native\win-x86\'
             Copy-Item 'WmiLight.Native\bin\${{env.BUILD_CONFIGURATION}}\arm64\WmiLight.Native.lib' 'nuget-packages\unpacked\lib\native\win-arm64\'
             Copy-Item 'WmiLight.Native\bin\${{env.BUILD_CONFIGURATION}}\arm64\WmiLight.Native.pdb' 'nuget-packages\unpacked\lib\native\win-arm64\'
-            Copy-Item 'WmiLight.Native\bin\${{env.BUILD_CONFIGURATION}}\arm32\WmiLight.Native.lib' 'nuget-packages\unpacked\lib\native\win-arm\'
-            Copy-Item 'WmiLight.Native\bin\${{env.BUILD_CONFIGURATION}}\arm32\WmiLight.Native.pdb' 'nuget-packages\unpacked\lib\native\win-arm\'
 
             # copy WmiLight.props and WmiLight.targets
             Copy-Item 'WmiLight\.nuget\.build\WmiLight.props' 'nuget-packages\unpacked\build\'
