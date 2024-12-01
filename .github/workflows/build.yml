@@ -27,8 +27,6 @@ jobs:
         
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v2
-      with:
-        vs-version: '17.11'
         
     - name: Restore NuGet packages
       run: dotnet restore
@@ -49,13 +47,6 @@ jobs:
       # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
       run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:ConfigurationType=DynamicLibrary /p:Platform=x64 WmiLight.Native\WmiLight.Native.vcxproj
 
-
-    - name: Dump winnt.h
-      run: 'Get-Content "C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0\um\winnt.h"'
-
-
-
-     
     - name: Build Native dynamic Lib (x86)  
       # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
       run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:ConfigurationType=DynamicLibrary /p:Platform=x86 WmiLight.Native\WmiLight.Native.vcxproj
