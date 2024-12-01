@@ -27,6 +27,8 @@ jobs:
         
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v2
+      with:
+        vs-version: 17.11
         
     - name: Restore NuGet packages
       run: dotnet restore
