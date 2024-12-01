@@ -15,7 +15,7 @@ env:
 jobs:
   build:
 
-    runs-on: windows-2019
+    runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v3
@@ -27,6 +27,8 @@ jobs:
         
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v2
+      with:
+        vs-prerelease: true
         
     - name: Restore NuGet packages
       run: dotnet restore
