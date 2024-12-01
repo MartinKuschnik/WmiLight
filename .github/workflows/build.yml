@@ -26,7 +26,7 @@ jobs:
         dotnet-version: 8.x
         
     - name: Setup MSBuild
-      uses: microsoft/setup-msbuild@v1.1.3
+      uses: microsoft/setup-msbuild@v2
         
     - name: Restore NuGet packages
       run: dotnet restore
@@ -35,18 +35,18 @@ jobs:
       run: |
            echo "${{ secrets.PRIVATE_KEY }}" > WmiLight\private_key.base64
            certutil -decode WmiLight\private_key.base64 WmiLight\private_key.snk
-           rm WmiLight\private_key.base64 -v
+           rm WmiLight\private_key.base64
            
     - name: Build .Net Lib
       run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} WmiLight\WmiLight.csproj
       
     - name: Cleanup Private Key
-      run: rm WmiLight\private_key.snk -v
+      run: rm WmiLight\private_key.snk
       
     - name: Build Native dynamic Lib (x64) 
       # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
       run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:ConfigurationType=DynamicLibrary /p:Platform=x64 WmiLight.Native\WmiLight.Native.vcxproj
-     
+
     - name: Build Native dynamic Lib (x86)  
       # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
       run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:ConfigurationType=DynamicLibrary /p:Platform=x86 WmiLight.Native\WmiLight.Native.vcxproj
