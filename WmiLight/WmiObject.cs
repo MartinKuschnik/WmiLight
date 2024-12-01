@@ -241,7 +241,7 @@
         #endregion
         public WmiMethod GetMethod(string methodName)
         {
-            WmiClass wmiClass = new WmiClass(this.wbemServices.GetClass(this.Class));
+            WmiClass wmiClass = new WmiClass( this.wbemServices, this.wbemServices.GetClass(this.Class));
 
             return wmiClass.GetMethod(methodName);
         }
@@ -408,7 +408,7 @@
         {
             this.wbemServices.ExecuteMethod(this.Path, method, inParameters, out WbemClassObject wbemOutParams);
 
-            outParameters = new WmiMethodParameters(wbemOutParams);
+            outParameters = new WmiMethodParameters(this.wbemServices, wbemOutParams);
 
             return outParameters.GetPropertyValue<TReturnValue>("ReturnValue");
         }

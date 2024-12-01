@@ -260,6 +260,69 @@ namespace WmiLight.Wbem
             }
         }
 
+        internal void Put(string propertyName, string[] propertyValue)
+        {
+            if (this.Disposed)
+                throw new ObjectDisposedException(nameof(WbemClassObject));
+
+            if (propertyValue != null)
+            {
+                IntPtr pSafeArray = NativeMethods.SafeArrayCreateVector(VARENUM.VT_BSTR, 0, (uint)propertyValue.Length);
+
+                int index = 0;
+
+                HResult hResult;
+
+                try
+                {
+                    foreach (string currentPropValue in propertyValue)
+                    {
+                        IntPtr pCurrentPropValue = Marshal.StringToBSTR(currentPropValue);
+
+                        try
+                        {
+                            hResult = NativeMethods.SafeArrayPutElement(pSafeArray, new int[] { index++ }, pCurrentPropValue);
+
+                            if (hResult.Failed)
+                                throw (Exception)hResult;
+                        }
+                        finally
+                        {
+                            Marshal.FreeBSTR(pCurrentPropValue);
+                        }
+                    }
+
+                    VARIANT value = new VARIANT() { vt = VARENUM.VT_BSTR | VARENUM.VT_ARRAY, BStrVal = pSafeArray };
+
+                    hResult = NativeMethods.Put(this, propertyName, ref value, CimType.None); /* Always CimType.None because this parameter is only for new properties. */
+
+                    if (hResult.Failed)
+                        throw (Exception)hResult;
+                }
+                finally
+                {
+                    NativeMethods.SafeArrayDestroy(pSafeArray);
+                }
+            }
+            else
+            {
+                VARIANT value = new VARIANT() { vt = VARENUM.VT_NULL };
+
+                try
+                {
+                    HResult hResult = NativeMethods.Put(this, propertyName, ref value, CimType.None); /* Always CimType.None because this parameter is only for new properties. */
+
+                    if (hResult.Failed)
+                        throw (Exception)hResult;
+                }
+                finally
+                {
+                    if (value.BStrVal != IntPtr.Zero)
+                        Marshal.FreeBSTR(value.BStrVal);
+                }
+            }
+        }
+
         private static object VariantToObject(ref VARIANT value, CimType type)
         {
             if (type.HasFlag(CimType.ArrayFlag))

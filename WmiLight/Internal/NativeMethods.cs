@@ -16,7 +16,7 @@
         /// <summary>
         /// Name of the native WmiLight DLL.
         /// </summary>
-        private const string NATIVE_DLL_NAME = "WmiLight.Native.dll"; 
+        private const string NATIVE_DLL_NAME = "WmiLight.Native.dll";
 
         #endregion
 
@@ -112,7 +112,7 @@
 
         [DllImport(NATIVE_DLL_NAME, CallingConvention = CallingConvention.StdCall)]
         public static extern HResult DeleteInstance(IntPtr pWbemServices, [MarshalAs(UnmanagedType.LPWStr)] string strObjectPath, IntPtr ctx);
-        
+
         [DllImport(NATIVE_DLL_NAME, CallingConvention = CallingConvention.StdCall)]
         public static extern HResult CreateEventSinkStub(IntPtr pUnsecApp, IntPtr pEventSink, Indicate indicateFunction, SetStatus setStatusFunction, out IntPtr eventSinkStub);
 
@@ -163,6 +163,15 @@
 
         [DllImport("oleaut32.dll", CallingConvention = CallingConvention.StdCall)]
         public static extern uint SafeArrayGetDim(IntPtr psa);
+
+        [DllImport("oleaut32.dll", CallingConvention = CallingConvention.StdCall)]
+        public static extern IntPtr SafeArrayCreateVector(VARENUM vt, int lLbound, uint cElements);
+
+        [DllImport("Oleaut32.dll", CallingConvention = CallingConvention.StdCall)]
+        public static extern HResult SafeArrayPutElement(IntPtr psa, int[] rgIndices, IntPtr pv);
+
+        [DllImport("oleaut32.dll", CallingConvention = CallingConvention.StdCall)]
+        public static extern HResult SafeArrayDestroy(IntPtr psa);
 
         #endregion
 

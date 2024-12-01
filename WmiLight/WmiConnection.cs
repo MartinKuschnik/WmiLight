@@ -395,7 +395,7 @@
 
             this.Open();
 
-            return new WmiClass(this.wbemServices.GetClass(className));
+            return new WmiClass(this.wbemServices, this.wbemServices.GetClass(className));
         }
 
         #region Description
@@ -580,7 +580,7 @@
 
             this.wbemServices.ExecuteMethod(classNameOrPath, methodName, inParameters, out WbemClassObject wbemOutParams);
 
-            outParameters = new WmiMethodParameters(wbemOutParams);
+            outParameters = new WmiMethodParameters(this.wbemServices, wbemOutParams);
 
             return outParameters.GetPropertyValue<TResult>("ReturnValue");
         }

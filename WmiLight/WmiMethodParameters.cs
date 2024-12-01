@@ -10,57 +10,15 @@ namespace WmiLight
     /// Represents the in and out parameters of a WMI defined method.
     /// </summary>
     #endregion
-    public class WmiMethodParameters : IDisposable
+    public class WmiMethodParameters : WmiObject
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private WbemClassObject signatur;
 
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private bool disposed;
-
-        internal WmiMethodParameters(WbemClassObject signatur)
+        internal WmiMethodParameters(WbemServices wbemServices, WbemClassObject signatur)
+            :base(wbemServices, signatur)
         {
             this.signatur = signatur ?? throw new ArgumentNullException(nameof(signatur));
-        }
-
-        #region Description
-        /// <summary>
-        /// Gets the faked fields for the debugger view.
-        /// </summary>
-        #endregion
-        [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
-        private DebuggerFakeField[] DebuggerFakeFields
-        {
-            get
-            {
-                return signatur.GetNames().Select(x => new DebuggerFakeField(x, this.signatur.Get(x))).ToArray();
-            }
-        }
-
-
-        #region Description
-        /// <summary>
-        /// Gets the value of a property.
-        /// </summary>
-        /// <param name="propertyName">The name of the requested property.</param>
-        /// <returns>The value of the requested property.</returns>
-        #endregion
-        public object GetPropertyValue(string propertyName)
-        {
-            return this.signatur.Get(propertyName);
-        }
-
-        #region Description
-        /// <summary>
-        /// Gets the value of a property.
-        /// </summary>
-        /// <typeparam name="TResult">The type of the requested property.</typeparam>
-        /// <param name="propertyName">The name of the requested property.</param>
-        /// <returns>The value of the requested property.</returns>
-        #endregion
-        public TResult GetPropertyValue<TResult>(string propertyName)
-        {
-            return this.signatur.Get<TResult>(propertyName);
         }
 
         #region Description
@@ -183,6 +141,11 @@ namespace WmiLight
             this.signatur.Put(propertyName, propertyValue);
         }
 
+        public void SetPropertyValue(string propertyName, string[] propertyValue)
+        {
+            this.signatur.Put(propertyName, propertyValue);
+        }
+
         #region Description
         /// <summary>
         /// Implicit conversion from <see cref="WmiMethodParameters"/> to <see cref="IntPtr"/>.
@@ -191,15 +154,5 @@ namespace WmiLight
         /// <returns>The <see cref="IntPtr"/> value as <see cref="WmiMethodParameters"/>.</returns>
         #endregion
         public static implicit operator IntPtr(WmiMethodParameters parameters) => parameters.signatur;
-
-        /// <inheritdoc />
-        public void Dispose()
-        {
-            if (!this.disposed)
-            {
-                this.signatur.Dispose();
-                this.disposed = true;
-            }
-        }
     }
 }
