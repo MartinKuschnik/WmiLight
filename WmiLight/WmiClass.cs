@@ -13,16 +13,23 @@
     public class WmiClass : IDisposable
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private readonly WbemServices wbemServices;
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly WbemClassObject wbemClassObject;
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private bool disposed;
 
-        internal WmiClass(WbemClassObject wbemClassObject)
+        internal WmiClass(WbemServices wbemServices, WbemClassObject wbemClassObject)
         {
+            if (wbemServices is null)
+                throw new ArgumentNullException(nameof(wbemServices));
+
             if (wbemClassObject is null)
                 throw new ArgumentNullException(nameof(wbemClassObject));
 
+            this.wbemServices = wbemServices;
             this.wbemClassObject = wbemClassObject;
         }
 
@@ -66,7 +73,7 @@
 
             this.wbemClassObject.GetMethod(methodName, out WbemClassObject inSignatur, out WbemClassObject outSignatur);
 
-            return new WmiMethod(this, methodName, inSignatur == null ? null : new WmiMethodParametersDefinition(inSignatur), outSignatur == null ? null : new WmiMethodParametersDefinition(outSignatur));
+            return new WmiMethod(this, methodName, inSignatur == null ? null : new WmiMethodParametersDefinition(this.wbemServices, inSignatur), outSignatur == null ? null : new WmiMethodParametersDefinition( this.wbemServices, outSignatur));
         }
 
         #region Description

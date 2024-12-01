@@ -32,6 +32,7 @@ namespace WmiLight.UnitTestsGenerator
                 new Tuple<string, string, string[]>( "root\\cimv2","Win32_Printer" , []),
                 new Tuple<string, string, string[]>( "root\\cimv2","Win32_PhysicalMemory" , []),
                 new Tuple<string, string, string[]>( "root\\cimv2","Win32_Process" , ["KernelModeTime"]),
+                new Tuple<string, string, string[]>( "root\\cimv2","Win32_PnPEntity" , []),
                 new Tuple<string, string, string[]>( "root\\cimv2","Win32_Processor" , ["KernelModeTime", "LoadPercentage", "L3CacheSize"]),
                 new Tuple<string, string, string[]>( "root\\cimv2","Win32_Registry" , ["KernelModeTime", "LoadPercentage"]),
                 new Tuple<string, string, string[]>( "root\\cimv2","Win32_Service" , ["DisconnectedSessions", "TotalSessions"]),
