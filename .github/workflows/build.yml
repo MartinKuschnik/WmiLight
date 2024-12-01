@@ -48,6 +48,13 @@ jobs:
     - name: Build Native dynamic Lib (x64) 
       # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
       run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:ConfigurationType=DynamicLibrary /p:Platform=x64 WmiLight.Native\WmiLight.Native.vcxproj
+
+
+    - name: Dump winnt.h
+      run: 'Get-Content "C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0\um\winnt.h"'
+
+
+
      
     - name: Build Native dynamic Lib (x86)  
       # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
