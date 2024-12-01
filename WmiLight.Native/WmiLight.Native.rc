@@ -60,11 +60,11 @@ BEGIN
         BLOCK "040904b0"
         BEGIN
             VALUE "CompanyName", "Martin Kuschnik"
-#if _x86
+#if __x86
     VALUE "FileDescription", "The native (x86) part of the WmiLight lib."
-#elif _x64
+#elif __x64
     VALUE "FileDescription", "The native (x64) part of the WmiLight lib."
-#elif _arm64
+#elif __arm64
     VALUE "FileDescription", "The native (ARM64) part of the WmiLight lib."
 #else
     VALUE "FileDescription", "The native part of the WmiLight lib."
