@@ -83,14 +83,20 @@ namespace WmiLight.Wbem
             if (this.Disposed)
                 throw new ObjectDisposedException(nameof(WbemClassObject));
 
-            string[] names;
-
-            HResult hResult = NativeMethods.GetNames(this, out names);
+            HResult hResult = NativeMethods.GetNames(this, out IntPtr pSafeArrayWithNames);
 
             if (hResult.Failed)
                 throw (Exception)hResult;
 
-            return names;
+            try
+            {
+                foreach (string name in SafeArray.ForEachBSTR(pSafeArrayWithNames))
+                    yield return name;
+            }
+            finally
+            {
+                NativeMethods.SafeArrayDestroy(pSafeArrayWithNames);
+            }
         }
 
         internal void GetMethod(string methodName, out WbemClassObject inSignatur, out WbemClassObject outSignatur)
@@ -475,33 +481,17 @@ namespace WmiLight.Wbem
             if (arrayDims != 1)
                 throw new NotSupportedException("Only single-dimensional arrays are supported");
 
-            int lBound, uBound;
+            T[] array = new T[SafeArray.GetLength(value.Object, arrayDims)];
 
-            HResult hResult = NativeMethods.SafeArrayGetLBound(value.Object, arrayDims, out lBound);
+            int index = 0;
 
-            if (hResult.Failed)
-                throw (Exception)hResult;
-
-            hResult = NativeMethods.SafeArrayGetUBound(value.Object, arrayDims, out uBound);
-
-            if (hResult.Failed)
-                throw (Exception)hResult;
-
-            T[] array = new T[uBound - lBound + 1];
-
-            for (int i = lBound; i <= uBound; i++)
+            foreach (IntPtr pElement in SafeArray.ForEach(value.Object, arrayDims))
             {
-                VARIANT variant = default;
+                VARIANT variant = new VARIANT() { vt = value.vt & ~VARENUM.VT_ARRAY, Object = pElement };
 
                 try
                 {
-                    variant.vt = value.vt & ~VARENUM.VT_ARRAY;
-                    hResult = NativeMethods.SafeArrayGetElement(value.Object, i, out variant.Object);
-
-                    if (hResult.Failed)
-                        throw (Exception)hResult;
-
-                    array[i] = (T)VariantToObject(ref variant, type);
+                    array[index++] = (T)VariantToObject(ref variant, type);
                 }
                 finally
                 {

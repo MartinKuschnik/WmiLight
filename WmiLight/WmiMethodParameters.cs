@@ -141,6 +141,13 @@ namespace WmiLight
             this.signatur.Put(propertyName, propertyValue);
         }
 
+        #region Description
+        /// <summary>
+        /// Sets the value of a property.
+        /// </summary>
+        /// <param name="propertyName">The name of the property that should be changed.</param>
+        /// <param name="propertyValue">The new property value.</param>
+        #endregion
         public void SetPropertyValue(string propertyName, string[] propertyValue)
         {
             this.signatur.Put(propertyName, propertyValue);
