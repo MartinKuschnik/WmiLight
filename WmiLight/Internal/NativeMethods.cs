@@ -143,7 +143,7 @@
         public static extern HResult GetType(IntPtr pClassObject, [MarshalAs(UnmanagedType.LPWStr)] string propertyName, out CimType cimType);
 
         [DllImport(NATIVE_DLL_NAME, CallingConvention = CallingConvention.StdCall)]
-        public static extern HResult GetNames(IntPtr pClassObject, [MarshalAs(UnmanagedType.SafeArray, SafeArraySubType = VarEnum.VT_BSTR)] out string[] pNames);
+        public static extern HResult GetNames(IntPtr pClassObject, out IntPtr pNames);
 
         #endregion
 
