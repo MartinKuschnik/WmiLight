@@ -580,9 +580,18 @@
 
             this.wbemServices.ExecuteMethod(classNameOrPath, methodName, inParameters, out WbemClassObject wbemOutParams);
 
-            outParameters = new WmiMethodParameters(this.wbemServices, wbemOutParams);
+            if (wbemOutParams != null)
+            {
+                outParameters = new WmiMethodParameters(this.wbemServices, wbemOutParams);
 
-            return outParameters.GetPropertyValue<TResult>("ReturnValue");
+                return outParameters.GetPropertyValue<TResult>("ReturnValue");
+            }
+            else
+            {
+                outParameters = null;
+
+                return default(TResult);
+            }
         }
 
         internal WmiEventSubscription ExecNotificationQueryAsync(string query, Action<WmiObject> action)

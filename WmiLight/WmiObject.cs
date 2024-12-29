@@ -408,9 +408,18 @@
         {
             this.wbemServices.ExecuteMethod(this.Path, method, inParameters, out WbemClassObject wbemOutParams);
 
-            outParameters = new WmiMethodParameters(this.wbemServices, wbemOutParams);
+            if (wbemOutParams != null)
+            {
+                outParameters = new WmiMethodParameters(this.wbemServices, wbemOutParams);
 
-            return outParameters.GetPropertyValue<TReturnValue>("ReturnValue");
+                return outParameters.GetPropertyValue<TReturnValue>("ReturnValue");
+            }
+            else
+            {
+                outParameters = null;
+
+                return default(TReturnValue);
+            }
         }
 
         #region Description

@@ -128,7 +128,10 @@ namespace WmiLight.Wbem
             if (hResult.Failed)
                 throw (Exception)hResult;
 
-            outParams = new WbemClassObject(pOutParams);
+            if (pOutParams != IntPtr.Zero)
+                outParams = new WbemClassObject(pOutParams);
+            else
+                outParams = null;
         }
 
         #endregion
