@@ -324,6 +324,150 @@
             return wbemClassObject.Get<TResult>(propertyName);
         }
 
+
+
+        #region Description
+        /// <summary>
+        /// Sets the value of a property.
+        /// </summary>
+        /// <param name="propertyName">The name of the property that should be changed.</param>
+        /// <param name="propertyValue">The new property value.</param>
+        #endregion
+        public void SetPropertyValue(string propertyName, sbyte propertyValue)
+        {
+            this.wbemClassObject.Put(propertyName, propertyValue);
+        }
+
+        #region Description
+        /// <summary>
+        /// Sets the value of a property.
+        /// </summary>
+        /// <param name="propertyName">The name of the property that should be changed.</param>
+        /// <param name="propertyValue">The new property value.</param>
+        #endregion
+        public void SetPropertyValue(string propertyName, byte propertyValue)
+        {
+            this.wbemClassObject.Put(propertyName, propertyValue);
+        }
+
+        #region Description
+        /// <summary>
+        /// Sets the value of a property.
+        /// </summary>
+        /// <param name="propertyName">The name of the property that should be changed.</param>
+        /// <param name="propertyValue">The new property value.</param>
+        #endregion
+        public void SetPropertyValue(string propertyName, short propertyValue)
+        {
+            this.wbemClassObject.Put(propertyName, propertyValue);
+        }
+
+        #region Description
+        /// <summary>
+        /// Sets the value of a property.
+        /// </summary>
+        /// <param name="propertyName">The name of the property that should be changed.</param>
+        /// <param name="propertyValue">The new property value.</param>
+        #endregion
+        public void SetPropertyValue(string propertyName, ushort propertyValue)
+        {
+            this.wbemClassObject.Put(propertyName, propertyValue);
+        }
+
+        #region Description
+        /// <summary>
+        /// Sets the value of a property.
+        /// </summary>
+        /// <param name="propertyName">The name of the property that should be changed.</param>
+        /// <param name="propertyValue">The new property value.</param>
+        #endregion
+        public void SetPropertyValue(string propertyName, int propertyValue)
+        {
+            this.wbemClassObject.Put(propertyName, propertyValue);
+        }
+
+        #region Description
+        /// <summary>
+        /// Sets the value of a property.
+        /// </summary>
+        /// <param name="propertyName">The name of the property that should be changed.</param>
+        /// <param name="propertyValue">The new property value.</param>
+        #endregion
+        public void SetPropertyValue(string propertyName, uint propertyValue)
+        {
+            this.wbemClassObject.Put(propertyName, propertyValue);
+        }
+
+        #region Description
+        /// <summary>
+        /// Sets the value of a property.
+        /// </summary>
+        /// <param name="propertyName">The name of the property that should be changed.</param>
+        /// <param name="propertyValue">The new property value.</param>
+        #endregion
+        public void SetPropertyValue(string propertyName, long propertyValue)
+        {
+            this.wbemClassObject.Put(propertyName, propertyValue);
+        }
+
+        #region Description
+        /// <summary>
+        /// Sets the value of a property.
+        /// </summary>
+        /// <param name="propertyName">The name of the property that should be changed.</param>
+        /// <param name="propertyValue">The new property value.</param>
+        #endregion
+        public void SetPropertyValue(string propertyName, ulong propertyValue)
+        {
+            this.wbemClassObject.Put(propertyName, propertyValue);
+        }
+
+        #region Description
+        /// <summary>
+        /// Sets the value of a property.
+        /// </summary>
+        /// <param name="propertyName">The name of the property that should be changed.</param>
+        /// <param name="propertyValue">The new property value.</param>
+        #endregion
+        public void SetPropertyValue(string propertyName, bool propertyValue)
+        {
+            this.wbemClassObject.Put(propertyName, propertyValue);
+        }
+
+        #region Description
+        /// <summary>
+        /// Sets the value of a property.
+        /// </summary>
+        /// <param name="propertyName">The name of the property that should be changed.</param>
+        /// <param name="propertyValue">The new property value.</param>
+        #endregion
+        public void SetPropertyValue(string propertyName, string propertyValue)
+        {
+            this.wbemClassObject.Put(propertyName, propertyValue);
+        }
+
+        #region Description
+        /// <summary>
+        /// Sets the value of a property.
+        /// </summary>
+        /// <param name="propertyName">The name of the property that should be changed.</param>
+        /// <param name="propertyValue">The new property value.</param>
+        #endregion
+        public void SetPropertyValue(string propertyName, string[] propertyValue)
+        {
+            this.wbemClassObject.Put(propertyName, propertyValue);
+        }
+
+        #region Description
+        /// <summary>
+        /// Commits the changes to the object.
+        /// </summary>
+        #endregion
+        public virtual void Put()
+        {
+            this.wbemServices.PutInstance(this.wbemClassObject, IntPtr.Zero);
+        }
+
         #region Description
         /// <summary>
         /// Executes a static WMI method.

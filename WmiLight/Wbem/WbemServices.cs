@@ -70,6 +70,17 @@ namespace WmiLight.Wbem
             return new WbemClassObjectEnumerator(pEnumerator);
         }
 
+        internal void PutInstance(WbemClassObject wbemClassObject, IntPtr ctx)
+        {
+            if (this.Disposed)
+                throw new ObjectDisposedException(nameof(WbemServices));
+
+            HResult hResult = NativeMethods.PutInstance(this, wbemClassObject, ctx);
+
+            if (hResult.Failed)
+                throw (Exception)hResult;
+        }
+
         internal void ExecNotificationQueryAsync(string query, IntPtr ctx, WbemObjectSink sink)
         {
             if (this.Disposed)

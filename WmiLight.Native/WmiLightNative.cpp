@@ -305,6 +305,14 @@ extern "C" {  // only need to export C interface if
 		return pClassObject->Put(wszName, 0, pVal, type);
 	}
 
+	__declspec(dllexport) HRESULT _stdcall PutInstance(IWbemServices* wbemServices, IWbemClassObject* pInst, IWbemContext* ctx)
+	{
+		if (wbemServices == nullptr)
+			return E_POINTER;
+
+		return wbemServices->PutInstance(pInst, WBEM_FLAG_CREATE_OR_UPDATE, ctx, nullptr);
+	}
+
 	__declspec(dllexport) HRESULT _stdcall ExecMethod(
 		IWbemServices* wbemServices,
 		wchar_t* classNameOrPath,
