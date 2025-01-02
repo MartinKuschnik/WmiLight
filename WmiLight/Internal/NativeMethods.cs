@@ -138,6 +138,9 @@
 
         [DllImport(NATIVE_DLL_NAME, CallingConvention = CallingConvention.StdCall)]
         public static extern HResult Put(IntPtr pClassObject, [MarshalAs(UnmanagedType.LPWStr)] string wszName, ref VARIANT pvar, CimType cimType);
+     
+        [DllImport(NATIVE_DLL_NAME, CallingConvention = CallingConvention.StdCall)]
+        public static extern HResult PutInstance(IntPtr pWbemServices, IntPtr pInst, IntPtr ctx);
 
         [DllImport(NATIVE_DLL_NAME, CallingConvention = CallingConvention.StdCall)]
         public static extern HResult GetType(IntPtr pClassObject, [MarshalAs(UnmanagedType.LPWStr)] string propertyName, out CimType cimType);
