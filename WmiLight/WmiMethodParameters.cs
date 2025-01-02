@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Linq;
 using WmiLight.Wbem;
 
 namespace WmiLight
@@ -21,136 +20,10 @@ namespace WmiLight
             this.signatur = signatur ?? throw new ArgumentNullException(nameof(signatur));
         }
 
-        #region Description
-        /// <summary>
-        /// Sets the value of a property.
-        /// </summary>
-        /// <param name="propertyName">The name of the property that should be changed.</param>
-        /// <param name="propertyValue">The new property value.</param>
-        #endregion
-        public void SetPropertyValue(string propertyName, sbyte propertyValue)
+        /// <inheritdoc />
+        public override void Put()
         {
-            this.signatur.Put(propertyName, propertyValue);
-        }
-
-        #region Description
-        /// <summary>
-        /// Sets the value of a property.
-        /// </summary>
-        /// <param name="propertyName">The name of the property that should be changed.</param>
-        /// <param name="propertyValue">The new property value.</param>
-        #endregion
-        public void SetPropertyValue(string propertyName, byte propertyValue)
-        {
-            this.signatur.Put(propertyName, propertyValue);
-        }
-
-        #region Description
-        /// <summary>
-        /// Sets the value of a property.
-        /// </summary>
-        /// <param name="propertyName">The name of the property that should be changed.</param>
-        /// <param name="propertyValue">The new property value.</param>
-        #endregion
-        public void SetPropertyValue(string propertyName, short propertyValue)
-        {
-            this.signatur.Put(propertyName, propertyValue);
-        }
-
-        #region Description
-        /// <summary>
-        /// Sets the value of a property.
-        /// </summary>
-        /// <param name="propertyName">The name of the property that should be changed.</param>
-        /// <param name="propertyValue">The new property value.</param>
-        #endregion
-        public void SetPropertyValue(string propertyName, ushort propertyValue)
-        {
-            this.signatur.Put(propertyName, propertyValue);
-        }
-
-        #region Description
-        /// <summary>
-        /// Sets the value of a property.
-        /// </summary>
-        /// <param name="propertyName">The name of the property that should be changed.</param>
-        /// <param name="propertyValue">The new property value.</param>
-        #endregion
-        public void SetPropertyValue(string propertyName, int propertyValue)
-        {
-            this.signatur.Put(propertyName, propertyValue);
-        }
-
-        #region Description
-        /// <summary>
-        /// Sets the value of a property.
-        /// </summary>
-        /// <param name="propertyName">The name of the property that should be changed.</param>
-        /// <param name="propertyValue">The new property value.</param>
-        #endregion
-        public void SetPropertyValue(string propertyName, uint propertyValue)
-        {
-            this.signatur.Put(propertyName, propertyValue);
-        }
-
-        #region Description
-        /// <summary>
-        /// Sets the value of a property.
-        /// </summary>
-        /// <param name="propertyName">The name of the property that should be changed.</param>
-        /// <param name="propertyValue">The new property value.</param>
-        #endregion
-        public void SetPropertyValue(string propertyName, long propertyValue)
-        {
-            this.signatur.Put(propertyName, propertyValue);
-        }
-
-        #region Description
-        /// <summary>
-        /// Sets the value of a property.
-        /// </summary>
-        /// <param name="propertyName">The name of the property that should be changed.</param>
-        /// <param name="propertyValue">The new property value.</param>
-        #endregion
-        public void SetPropertyValue(string propertyName, ulong propertyValue)
-        {
-            this.signatur.Put(propertyName, propertyValue);
-        }
-
-        #region Description
-        /// <summary>
-        /// Sets the value of a property.
-        /// </summary>
-        /// <param name="propertyName">The name of the property that should be changed.</param>
-        /// <param name="propertyValue">The new property value.</param>
-        #endregion
-        public void SetPropertyValue(string propertyName, bool propertyValue)
-        {
-            this.signatur.Put(propertyName, propertyValue);
-        }
-
-        #region Description
-        /// <summary>
-        /// Sets the value of a property.
-        /// </summary>
-        /// <param name="propertyName">The name of the property that should be changed.</param>
-        /// <param name="propertyValue">The new property value.</param>
-        #endregion
-        public void SetPropertyValue(string propertyName, string propertyValue)
-        {
-            this.signatur.Put(propertyName, propertyValue);
-        }
-
-        #region Description
-        /// <summary>
-        /// Sets the value of a property.
-        /// </summary>
-        /// <param name="propertyName">The name of the property that should be changed.</param>
-        /// <param name="propertyValue">The new property value.</param>
-        #endregion
-        public void SetPropertyValue(string propertyName, string[] propertyValue)
-        {
-            this.signatur.Put(propertyName, propertyValue);
+            throw new NotSupportedException();
         }
 
         #region Description
