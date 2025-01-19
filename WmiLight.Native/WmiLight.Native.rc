@@ -72,7 +72,7 @@ BEGIN
 
             VALUE "FileVersion", "6.10.0.0"
             VALUE "InternalName", "WmiLight.Native"
-            VALUE "LegalCopyright", "Copyright 2024 Martin Kuschnik"
+            VALUE "LegalCopyright", "Copyright 2025 Martin Kuschnik"
             VALUE "OriginalFilename", "WmiLight.Native.dll"
             VALUE "ProductName", "WmiLight"
             VALUE "ProductVersion", "6.10.0.0"
