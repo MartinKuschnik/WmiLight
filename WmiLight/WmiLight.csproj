@@ -39,10 +39,10 @@
 		<DelaySign>False</DelaySign>
 		<Title></Title>
 
+		<!-- Workaround for https://github.com/dotnet/sdk/issues/43016. -->
 		<_NeedToDownloadMicrosoftNetSdkCompilersToolsetPackage>true</_NeedToDownloadMicrosoftNetSdkCompilersToolsetPackage>
 
-		<!-- Workaround for https://github.com/dotnet/sdk/issues/43016. -->
-		<_SkipCheckMicrosoftNetSdkCompilersToolsetPackageExists Condition="'$(NuGetPackageRoot)' == ''">true</_SkipCheckMicrosoftNetSdkCompilersToolsetPackageExists>
+		<!--<_SkipCheckMicrosoftNetSdkCompilersToolsetPackageExists Condition="'$(NuGetPackageRoot)' == ''">true</_SkipCheckMicrosoftNetSdkCompilersToolsetPackageExists>-->
 		
 	</PropertyGroup>
 	<ItemGroup>
