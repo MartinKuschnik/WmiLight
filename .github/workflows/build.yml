@@ -38,7 +38,7 @@ jobs:
            rm WmiLight\private_key.base64
            
     - name: Build .Net Lib
-      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /t:Restore;Rebuild WmiLight\WmiLight.csproj
+      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=AnyCPU WmiLight\WmiLight.csproj
       
     - name: Cleanup Private Key
       run: rm WmiLight\private_key.snk
