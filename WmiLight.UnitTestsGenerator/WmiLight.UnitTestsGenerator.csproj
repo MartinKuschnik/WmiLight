@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <PackageReference Include="System.Management" Version="9.0.2" />
-    <PackageReference Include="WmiLight" Version="5.1.1" />
   </ItemGroup>
 
 </Project>
