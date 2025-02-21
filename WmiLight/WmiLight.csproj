@@ -41,8 +41,6 @@
 
 		<!-- Workaround for https://github.com/dotnet/sdk/issues/43016. -->
 		<_NeedToDownloadMicrosoftNetSdkCompilersToolsetPackage>true</_NeedToDownloadMicrosoftNetSdkCompilersToolsetPackage>
-
-		<!--<_SkipCheckMicrosoftNetSdkCompilersToolsetPackageExists Condition="'$(NuGetPackageRoot)' == ''">true</_SkipCheckMicrosoftNetSdkCompilersToolsetPackageExists>-->
 		
 	</PropertyGroup>
 	<ItemGroup>
