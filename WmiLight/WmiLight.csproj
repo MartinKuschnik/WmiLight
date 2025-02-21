@@ -38,6 +38,10 @@
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<DelaySign>False</DelaySign>
 		<Title></Title>
+
+		<!-- Workaround for https://github.com/dotnet/sdk/issues/43016. -->
+		<_NeedToDownloadMicrosoftNetSdkCompilersToolsetPackage>true</_NeedToDownloadMicrosoftNetSdkCompilersToolsetPackage>
+		
 	</PropertyGroup>
 	<ItemGroup>
 	  <None Include=".nuget\.build\WmiLight.props" />
@@ -47,6 +51,5 @@
 		<PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers" Version="0.4.421302">
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.Net.Sdk.Compilers.Toolset" Version="9.0.200" />
 	</ItemGroup>
 </Project>
