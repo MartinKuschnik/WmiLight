@@ -23,7 +23,7 @@
 
         #endregion
 
-        #region Contructor
+        #region Constructor
 
         /// <summary>
         /// Creates a new instance of the <see cref="WmiEventWatcher"/> class.
