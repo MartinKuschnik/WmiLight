@@ -38,6 +38,10 @@
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<DelaySign>False</DelaySign>
 		<Title></Title>
+
+		<!-- Workaround for https://github.com/dotnet/sdk/issues/43016. -->
+		<_SkipCheckMicrosoftNetSdkCompilersToolsetPackageExists Condition="'$(NuGetPackageRoot)' == ''">true</_SkipCheckMicrosoftNetSdkCompilersToolsetPackageExists>
+		
 	</PropertyGroup>
 	<ItemGroup>
 	  <None Include=".nuget\.build\WmiLight.props" />
