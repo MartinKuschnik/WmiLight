@@ -18,10 +18,10 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4.2.2
     
     - name: Setup .NET Core
-      uses: actions/setup-dotnet@v4.1.0
+      uses: actions/setup-dotnet@v4.3.0
       with:
         dotnet-version: 9.x
         
@@ -38,7 +38,7 @@ jobs:
            rm WmiLight\private_key.base64
            
     - name: Build .Net Lib
-      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} WmiLight\WmiLight.csproj
+      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=AnyCPU WmiLight\WmiLight.csproj
       
     - name: Cleanup Private Key
       run: rm WmiLight\private_key.snk

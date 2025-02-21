@@ -15,7 +15,7 @@
 	<SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>private_key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
-	<PropertyGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0')) Or $([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
+	<PropertyGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0')) Or $([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net9.0'))">
 		<IsTrimmable>true</IsTrimmable>
 	</PropertyGroup>
 	<Target Name="AfterBuild" />
@@ -23,7 +23,7 @@
 	</Target>
 	<PropertyGroup />
 	<PropertyGroup>
-		<Version>6.11.0</Version>
+		<Version>6.12.0</Version>
 		<PackageId>WmiLight</PackageId>
 		<Authors>Martin Kuschnik</Authors>
 		<Company>Martin Kuschnik</Company>
@@ -44,8 +44,9 @@
 	  <None Include=".nuget\.build\WmiLight.targets" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers" Version="0.3.261302">
+		<PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers" Version="0.4.421302">
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
+		<PackageReference Include="Microsoft.Net.Sdk.Compilers.Toolset" Version="9.0.200" />
 	</ItemGroup>
 </Project>
