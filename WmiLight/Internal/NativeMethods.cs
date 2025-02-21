@@ -20,8 +20,9 @@
 
         #endregion
 
-        #region Delegates
 
+        #region Delegates
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate HResult Indicate(
             IntPtr pEventSink,
             int lObjectCount,
@@ -29,6 +30,7 @@
             IntPtr[] apObjArray
         );
 
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate HResult SetStatus(
             IntPtr pEventSink,
             int lFlags,
