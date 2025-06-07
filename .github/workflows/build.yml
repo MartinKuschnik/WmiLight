@@ -30,7 +30,7 @@ jobs:
         
     - name: Restore NuGet packages
       run: dotnet restore
-      
+            
     - name: Extract Private Key
       run: |
            echo "${{ secrets.PRIVATE_KEY }}" > WmiLight\private_key.base64
@@ -41,10 +41,10 @@ jobs:
       run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=AnyCPU WmiLight\WmiLight.csproj
 
     - name: Build .Net Framework Tests Project (x64)
-      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=x64 WmiLight.UnitTests-NetFramework\WmiLight.UnitTests-NetFramework.csproj
+      run: msbuild -t:"Restore;Clean;Compile" /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=x64 WmiLight.UnitTests-NetFramework\WmiLight.UnitTests-NetFramework.csproj
       
     - name: Build .Net Framework Tests Project (x86)
-      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=x86 WmiLight.UnitTests-NetFramework\WmiLight.UnitTests-NetFramework.csproj
+      run: msbuild -t:"Restore;Clean;Compile" /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=x86 WmiLight.UnitTests-NetFramework\WmiLight.UnitTests-NetFramework.csproj
       
     - name: Cleanup Private Key
       run: rm WmiLight\private_key.snk
