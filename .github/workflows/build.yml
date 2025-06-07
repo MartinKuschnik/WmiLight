@@ -41,10 +41,10 @@ jobs:
       run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=AnyCPU WmiLight\WmiLight.csproj
 
     - name: Build .Net Framework Tests Project (x64)
-      run: msbuild -t:"Restore;Clean;Compile" /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=x64 WmiLight.UnitTests-NetFramework\WmiLight.UnitTests-NetFramework.csproj
+      run: msbuild -t:"Restore;Clean;Build" /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=x64 WmiLight.UnitTests-NetFramework\WmiLight.UnitTests-NetFramework.csproj
       
     - name: Build .Net Framework Tests Project (x86)
-      run: msbuild -t:"Restore;Clean;Compile" /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=x86 WmiLight.UnitTests-NetFramework\WmiLight.UnitTests-NetFramework.csproj
+      run: msbuild -t:"Restore;Clean;Build" /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=x86 WmiLight.UnitTests-NetFramework\WmiLight.UnitTests-NetFramework.csproj
       
     - name: Cleanup Private Key
       run: rm WmiLight\private_key.snk
