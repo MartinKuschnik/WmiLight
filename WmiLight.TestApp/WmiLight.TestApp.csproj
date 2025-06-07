@@ -134,7 +134,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(SolutionDir)WmiLight.Native\bin\$(Configuration)\$(PlatformName)\WmiLight.Native.dll" "$(ProjectDir)$(OutDir)" /Y</PostBuildEvent>
+    <PostBuildEvent>xcopy "$(SolutionDir)WmiLight.Native\bin\$(Configuration)\$(PlatformName)\WmiLight.Native.dll" "$(ProjectDir)$(OutDir)" /Y
+move /y "$(ProjectDir)$(OutDir)WmiLight.Native.dll" "$(ProjectDir)$(OutDir)WmiLight.Native.$(PlatformName).dll"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

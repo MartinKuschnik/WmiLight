@@ -69,14 +69,23 @@ jobs:
       
     - name: Run Unit Tests (x64)
       run: dotnet test -property:Platform=x64 --configuration ${{env.BUILD_CONFIGURATION}} .\WmiLight.UnitTests\WmiLight.UnitTests.csproj
+            
+    - name: Run Unit Tests (x64 - .NET Framework)  
+      run: ./WmiLight.UnitTests-NetFramework\bin\x64\${{env.BUILD_CONFIGURATION}}\net462\WmiLight.UnitTests-NetFramework.exe" 
       
     - name: Run Unit Tests (x86)
       run: dotnet test -property:Platform=x64 --configuration ${{env.BUILD_CONFIGURATION}} .\WmiLight.UnitTests\WmiLight.UnitTests.csproj
             
+    - name: Run Unit Tests (x86 - .NET Framework)  
+      run: ./WmiLight.UnitTests-NetFramework\bin\x86\${{env.BUILD_CONFIGURATION}}\net462\WmiLight.UnitTests-NetFramework.exe" 
+            
     - name: Run Unit Tests (arm64)
       run: echo "::warning Unit Tests are disabled for Arm64 because there is no machine to run tests at Arm64 architecture."
       #run: dotnet test -property:Platform=arm64 --configuration ${{env.BUILD_CONFIGURATION}} .\WmiLight.UnitTests\WmiLight.UnitTests.csproj
-            
+                 
+    - name: Run Unit Tests (arm64 - .NET Framework)
+      run: echo "::warning Unit Tests are disabled for Arm64 - .NET Framework because there is no machine to run tests at Arm64 architecture."
+
     - name: Pack with dotnet
       run: dotnet pack WmiLight\WmiLight.csproj --configuration ${{env.BUILD_CONFIGURATION}} --output nuget-packages --no-build      
 

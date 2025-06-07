@@ -43,6 +43,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{BB2E4DCC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WmiLight.UnitTestsGenerator", "WmiLight.UnitTestsGenerator\WmiLight.UnitTestsGenerator.csproj", "{FFB59410-08FE-4CBC-ACA8-996BCE45AFF8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WmiLight.UnitTests-NetFramework", "WmiLight.UnitTests-NetFramework\WmiLight.UnitTests-NetFramework.csproj", "{4FB8BD1D-0F21-4FE8-6D29-662B0D0270D5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM64 = Debug|ARM64
@@ -137,6 +139,18 @@ Global
 		{FFB59410-08FE-4CBC-ACA8-996BCE45AFF8}.Release|x64.Build.0 = Release|Any CPU
 		{FFB59410-08FE-4CBC-ACA8-996BCE45AFF8}.Release|x86.ActiveCfg = Release|Any CPU
 		{FFB59410-08FE-4CBC-ACA8-996BCE45AFF8}.Release|x86.Build.0 = Release|Any CPU
+		{4FB8BD1D-0F21-4FE8-6D29-662B0D0270D5}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{4FB8BD1D-0F21-4FE8-6D29-662B0D0270D5}.Debug|ARM64.Build.0 = Debug|ARM64
+		{4FB8BD1D-0F21-4FE8-6D29-662B0D0270D5}.Debug|x64.ActiveCfg = Debug|x64
+		{4FB8BD1D-0F21-4FE8-6D29-662B0D0270D5}.Debug|x64.Build.0 = Debug|x64
+		{4FB8BD1D-0F21-4FE8-6D29-662B0D0270D5}.Debug|x86.ActiveCfg = Debug|x86
+		{4FB8BD1D-0F21-4FE8-6D29-662B0D0270D5}.Debug|x86.Build.0 = Debug|x86
+		{4FB8BD1D-0F21-4FE8-6D29-662B0D0270D5}.Release|ARM64.ActiveCfg = Release|ARM64
+		{4FB8BD1D-0F21-4FE8-6D29-662B0D0270D5}.Release|ARM64.Build.0 = Release|ARM64
+		{4FB8BD1D-0F21-4FE8-6D29-662B0D0270D5}.Release|x64.ActiveCfg = Release|x64
+		{4FB8BD1D-0F21-4FE8-6D29-662B0D0270D5}.Release|x64.Build.0 = Release|x64
+		{4FB8BD1D-0F21-4FE8-6D29-662B0D0270D5}.Release|x86.ActiveCfg = Release|x86
+		{4FB8BD1D-0F21-4FE8-6D29-662B0D0270D5}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
