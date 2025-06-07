@@ -40,12 +40,6 @@ jobs:
     - name: Build .Net Lib
       run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=AnyCPU WmiLight\WmiLight.csproj
 
-    - name: Build .Net Framework Tests Project (x64)
-      run: msbuild -t:"Restore;Clean;Build" /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=x64 WmiLight.UnitTests-NetFramework\WmiLight.UnitTests-NetFramework.csproj
-      
-    - name: Build .Net Framework Tests Project (x86)
-      run: msbuild -t:"Restore;Clean;Build" /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=x86 WmiLight.UnitTests-NetFramework\WmiLight.UnitTests-NetFramework.csproj
-      
     - name: Cleanup Private Key
       run: rm WmiLight\private_key.snk
       
@@ -72,6 +66,12 @@ jobs:
     - name: Build Native static Lib (arm64, NoOp) 
       # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
       run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:ConfigurationType=StaticLibrary /p:WholeProgramOptimization=false /p:Platform=arm64 WmiLight.Native\WmiLight.Native.vcxproj
+      
+    - name: Build .Net Framework Tests Project (x64)
+      run: msbuild -t:"Restore;Clean;Build" /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=x64 WmiLight.UnitTests-NetFramework\WmiLight.UnitTests-NetFramework.csproj
+      
+    - name: Build .Net Framework Tests Project (x86)
+      run: msbuild -t:"Restore;Clean;Build" /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=x86 WmiLight.UnitTests-NetFramework\WmiLight.UnitTests-NetFramework.csproj
       
     - name: Run Unit Tests (x64)
       run: dotnet test -property:Platform=x64 --configuration ${{env.BUILD_CONFIGURATION}} .\WmiLight.UnitTests\WmiLight.UnitTests.csproj
