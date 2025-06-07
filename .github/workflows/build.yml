@@ -39,6 +39,12 @@ jobs:
 
     - name: Build .Net Lib
       run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=AnyCPU WmiLight\WmiLight.csproj
+
+    - name: Build .Net Framework Tests Project (x64)
+      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=x64 WmiLight.UnitTests-NetFramework\WmiLight.UnitTests-NetFramework.csproj
+      
+    - name: Build .Net Framework Tests Project (x86)
+      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=x86 WmiLight.UnitTests-NetFramework\WmiLight.UnitTests-NetFramework.csproj
       
     - name: Cleanup Private Key
       run: rm WmiLight\private_key.snk
@@ -71,13 +77,13 @@ jobs:
       run: dotnet test -property:Platform=x64 --configuration ${{env.BUILD_CONFIGURATION}} .\WmiLight.UnitTests\WmiLight.UnitTests.csproj
             
     - name: Run Unit Tests (x64 - .NET Framework)  
-      run: ./WmiLight.UnitTests-NetFramework\bin\x64\${{env.BUILD_CONFIGURATION}}\net462\WmiLight.UnitTests-NetFramework.exe
+      run: .\WmiLight.UnitTests-NetFramework\bin\x64\${{env.BUILD_CONFIGURATION}}\net462\WmiLight.UnitTests-NetFramework.exe
       
     - name: Run Unit Tests (x86)
       run: dotnet test -property:Platform=x64 --configuration ${{env.BUILD_CONFIGURATION}} .\WmiLight.UnitTests\WmiLight.UnitTests.csproj
             
     - name: Run Unit Tests (x86 - .NET Framework)  
-      run: ./WmiLight.UnitTests-NetFramework\bin\x86\${{env.BUILD_CONFIGURATION}}\net462\WmiLight.UnitTests-NetFramework.exe
+      run: .\WmiLight.UnitTests-NetFramework\bin\x86\${{env.BUILD_CONFIGURATION}}\net462\WmiLight.UnitTests-NetFramework.exe
             
     - name: Run Unit Tests (arm64)
       run: echo "::warning Unit Tests are disabled for Arm64 because there is no machine to run tests at Arm64 architecture."
