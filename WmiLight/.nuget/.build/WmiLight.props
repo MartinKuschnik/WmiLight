@@ -6,7 +6,7 @@
     <NativeLibrary Include="$(MSBuildThisFileDirectory)..\lib\native\$(RuntimeIdentifier)\WmiLight.Native.lib" Condition="$(RuntimeIdentifier.StartsWith('win'))" />
   </ItemGroup>
 	
-  <ItemGroup Condition="$(MSBuildRuntimeType) == 'Full' Or $(MSBuildRuntimeType) == 'Mono'">
+  <ItemGroup Condition="'$(TargetFrameworkIdentifier)' == '.NETFramework'">
 	<None Include="$(MSBuildThisFileDirectory)..\runtimes\win-x86\native\WmiLight.Native.dll">
 	  <Link>%(RecursiveDir)%(FileName).x86%(Extension)</Link>
 	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
