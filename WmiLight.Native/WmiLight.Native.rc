@@ -70,12 +70,12 @@ BEGIN
     VALUE "FileDescription", "The native part of the WmiLight lib."
 #endif
 
-            VALUE "FileVersion", "6.14.0.0-pre2"
+            VALUE "FileVersion", "6.14.0.0"
             VALUE "InternalName", "WmiLight.Native"
             VALUE "LegalCopyright", "Copyright 2025 Martin Kuschnik"
             VALUE "OriginalFilename", "WmiLight.Native.dll"
             VALUE "ProductName", "WmiLight"
-            VALUE "ProductVersion", "6.14.0.0-pre2"
+            VALUE "ProductVersion", "6.14.0.0"
         END
     END
     BLOCK "VarFileInfo"
