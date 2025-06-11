@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFrameworks>netstandard2.0;.Net8.0;.Net9.0</TargetFrameworks>
+		<TargetFrameworks>netstandard2.0;net46;.Net8.0;.Net9.0</TargetFrameworks>
 		<OutputType>Library</OutputType>
 		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
 	</PropertyGroup>
@@ -23,7 +23,7 @@
 	</Target>
 	<PropertyGroup />
 	<PropertyGroup>
-		<Version>6.13.0</Version>
+		<Version>6.14.0</Version>
 		<PackageId>WmiLight</PackageId>
 		<Authors>Martin Kuschnik</Authors>
 		<Company>Martin Kuschnik</Company>

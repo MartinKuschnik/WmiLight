@@ -30,7 +30,7 @@ jobs:
         
     - name: Restore NuGet packages
       run: dotnet restore
-      
+            
     - name: Extract Private Key
       run: |
            echo "${{ secrets.PRIVATE_KEY }}" > WmiLight\private_key.base64
@@ -39,7 +39,7 @@ jobs:
 
     - name: Build .Net Lib
       run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=AnyCPU WmiLight\WmiLight.csproj
-      
+
     - name: Cleanup Private Key
       run: rm WmiLight\private_key.snk
       
@@ -67,16 +67,31 @@ jobs:
       # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
       run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:ConfigurationType=StaticLibrary /p:WholeProgramOptimization=false /p:Platform=arm64 WmiLight.Native\WmiLight.Native.vcxproj
       
+    - name: Build .Net Framework Tests Project (x64)
+      run: msbuild -t:"Restore;Clean;Build" /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=x64 WmiLight.UnitTests-NetFramework\WmiLight.UnitTests-NetFramework.csproj
+      
+    - name: Build .Net Framework Tests Project (x86)
+      run: msbuild -t:"Restore;Clean;Build" /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=x86 WmiLight.UnitTests-NetFramework\WmiLight.UnitTests-NetFramework.csproj
+      
     - name: Run Unit Tests (x64)
       run: dotnet test -property:Platform=x64 --configuration ${{env.BUILD_CONFIGURATION}} .\WmiLight.UnitTests\WmiLight.UnitTests.csproj
+            
+    - name: Run Unit Tests (x64 - .NET Framework)  
+      run: .\WmiLight.UnitTests-NetFramework\bin\x64\${{env.BUILD_CONFIGURATION}}\net462\WmiLight.UnitTests-NetFramework.exe
       
     - name: Run Unit Tests (x86)
       run: dotnet test -property:Platform=x64 --configuration ${{env.BUILD_CONFIGURATION}} .\WmiLight.UnitTests\WmiLight.UnitTests.csproj
             
+    - name: Run Unit Tests (x86 - .NET Framework)  
+      run: .\WmiLight.UnitTests-NetFramework\bin\x86\${{env.BUILD_CONFIGURATION}}\net462\WmiLight.UnitTests-NetFramework.exe
+            
     - name: Run Unit Tests (arm64)
       run: echo "::warning Unit Tests are disabled for Arm64 because there is no machine to run tests at Arm64 architecture."
       #run: dotnet test -property:Platform=arm64 --configuration ${{env.BUILD_CONFIGURATION}} .\WmiLight.UnitTests\WmiLight.UnitTests.csproj
-            
+                 
+    - name: Run Unit Tests (arm64 - .NET Framework)
+      run: echo "::warning Unit Tests are disabled for Arm64 - .NET Framework because there is no machine to run tests at Arm64 architecture."
+
     - name: Pack with dotnet
       run: dotnet pack WmiLight\WmiLight.csproj --configuration ${{env.BUILD_CONFIGURATION}} --output nuget-packages --no-build      
 

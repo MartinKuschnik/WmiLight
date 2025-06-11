@@ -46,6 +46,404 @@
 
         #region WmiLight.Native.dll
 
+#if NETFRAMEWORK
+        private static class x64
+        {
+            private const string NATIVE_DLL_NAME_X64 = "WmiLight.Native.x64.dll";
+
+            [DllImport(NATIVE_DLL_NAME_X64, CallingConvention = CallingConvention.StdCall)]
+            public static extern HResult CreateWbemLocator(out IntPtr pWbemLocator);
+
+            [DllImport(NATIVE_DLL_NAME_X64, CallingConvention = CallingConvention.StdCall)]
+            public static extern HResult CreateWbemUnsecuredApartment(out IntPtr pUnsecuredApartment);
+
+            [DllImport(NATIVE_DLL_NAME_X64, CallingConvention = CallingConvention.StdCall)]
+            public static extern HResult ConnectServer(
+                IntPtr pWbemLocator,
+                [MarshalAs(UnmanagedType.LPWStr)]
+                string networkResource,
+                [MarshalAs(UnmanagedType.LPWStr)]
+                string userName,
+                [MarshalAs(UnmanagedType.LPWStr)]
+                string userPassword,
+                [MarshalAs(UnmanagedType.LPWStr)]
+                string locale,
+                [MarshalAs (UnmanagedType.U4)]
+                WbemConnectOption wbemConnectOption,
+                [MarshalAs(UnmanagedType.LPWStr)]
+                string authority,
+                IntPtr pCtx,
+                out IntPtr pWbemServices);
+
+            [DllImport(NATIVE_DLL_NAME_X64, CallingConvention = CallingConvention.StdCall)]
+            public static extern HResult SetProxy(
+                IntPtr pIUnknown,
+                [MarshalAs(UnmanagedType.LPWStr)]
+                string username,
+                [MarshalAs(UnmanagedType.LPWStr)]
+                string password,
+                [MarshalAs(UnmanagedType.LPWStr)]
+                string authority,
+                ImpersonationLevel impersonationLevel,
+                AuthenticationLevel authenticationLevel);
+
+            [DllImport(NATIVE_DLL_NAME_X64, CallingConvention = CallingConvention.StdCall)]
+            public static extern HResult ExecQuery(
+                IntPtr pWbemServices,
+                [MarshalAs(UnmanagedType.LPWStr)]
+            string ueryLanguage,
+                [MarshalAs(UnmanagedType.LPWStr)]
+            string query,
+                WbemClassObjectEnumeratorBehaviorOption behaviorOption,
+                IntPtr ctx,
+                out IntPtr pEnumerator);
+
+            [DllImport(NATIVE_DLL_NAME_X64, CallingConvention = CallingConvention.StdCall)]
+            public static extern HResult ExecNotificationQueryAsync(
+                IntPtr pWbemServices,
+                [MarshalAs(UnmanagedType.LPWStr)]
+            string queryLanguage,
+                [MarshalAs(UnmanagedType.LPWStr)]
+            string query,
+                IntPtr ctx,
+                IntPtr pEventSinkProxy);
+
+            [DllImport(NATIVE_DLL_NAME_X64, CallingConvention = CallingConvention.StdCall)]
+            public static extern HResult CancelAsyncCall(IntPtr pWbemServices, IntPtr pEventSinkProxy);
+
+            [DllImport(NATIVE_DLL_NAME_X64, CallingConvention = CallingConvention.StdCall)]
+            public static extern HResult GetClass(IntPtr pWbemServices, [MarshalAs(UnmanagedType.LPWStr)] string className, IntPtr ctx, out IntPtr pObject);
+
+            [DllImport(NATIVE_DLL_NAME_X64, CallingConvention = CallingConvention.StdCall)]
+            public static extern HResult ExecMethod(IntPtr pWbemServices, [MarshalAs(UnmanagedType.LPWStr)] string classNameOrPath, [MarshalAs(UnmanagedType.LPWStr)] string methodName, IntPtr ctx, IntPtr inParams, out IntPtr outParams);
+
+            [DllImport(NATIVE_DLL_NAME_X64, CallingConvention = CallingConvention.StdCall)]
+            public static extern HResult DeleteInstance(IntPtr pWbemServices, [MarshalAs(UnmanagedType.LPWStr)] string strObjectPath, IntPtr ctx);
+
+            [DllImport(NATIVE_DLL_NAME_X64, CallingConvention = CallingConvention.StdCall)]
+            public static extern HResult CreateEventSinkStub(IntPtr pUnsecApp, IntPtr pEventSink, Indicate indicateFunction, SetStatus setStatusFunction, out IntPtr eventSinkStub);
+
+            [DllImport(NATIVE_DLL_NAME_X64, CallingConvention = CallingConvention.StdCall)]
+            public static extern HResult Next(IntPtr pEnumerator, out IntPtr pClassObject);
+
+            [DllImport(NATIVE_DLL_NAME_X64, CallingConvention = CallingConvention.StdCall)]
+            public static extern HResult Reset(IntPtr pEnumerator);
+
+            [DllImport(NATIVE_DLL_NAME_X64, CallingConvention = CallingConvention.StdCall)]
+            public static extern HResult Get(
+                IntPtr pClassObject,
+                [MarshalAs(UnmanagedType.LPWStr)]
+            string propertyName,
+                ref VARIANT value,
+                out CimType valueType);
+
+            [DllImport(NATIVE_DLL_NAME_X64, CallingConvention = CallingConvention.StdCall)]
+            public static extern HResult GetMethod(IntPtr pClassObject, [MarshalAs(UnmanagedType.LPWStr)] string methodName, out IntPtr pInSignature, out IntPtr pOutSignature);
+
+            [DllImport(NATIVE_DLL_NAME_X64, CallingConvention = CallingConvention.StdCall)]
+            public static extern HResult SpawnInstance(IntPtr pClassObject, out IntPtr pNewInstance);
+
+            [DllImport(NATIVE_DLL_NAME_X64, CallingConvention = CallingConvention.StdCall)]
+            public static extern HResult Put(IntPtr pClassObject, [MarshalAs(UnmanagedType.LPWStr)] string wszName, ref VARIANT pvar, CimType cimType);
+
+            [DllImport(NATIVE_DLL_NAME_X64, CallingConvention = CallingConvention.StdCall)]
+            public static extern HResult PutInstance(IntPtr pWbemServices, IntPtr pInst, IntPtr ctx);
+
+            [DllImport(NATIVE_DLL_NAME_X64, CallingConvention = CallingConvention.StdCall)]
+            public static extern HResult GetType(IntPtr pClassObject, [MarshalAs(UnmanagedType.LPWStr)] string propertyName, out CimType cimType);
+
+            [DllImport(NATIVE_DLL_NAME_X64, CallingConvention = CallingConvention.StdCall)]
+            public static extern HResult GetNames(IntPtr pClassObject, out IntPtr pNames);
+        }
+        private static class x86
+        {
+            private const string NATIVE_DLL_NAME_X86 = "WmiLight.Native.x86.dll";
+
+            [DllImport(NATIVE_DLL_NAME_X86, CallingConvention = CallingConvention.StdCall)]
+            public static extern HResult CreateWbemLocator(out IntPtr pWbemLocator);
+
+            [DllImport(NATIVE_DLL_NAME_X86, CallingConvention = CallingConvention.StdCall)]
+            public static extern HResult CreateWbemUnsecuredApartment(out IntPtr pUnsecuredApartment);
+
+            [DllImport(NATIVE_DLL_NAME_X86, CallingConvention = CallingConvention.StdCall)]
+            public static extern HResult ConnectServer(
+                IntPtr pWbemLocator,
+                [MarshalAs(UnmanagedType.LPWStr)]
+            string networkResource,
+                [MarshalAs(UnmanagedType.LPWStr)]
+            string userName,
+                [MarshalAs(UnmanagedType.LPWStr)]
+            string userPassword,
+                [MarshalAs(UnmanagedType.LPWStr)]
+            string locale,
+                [MarshalAs (UnmanagedType.U4)]
+            WbemConnectOption wbemConnectOption,
+                [MarshalAs(UnmanagedType.LPWStr)]
+            string authority,
+                IntPtr pCtx,
+                out IntPtr pWbemServices);
+
+            [DllImport(NATIVE_DLL_NAME_X86, CallingConvention = CallingConvention.StdCall)]
+            public static extern HResult SetProxy(
+                IntPtr pIUnknown,
+                [MarshalAs(UnmanagedType.LPWStr)]
+            string username,
+                [MarshalAs(UnmanagedType.LPWStr)]
+            string password,
+                [MarshalAs(UnmanagedType.LPWStr)]
+            string authority,
+                ImpersonationLevel impersonationLevel,
+                AuthenticationLevel authenticationLevel);
+
+            [DllImport(NATIVE_DLL_NAME_X86, CallingConvention = CallingConvention.StdCall)]
+            public static extern HResult ExecQuery(
+                IntPtr pWbemServices,
+                [MarshalAs(UnmanagedType.LPWStr)]
+            string ueryLanguage,
+                [MarshalAs(UnmanagedType.LPWStr)]
+            string query,
+                WbemClassObjectEnumeratorBehaviorOption behaviorOption,
+                IntPtr ctx,
+                out IntPtr pEnumerator);
+
+            [DllImport(NATIVE_DLL_NAME_X86, CallingConvention = CallingConvention.StdCall)]
+            public static extern HResult ExecNotificationQueryAsync(
+                IntPtr pWbemServices,
+                [MarshalAs(UnmanagedType.LPWStr)]
+            string queryLanguage,
+                [MarshalAs(UnmanagedType.LPWStr)]
+            string query,
+                IntPtr ctx,
+                IntPtr pEventSinkProxy);
+
+            [DllImport(NATIVE_DLL_NAME_X86, CallingConvention = CallingConvention.StdCall)]
+            public static extern HResult CancelAsyncCall(IntPtr pWbemServices, IntPtr pEventSinkProxy);
+
+            [DllImport(NATIVE_DLL_NAME_X86, CallingConvention = CallingConvention.StdCall)]
+            public static extern HResult GetClass(IntPtr pWbemServices, [MarshalAs(UnmanagedType.LPWStr)] string className, IntPtr ctx, out IntPtr pObject);
+
+            [DllImport(NATIVE_DLL_NAME_X86, CallingConvention = CallingConvention.StdCall)]
+            public static extern HResult ExecMethod(IntPtr pWbemServices, [MarshalAs(UnmanagedType.LPWStr)] string classNameOrPath, [MarshalAs(UnmanagedType.LPWStr)] string methodName, IntPtr ctx, IntPtr inParams, out IntPtr outParams);
+
+            [DllImport(NATIVE_DLL_NAME_X86, CallingConvention = CallingConvention.StdCall)]
+            public static extern HResult DeleteInstance(IntPtr pWbemServices, [MarshalAs(UnmanagedType.LPWStr)] string strObjectPath, IntPtr ctx);
+
+            [DllImport(NATIVE_DLL_NAME_X86, CallingConvention = CallingConvention.StdCall)]
+            public static extern HResult CreateEventSinkStub(IntPtr pUnsecApp, IntPtr pEventSink, Indicate indicateFunction, SetStatus setStatusFunction, out IntPtr eventSinkStub);
+
+            [DllImport(NATIVE_DLL_NAME_X86, CallingConvention = CallingConvention.StdCall)]
+            public static extern HResult Next(IntPtr pEnumerator, out IntPtr pClassObject);
+
+            [DllImport(NATIVE_DLL_NAME_X86, CallingConvention = CallingConvention.StdCall)]
+            public static extern HResult Reset(IntPtr pEnumerator);
+
+            [DllImport(NATIVE_DLL_NAME_X86, CallingConvention = CallingConvention.StdCall)]
+            public static extern HResult Get(
+                IntPtr pClassObject,
+                [MarshalAs(UnmanagedType.LPWStr)]
+            string propertyName,
+                ref VARIANT value,
+                out CimType valueType);
+
+            [DllImport(NATIVE_DLL_NAME_X86, CallingConvention = CallingConvention.StdCall)]
+            public static extern HResult GetMethod(IntPtr pClassObject, [MarshalAs(UnmanagedType.LPWStr)] string methodName, out IntPtr pInSignature, out IntPtr pOutSignature);
+
+            [DllImport(NATIVE_DLL_NAME_X86, CallingConvention = CallingConvention.StdCall)]
+            public static extern HResult SpawnInstance(IntPtr pClassObject, out IntPtr pNewInstance);
+
+            [DllImport(NATIVE_DLL_NAME_X86, CallingConvention = CallingConvention.StdCall)]
+            public static extern HResult Put(IntPtr pClassObject, [MarshalAs(UnmanagedType.LPWStr)] string wszName, ref VARIANT pvar, CimType cimType);
+
+            [DllImport(NATIVE_DLL_NAME_X86, CallingConvention = CallingConvention.StdCall)]
+            public static extern HResult PutInstance(IntPtr pWbemServices, IntPtr pInst, IntPtr ctx);
+
+            [DllImport(NATIVE_DLL_NAME_X86, CallingConvention = CallingConvention.StdCall)]
+            public static extern HResult GetType(IntPtr pClassObject, [MarshalAs(UnmanagedType.LPWStr)] string propertyName, out CimType cimType);
+
+            [DllImport(NATIVE_DLL_NAME_X86, CallingConvention = CallingConvention.StdCall)]
+            public static extern HResult GetNames(IntPtr pClassObject, out IntPtr pNames);
+        }
+        public static HResult CreateWbemLocator(out IntPtr pWbemLocator)
+        {
+            if (Environment.Is64BitProcess)
+                return x64.CreateWbemLocator(out pWbemLocator);
+            else
+                return x86.CreateWbemLocator(out pWbemLocator);
+        }
+        public static HResult CreateWbemUnsecuredApartment(out IntPtr pUnsecuredApartment)
+        {
+            if (Environment.Is64BitProcess)
+                return x64.CreateWbemUnsecuredApartment(out pUnsecuredApartment);
+            else
+                return x86.CreateWbemUnsecuredApartment(out pUnsecuredApartment);
+        }
+        public static HResult ConnectServer(
+            IntPtr pWbemLocator,
+            string networkResource,
+            string userName,
+            string userPassword,
+            string locale,
+            WbemConnectOption wbemConnectOption,
+            string authority,
+            IntPtr pCtx,
+            out IntPtr pWbemServices)
+        {
+            if (Environment.Is64BitProcess)
+                return x64.ConnectServer(pWbemLocator, networkResource, userName, userPassword, locale, wbemConnectOption, authority, pCtx, out pWbemServices);
+            else
+                return x86.ConnectServer(pWbemLocator, networkResource, userName, userPassword, locale, wbemConnectOption, authority, pCtx, out pWbemServices);
+        }
+        public static HResult SetProxy(
+            IntPtr pIUnknown,
+            string username,
+            string password,
+            string authority,
+            ImpersonationLevel impersonationLevel,
+            AuthenticationLevel authenticationLevel)
+        {
+            if (Environment.Is64BitProcess)
+                return x64.SetProxy(pIUnknown, username, username, authority, impersonationLevel, authenticationLevel);
+            else
+                return x86.SetProxy(pIUnknown, username, username, authority, impersonationLevel, authenticationLevel);
+        }
+        public static HResult ExecQuery(
+            IntPtr pWbemServices,
+            string ueryLanguage,
+            string query,
+            WbemClassObjectEnumeratorBehaviorOption behaviorOption,
+            IntPtr ctx,
+            out IntPtr pEnumerator)
+        {
+            if (Environment.Is64BitProcess)
+                return x64.ExecQuery(pWbemServices, ueryLanguage, query, behaviorOption, ctx, out pEnumerator);
+            else
+                return x86.ExecQuery(pWbemServices, ueryLanguage, query, behaviorOption, ctx, out pEnumerator);
+        }
+        public static HResult ExecNotificationQueryAsync(
+            IntPtr pWbemServices,
+            string queryLanguage,
+            string query,
+            IntPtr ctx,
+            IntPtr pEventSinkProxy)
+        {
+            if (Environment.Is64BitProcess)
+                return x64.ExecNotificationQueryAsync(pWbemServices, queryLanguage, query, ctx, pEventSinkProxy);
+            else
+                return x86.ExecNotificationQueryAsync(pWbemServices, queryLanguage, query, ctx, pEventSinkProxy);
+        }
+        public static HResult CancelAsyncCall(IntPtr pWbemServices, IntPtr pEventSinkProxy)
+        {
+            if (Environment.Is64BitProcess)
+                return x64.CancelAsyncCall(pWbemServices, pEventSinkProxy);
+            else
+                return x86.CancelAsyncCall(pWbemServices, pEventSinkProxy);
+        }
+
+        public static HResult GetClass(IntPtr pWbemServices, string className, IntPtr ctx, out IntPtr pObject)
+        {
+            if (Environment.Is64BitProcess)
+                return x64.GetClass(pWbemServices, className, ctx, out pObject);
+            else
+                return x86.GetClass(pWbemServices, className, ctx, out pObject);
+        }
+
+        public static HResult ExecMethod(IntPtr pWbemServices, string classNameOrPath, string methodName, IntPtr ctx, IntPtr inParams, out IntPtr outParams)
+        {
+            if (Environment.Is64BitProcess)
+                return x64.ExecMethod(pWbemServices, classNameOrPath, methodName, ctx, inParams, out outParams);
+            else
+                return x86.ExecMethod(pWbemServices, classNameOrPath, methodName, ctx, inParams, out outParams);
+        }
+
+        public static HResult DeleteInstance(IntPtr pWbemServices, string strObjectPath, IntPtr ctx)
+        {
+            if (Environment.Is64BitProcess)
+                return x64.DeleteInstance(pWbemServices, strObjectPath, ctx);
+            else
+                return x86.DeleteInstance(pWbemServices, strObjectPath, ctx);
+        }
+
+        public static HResult CreateEventSinkStub(IntPtr pUnsecApp, IntPtr pEventSink, Indicate indicateFunction, SetStatus setStatusFunction, out IntPtr eventSinkStub)
+        {
+            if (Environment.Is64BitProcess)
+                return x64.CreateEventSinkStub(pUnsecApp, pEventSink, indicateFunction, setStatusFunction, out eventSinkStub);
+            else
+                return x86.CreateEventSinkStub(pUnsecApp, pEventSink, indicateFunction, setStatusFunction, out eventSinkStub);
+        }
+
+        public static HResult Next(IntPtr pEnumerator, out IntPtr pClassObject)
+        {
+            if (Environment.Is64BitProcess)
+                return x64.Next(pEnumerator, out pClassObject);
+            else
+                return x86.Next(pEnumerator, out pClassObject);
+        }
+
+        public static HResult Reset(IntPtr pEnumerator)
+        {
+            if (Environment.Is64BitProcess)
+                return x64.Reset(pEnumerator);
+            else
+                return x86.Reset(pEnumerator);
+        }
+
+        public static HResult Get(IntPtr pClassObject, string propertyName, ref VARIANT value, out CimType valueType)
+        {
+            if (Environment.Is64BitProcess)
+                return x64.Get(pClassObject, propertyName, ref value, out valueType);
+            else
+                return x86.Get(pClassObject, propertyName, ref value, out valueType);
+        }
+
+        public static HResult GetMethod(IntPtr pClassObject, string methodName, out IntPtr pInSignature, out IntPtr pOutSignature)
+        {
+            if (Environment.Is64BitProcess)
+                return x64.GetMethod(pClassObject, methodName, out pInSignature, out pOutSignature);
+            else
+                return x86.GetMethod(pClassObject, methodName, out pInSignature, out pOutSignature);
+        }
+
+        public static HResult SpawnInstance(IntPtr pClassObject, out IntPtr pNewInstance)
+        {
+            if (Environment.Is64BitProcess)
+                return x64.SpawnInstance(pClassObject, out pNewInstance);
+            else
+                return x86.SpawnInstance(pClassObject, out pNewInstance);
+        }
+
+        public static HResult Put(IntPtr pClassObject, string wszName, ref VARIANT pvar, CimType cimType)
+        {
+            if (Environment.Is64BitProcess)
+                return x64.Put(pClassObject, wszName, ref pvar, cimType);
+            else
+                return x86.Put(pClassObject, wszName, ref pvar, cimType);
+        }
+
+        public static HResult PutInstance(IntPtr pWbemServices, IntPtr pInst, IntPtr ctx)
+        {
+            if (Environment.Is64BitProcess)
+                return x64.PutInstance(pWbemServices, pInst, ctx);
+            else
+                return x86.PutInstance(pWbemServices, pInst, ctx);
+        }
+
+        public static HResult GetType(IntPtr pClassObject, string propertyName, out CimType cimType)
+        {
+            if (Environment.Is64BitProcess)
+                return x64.GetType(pClassObject, propertyName, out cimType);
+            else
+                return x86.GetType(pClassObject, propertyName, out cimType);
+        }
+
+        public static HResult GetNames(IntPtr pClassObject, out IntPtr pNames)
+        {
+            if (Environment.Is64BitProcess)
+                return x64.GetNames(pClassObject, out pNames);
+            else
+                return x86.GetNames(pClassObject, out pNames);
+        }
+#else
+
         [DllImport(NATIVE_DLL_NAME, CallingConvention = CallingConvention.StdCall)]
         public static extern HResult CreateWbemLocator(out IntPtr pWbemLocator);
 
@@ -149,6 +547,8 @@
 
         [DllImport(NATIVE_DLL_NAME, CallingConvention = CallingConvention.StdCall)]
         public static extern HResult GetNames(IntPtr pClassObject, out IntPtr pNames);
+
+#endif
 
         #endregion
 

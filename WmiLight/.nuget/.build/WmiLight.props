@@ -5,4 +5,17 @@
     <NativeLibrary Include="wbemuuid.lib" Condition="$(RuntimeIdentifier.StartsWith('win'))" />
     <NativeLibrary Include="$(MSBuildThisFileDirectory)..\lib\native\$(RuntimeIdentifier)\WmiLight.Native.lib" Condition="$(RuntimeIdentifier.StartsWith('win'))" />
   </ItemGroup>
+	
+  <ItemGroup Condition="'$(TargetFrameworkIdentifier)' == '.NETFramework'">
+	<None Include="$(MSBuildThisFileDirectory)..\runtimes\win-x86\native\WmiLight.Native.dll">
+	  <Link>%(RecursiveDir)%(FileName).x86%(Extension)</Link>
+	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  <Visible>False</Visible>
+	</None>
+	<None Include="$(MSBuildThisFileDirectory)..\runtimes\win-x64\native\WmiLight.Native.dll">
+	  <Link>%(RecursiveDir)%(FileName).x64%(Extension)</Link>
+	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  <Visible>False</Visible>
+	</None>
+  </ItemGroup>
 </Project>

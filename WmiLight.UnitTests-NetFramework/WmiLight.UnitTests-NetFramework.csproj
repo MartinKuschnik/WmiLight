@@ -1,0 +1,46 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net462</TargetFramework>
+    <RootNamespace>WmiLight.UnitTests_NetFramework</RootNamespace>
+    <LangVersion>latest</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <EnableMSTestRunner>true</EnableMSTestRunner>
+    <OutputType>Exe</OutputType>
+    <TestingPlatformDotnetTestSupport>true</TestingPlatformDotnetTestSupport>
+    <!--
+      Displays error on console in addition to the log file. Note that this feature comes with a performance impact.
+      For more information, visit https://learn.microsoft.com/dotnet/core/testing/unit-testing-platform-integration-dotnet-test#show-failure-per-test
+      -->
+    <TestingPlatformShowTestsFailure>true</TestingPlatformShowTestsFailure>
+    <Platforms>x86;x64;ARM64</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+	  <Compile Include="..\WmiLight.UnitTests\Generated\*.cs" Link="Generated\%(Filename)%(Extension)" />
+	  <Compile Include="..\WmiLight.UnitTests\Helpers\*.cs" Link="Helpers\%(Filename)%(Extension)" />
+	  <Compile Include="..\WmiLight.UnitTests\*.cs" Link="%(Filename)%(Extension)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+    <PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" Version="17.12.6" />
+    <PackageReference Include="Microsoft.Testing.Extensions.TrxReport" Version="1.4.3" />
+    <PackageReference Include="MSTest" Version="3.6.4" />
+    <PackageReference Include="System.Management" Version="9.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WmiLight\WmiLight.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy &quot;$(SolutionDir)WmiLight.Native\bin\$(Configuration)\$(PlatformName)\WmiLight.Native.dll&quot; &quot;$(ProjectDir)$(OutDir)&quot; /Y&#xD;&#xA;move /y &quot;$(ProjectDir)$(OutDir)WmiLight.Native.dll&quot; &quot;$(ProjectDir)$(OutDir)WmiLight.Native.$(PlatformName).dll&quot;" />
+  </Target>
+
+</Project>
