@@ -5,7 +5,7 @@
     using System.Runtime.InteropServices;
 
     [DebuggerDisplay("{vt}")]
-    [StructLayout(LayoutKind.Explicit, Size = 24)]
+    [StructLayout(LayoutKind.Explicit, Size = 24, CharSet = CharSet.Unicode)]
     internal struct VARIANT
     {
         [FieldOffset(0)]
