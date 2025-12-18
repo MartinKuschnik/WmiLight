@@ -302,9 +302,9 @@
             AuthenticationLevel authenticationLevel)
         {
             if (Environment.Is64BitProcess)
-                return x64.SetProxy(pIUnknown, username, username, authority, impersonationLevel, authenticationLevel);
+                return x64.SetProxy(pIUnknown, username, password, authority, impersonationLevel, authenticationLevel);
             else
-                return x86.SetProxy(pIUnknown, username, username, authority, impersonationLevel, authenticationLevel);
+                return x86.SetProxy(pIUnknown, username, password, authority, impersonationLevel, authenticationLevel);
         }
         public static HResult ExecQuery(
             IntPtr pWbemServices,
