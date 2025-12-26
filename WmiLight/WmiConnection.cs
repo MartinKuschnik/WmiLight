@@ -295,7 +295,7 @@
                     {
                         if (!this.isConnected)
                         {
-                            AuthenticationLevel authLevel = this.options.EnablePackageEncryption ? AuthenticationLevel.PacketIntegrity : AuthenticationLevel.PacketPrivacy;
+                            AuthenticationLevel authLevel = this.options.EnablePackageEncryption ? AuthenticationLevel.PacketPrivacy : AuthenticationLevel.PacketIntegrity;
 
                             if (this.IsRemote)
                             {
