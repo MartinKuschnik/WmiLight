@@ -56,8 +56,6 @@ extern "C" {  // only need to export C interface if
 		return CoCreateInstance(CLSID_UnsecuredApartment, nullptr, CLSCTX_LOCAL_SERVER, IID_IUnsecuredApartment, reinterpret_cast<void**>(unsecuredApartment));
 	}
 
-
-
 	__declspec(dllexport) HRESULT _stdcall ConnectServer(
 		IWbemLocator* wbemLocator,
 		wchar_t* networkResource,
@@ -203,6 +201,7 @@ extern "C" {  // only need to export C interface if
 
 	__declspec(dllexport) HRESULT _stdcall Next(
 		IEnumWbemClassObject* pEnumerator,
+		long timeout,
 		IWbemClassObject** pClassObject)
 	{
 		if (pEnumerator == nullptr)
@@ -210,7 +209,7 @@ extern "C" {  // only need to export C interface if
 
 		ULONG uReturn;
 
-		return pEnumerator->Next(WBEM_INFINITE, 1, pClassObject, &uReturn);
+		return pEnumerator->Next(timeout, 1, pClassObject, &uReturn);
 	}
 
 	__declspec(dllexport) HRESULT _stdcall Reset(

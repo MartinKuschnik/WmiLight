@@ -373,7 +373,7 @@
 
             this.Open();
 
-            return new WmiObjectEnumerator(this.wbemServices, this.InternalExecuteQuery(query));
+            return new WmiObjectEnumerator(this.wbemServices, this.InternalExecuteQuery(query), query.EnumeratorTimeout);
         }
 
         #region Description

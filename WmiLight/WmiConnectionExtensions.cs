@@ -9,6 +9,26 @@ namespace WmiLight
     #endregion
     public static class WmiConnectionExtensions
     {
+
+        #region Description
+        /// <summary>
+        /// Creates a <see cref="WmiQuery"/> for the given <see cref="string"/>.
+        /// </summary>
+        /// <param name="connection">the extended <see cref="WmiConnection"/> object.</param>
+        /// <param name="wql">The query.</param>
+        /// <param name="enumeratorBehaviorOptions">The options that can be used to adjust the behavior of the created enumerator.</param>
+        /// <param name="enumeratorTimeout">The timeout for the enumerator.</param>
+        /// <returns>The created <see cref="WmiQuery"/>.</returns>
+        /// <exception cref="System.ArgumentNullException"><paramref name="wql"/> is null.</exception>
+        #endregion
+        public static WmiQuery CreateQuery(this WmiConnection connection, string wql, EnumeratorBehaviorOption enumeratorBehaviorOptions, TimeSpan enumeratorTimeout)
+        {
+            if (wql == null)
+                throw new ArgumentNullException(nameof(wql));
+
+            return new WmiQuery(connection, wql, enumeratorBehaviorOptions, enumeratorTimeout);
+        }
+
         #region Description
         /// <summary>
         /// Creates a <see cref="WmiQuery"/> for the given <see cref="string"/>.
@@ -42,6 +62,25 @@ namespace WmiLight
                 throw new ArgumentNullException(nameof(wql));
 
             return new WmiQuery(connection, wql);
+        }
+
+        #region Description
+        /// <summary>
+        /// Creates a <see cref="WmiQuery"/> for the given <see cref="string"/>.
+        /// </summary>
+        /// <param name="connection">the extended <see cref="WmiConnection"/> object.</param>
+        /// <param name="wql">The query.</param>
+        /// <param name="enumeratorTimeout">The timeout for the enumerator.</param>
+        /// <returns>The created <see cref="WmiQuery"/>.</returns>
+        /// <exception cref="System.ArgumentNullException"><paramref name="wql"/> is null.</exception>
+        #endregion
+
+        public static WmiQuery CreateQuery(this WmiConnection connection, string wql, TimeSpan enumeratorTimeout)
+        {
+            if (wql == null)
+                throw new ArgumentNullException(nameof(wql));
+
+            return new WmiQuery(connection, wql, enumeratorTimeout);
         }
 
         /// <summary>
@@ -92,6 +131,26 @@ namespace WmiLight
                 throw new ArgumentNullException(nameof(query));
 
             return connection.ExecuteQuery(connection.CreateQuery(query, enumeratorBehaviorOptions));
+        }
+
+        #region Description
+        /// <summary>
+        /// Executes a query to retrieve objects.
+        /// </summary>
+        /// <param name="connection">the extended <see cref="WmiConnection"/> object.</param>
+        /// <param name="query">The query which will be executed.</param>
+        /// <param name="enumeratorBehaviorOptions">The options that can be used to adjust the behavior of the created enumerator.</param>
+        /// <param name="enumeratorTimeout">The timeout for the enumerator.</param>
+        /// <returns>An object collection that contains the result set of the query.</returns>
+        /// <exception cref="System.ObjectDisposedException">Object already disposed.</exception>
+        /// <exception cref="System.ArgumentNullException"><paramref name="query"/> is null.</exception>
+        #endregion
+        public static WmiObjectEnumerator ExecuteQuery(this WmiConnection connection, string query, EnumeratorBehaviorOption enumeratorBehaviorOptions, TimeSpan enumeratorTimeout)
+        {
+            if (query == null)
+                throw new ArgumentNullException(nameof(query));
+
+            return connection.ExecuteQuery(connection.CreateQuery(query, enumeratorBehaviorOptions, enumeratorTimeout));
         }
 
         #region Description

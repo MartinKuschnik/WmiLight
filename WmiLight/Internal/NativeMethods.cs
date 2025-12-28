@@ -124,7 +124,7 @@
             public static extern HResult CreateEventSinkStub(IntPtr pUnsecApp, IntPtr pEventSink, Indicate indicateFunction, SetStatus setStatusFunction, out IntPtr eventSinkStub);
 
             [DllImport(NATIVE_DLL_NAME_X64, CallingConvention = CallingConvention.StdCall)]
-            public static extern HResult Next(IntPtr pEnumerator, out IntPtr pClassObject);
+            public static extern HResult Next(IntPtr pEnumerator, int timeout, out IntPtr pClassObject);
 
             [DllImport(NATIVE_DLL_NAME_X64, CallingConvention = CallingConvention.StdCall)]
             public static extern HResult Reset(IntPtr pEnumerator);
@@ -232,7 +232,7 @@
             public static extern HResult CreateEventSinkStub(IntPtr pUnsecApp, IntPtr pEventSink, Indicate indicateFunction, SetStatus setStatusFunction, out IntPtr eventSinkStub);
 
             [DllImport(NATIVE_DLL_NAME_X86, CallingConvention = CallingConvention.StdCall)]
-            public static extern HResult Next(IntPtr pEnumerator, out IntPtr pClassObject);
+            public static extern HResult Next(IntPtr pEnumerator, int timeout, out IntPtr pClassObject);
 
             [DllImport(NATIVE_DLL_NAME_X86, CallingConvention = CallingConvention.StdCall)]
             public static extern HResult Reset(IntPtr pEnumerator);
@@ -371,12 +371,12 @@
                 return x86.CreateEventSinkStub(pUnsecApp, pEventSink, indicateFunction, setStatusFunction, out eventSinkStub);
         }
 
-        public static HResult Next(IntPtr pEnumerator, out IntPtr pClassObject)
+        public static HResult Next(IntPtr pEnumerator, int timeout, out IntPtr pClassObject)
         {
             if (Environment.Is64BitProcess)
-                return x64.Next(pEnumerator, out pClassObject);
+                return x64.Next(pEnumerator, timeout, out pClassObject);
             else
-                return x86.Next(pEnumerator, out pClassObject);
+                return x86.Next(pEnumerator, timeout, out pClassObject);
         }
 
         public static HResult Reset(IntPtr pEnumerator)
@@ -517,7 +517,7 @@
         public static extern HResult CreateEventSinkStub(IntPtr pUnsecApp, IntPtr pEventSink, Indicate indicateFunction, SetStatus setStatusFunction, out IntPtr eventSinkStub);
 
         [DllImport(NATIVE_DLL_NAME, CallingConvention = CallingConvention.StdCall)]
-        public static extern HResult Next(IntPtr pEnumerator, out IntPtr pClassObject);
+        public static extern HResult Next(IntPtr pEnumerator, int timeout, out IntPtr pClassObject);
 
         [DllImport(NATIVE_DLL_NAME, CallingConvention = CallingConvention.StdCall)]
         public static extern HResult Reset(IntPtr pEnumerator);

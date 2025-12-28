@@ -3,6 +3,7 @@
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Threading;
     using WmiLight.Wbem;
 
     #region Description
@@ -30,6 +31,13 @@
 
         #region Description
         /// <summary>
+        /// The timeout for the enumerator or <c>null</c> for no timeout.
+        /// </summary>
+        #endregion
+        private readonly TimeSpan? timeout;
+
+        #region Description
+        /// <summary>
         /// true if the instance is already disposed, otherwise false.
         /// </summary>
         #endregion
@@ -45,10 +53,11 @@
         /// </summary>
         /// <param name="wbemServices">The native <see cref="WbemServices"/> object.</param>
         /// <param name="enumerator">The the native enumerator.</param>
+        /// <param name="timeout">The timeout for the enumerator or <c>null</c> for no timeout.</param>
         /// <exception cref="ArgumentNullException"><paramref name="wbemServices"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="enumerator"/> is null.</exception>
         #endregion
-        internal WmiObjectEnumerator(WbemServices wbemServices, WbemClassObjectEnumerator enumerator)
+        internal WmiObjectEnumerator(WbemServices wbemServices, WbemClassObjectEnumerator enumerator, TimeSpan? timeout)
         {
             if (wbemServices == null)
                 throw new ArgumentNullException(nameof(wbemServices));
@@ -58,6 +67,7 @@
 
             this.wbemServices = wbemServices;
             this.wbemClassObjectEnumerator = enumerator;
+            this.timeout = timeout;
 
             enumerator.Reset();
         }
@@ -97,8 +107,9 @@
             if (this.disposed)
                 throw new ObjectDisposedException(nameof(WmiObjectEnumerator));
 
+            int timeout = this.timeout.HasValue ? (int)this.timeout.Value.TotalMilliseconds : Timeout.Infinite;
 
-            if (this.wbemClassObjectEnumerator.Next(out WbemClassObject currentWmiObject))
+            if (this.wbemClassObjectEnumerator.Next(timeout, out WbemClassObject currentWmiObject))
             {
                 this.Current = new WmiObject(this.wbemServices, currentWmiObject);
                 return true;
