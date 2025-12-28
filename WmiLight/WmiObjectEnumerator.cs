@@ -107,7 +107,7 @@
             if (this.disposed)
                 throw new ObjectDisposedException(nameof(WmiObjectEnumerator));
 
-            int timeout = this.timeout.HasValue ? (int)this.timeout.Value.TotalMilliseconds : Timeout.Infinite;
+            int timeout = this.timeout.HasValue && this.timeout.Value.TotalMilliseconds <= int.MaxValue ? (int)this.timeout.Value.TotalMilliseconds : Timeout.Infinite;
 
             if (this.wbemClassObjectEnumerator.Next(timeout, out WbemClassObject currentWmiObject))
             {

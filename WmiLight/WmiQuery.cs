@@ -114,8 +114,8 @@
         /// <exception cref="ArgumentNullException"><paramref name="connection"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="wql"/> is null.</exception>
         #endregion
-        public WmiQuery(WmiConnection connection, string wql, TimeSpan timeout)
-            : this(connection, wql, EnumeratorBehaviorOption.ReturnImmediately, timeout)
+        public WmiQuery(WmiConnection connection, string wql, TimeSpan enumeratorTimeout)
+            : this(connection, wql, EnumeratorBehaviorOption.ReturnImmediately, enumeratorTimeout)
         {
         }
 

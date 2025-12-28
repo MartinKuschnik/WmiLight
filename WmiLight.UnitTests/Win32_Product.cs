@@ -7,13 +7,13 @@
         /// Verifies that a TimeoutException is thrown when the enumerator timeout is too short.
         /// </summary>
         [TestMethod]
-        public void Win32_Product_Timeouts_With_Tiny_Timeout()
+        public void Win32_Product_Time_Out_With_Tiny_Timeout()
         {
             Assert.ThrowsException<TimeoutException>(() => {
 
                 using (WmiConnection connection = new WmiConnection())
                 {
-                    foreach (WmiObject product in connection.CreateQuery("SELECT * FROM Win32_Product", TimeSpan.FromMilliseconds(100)))
+                    foreach (WmiObject _ in connection.CreateQuery("SELECT * FROM Win32_Product", TimeSpan.FromMilliseconds(100)))
                     {
                         Assert.Fail("Should not reach here due to timeout.");
                     }
@@ -25,13 +25,13 @@
         /// Verifies that the query completes successfully without a timeout.
         /// </summary>
         [TestMethod]
-        public void Win32_Product_Does_Not_Timeouts_Without_Timeout()
+        public void Win32_Product_Does_Not_Time_Out_Without_Timeout()
         {
             using (WmiConnection connection = new WmiConnection())
             {
                 bool productFound = false;
 
-                foreach (WmiObject product in connection.CreateQuery("SELECT * FROM Win32_Product"))
+                foreach (WmiObject _ in connection.CreateQuery("SELECT * FROM Win32_Product"))
                 {
                     productFound = true;
                     break;
