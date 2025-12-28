@@ -65,7 +65,7 @@
         /// <exception cref="ArgumentNullException"><paramref name="connection"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="wql"/> is null.</exception>
         #endregion
-        public WmiQuery(WmiConnection connection, string wql, EnumeratorBehaviorOption enumeratorBehaviorOptions, TimeSpan? enumeratorTimeout = null)
+        public WmiQuery(WmiConnection connection, string wql, TimeSpan? enumeratorTimeout = null, EnumeratorBehaviorOption enumeratorBehaviorOptions = EnumeratorBehaviorOption.ReturnImmediately)
         {
             if (connection == null)
                 throw new ArgumentNullException(nameof(connection));
@@ -96,7 +96,7 @@
         /// <exception cref="ArgumentNullException"><paramref name="wql"/> is null.</exception>
         #endregion
         public WmiQuery(WmiConnection connection, string wql)
-            : this(connection, wql, EnumeratorBehaviorOption.ReturnImmediately)
+            : this(connection, wql, null, EnumeratorBehaviorOption.ReturnImmediately)
         {
         }
 
@@ -115,7 +115,7 @@
         /// <exception cref="ArgumentNullException"><paramref name="wql"/> is null.</exception>
         #endregion
         public WmiQuery(WmiConnection connection, string wql, TimeSpan timeout)
-            : this(connection, wql, EnumeratorBehaviorOption.ReturnImmediately, timeout)
+            : this(connection, wql, timeout, EnumeratorBehaviorOption.ReturnImmediately)
         {
         }
 
