@@ -9,14 +9,14 @@ namespace WmiLight.Wbem
         {
         }
 
-        internal bool Next(out WbemClassObject wbemClassObject)
+        internal bool Next(int timeout, out WbemClassObject wbemClassObject)
         {
             if (this.Disposed)
                 throw new ObjectDisposedException(nameof(WbemClassObjectEnumerator));
 
             IntPtr pClassObject;
             
-            HResult hResult = NativeMethods.Next(this, out pClassObject);
+            HResult hResult = NativeMethods.Next(this, timeout, out pClassObject);
 
             if (hResult.Failed)
                 throw (Exception)hResult;
@@ -26,6 +26,9 @@ namespace WmiLight.Wbem
                 wbemClassObject = null;
                 return false;
             }
+
+            if (hResult == WbemStatus.WBEM_S_TIMEDOUT)
+                throw new TimeoutException();
 
             wbemClassObject = new WbemClassObject(pClassObject);
             return true;

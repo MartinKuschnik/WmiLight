@@ -122,9 +122,9 @@ namespace WmiCompare
 
                 Stopwatch stopwatch2 = Stopwatch.StartNew();
 
-                using (WmiConnection conncetion = new WmiConnection())
+                using (WmiConnection connection = new WmiConnection())
                 {
-                    foreach (WmiObject partition in conncetion.CreateQuery(this.QueryTextBox.Text))
+                    foreach (WmiObject partition in connection.CreateQuery(this.QueryTextBox.Text))
                     {
                         if (rightCount++ == 0)
                         {

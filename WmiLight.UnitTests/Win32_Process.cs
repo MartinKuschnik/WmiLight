@@ -6,11 +6,11 @@
         [TestMethod]
         public void Win32_Process_GetOwner_Can_Be_Called()
         {
-            using (WmiConnection conncetion = new WmiConnection())
+            using (WmiConnection connection = new WmiConnection())
             {
-                using (WmiMethod method = conncetion.GetMethod("Win32_Process", "GetOwner"))
+                using (WmiMethod method = connection.GetMethod("Win32_Process", "GetOwner"))
                 {
-                    using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(conncetion, "Win32_Process"))
+                    using (WmiObject wmiObject = WmiHelper.GetFirstWmiLightObjects(connection, "Win32_Process"))
                     {
                         uint result = wmiObject.ExecuteMethod<uint>(method, out WmiMethodParameters outParameters);
 
