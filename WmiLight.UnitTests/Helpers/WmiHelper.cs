@@ -23,9 +23,9 @@ namespace WmiLight.UnitTests
 
         internal static WmiObject GetFirstWmiLightObjects(string path, string @class)
         {
-            using (WmiConnection conncetion = new WmiConnection(path))
+            using (WmiConnection connection = new WmiConnection(path))
             {
-                using (WmiObjectEnumerator enumerator = conncetion.ExecuteQuery(new WmiQuery(conncetion, $"SELECT * FROM {@class}")))
+                using (WmiObjectEnumerator enumerator = connection.ExecuteQuery(new WmiQuery(connection, $"SELECT * FROM {@class}")))
                 {
                     if (!enumerator.MoveNext())
                         Assert.Inconclusive();
@@ -34,9 +34,9 @@ namespace WmiLight.UnitTests
                 }
             }
         }
-        internal static WmiObject GetFirstWmiLightObjects(WmiConnection conncetion, string @class)
+        internal static WmiObject GetFirstWmiLightObjects(WmiConnection connection, string @class)
         {
-            using (WmiObjectEnumerator enumerator = conncetion.ExecuteQuery(new WmiQuery(conncetion, $"SELECT * FROM {@class}")))
+            using (WmiObjectEnumerator enumerator = connection.ExecuteQuery(new WmiQuery(connection, $"SELECT * FROM {@class}")))
             {
                 if (!enumerator.MoveNext())
                     Assert.Inconclusive();

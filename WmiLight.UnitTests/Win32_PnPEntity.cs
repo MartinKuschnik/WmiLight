@@ -6,11 +6,11 @@
         [TestMethod]
         public void Win32_PnPEntity_GetDeviceProperties_Can_Be_Called_With_String_Array_Parameter()
         {
-            using (WmiConnection conncetion = new WmiConnection())
+            using (WmiConnection connection = new WmiConnection())
             {
-                using (WmiMethod method = conncetion.GetMethod("Win32_PnPEntity", "GetDeviceProperties"))
+                using (WmiMethod method = connection.GetMethod("Win32_PnPEntity", "GetDeviceProperties"))
                 {
-                    foreach (WmiObject pnpEntity in conncetion.CreateQuery("SELECT * FROM Win32_PnPEntity"))
+                    foreach (WmiObject pnpEntity in connection.CreateQuery("SELECT * FROM Win32_PnPEntity"))
                     {
                         uint result = pnpEntity.ExecuteMethod<uint>(method, out WmiMethodParameters outParameters);
 
@@ -48,11 +48,11 @@
         [TestMethod]
         public void Win32_PnPEntity_GetDeviceProperties_Can_Be_Called_Null_Parameter()
         {
-            using (WmiConnection conncetion = new WmiConnection())
+            using (WmiConnection connection = new WmiConnection())
             {
-                using (WmiMethod method = conncetion.GetMethod("Win32_PnPEntity", "GetDeviceProperties"))
+                using (WmiMethod method = connection.GetMethod("Win32_PnPEntity", "GetDeviceProperties"))
                 {
-                    foreach (WmiObject pnpEntity in conncetion.CreateQuery("SELECT * FROM Win32_PnPEntity"))
+                    foreach (WmiObject pnpEntity in connection.CreateQuery("SELECT * FROM Win32_PnPEntity"))
                     {
                         WmiMethodParameters inParameters = method.CreateInParameters();
 
