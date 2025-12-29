@@ -287,14 +287,14 @@
         /// The query was not syntactically valid.
         /// </summary>
         #endregion
-        InvalidQuery = unchecked((int)0x80041017),
+        WBEM_E_INVALID_QUERY = unchecked((int)0x80041017),
 
         #region Description
         /// <summary>
         /// The requested query language is not supported.
         /// </summary>
         #endregion
-        WBEM_E_INVALID_QUERY = unchecked((int)0x80041018),
+        WBEM_E_INVALID_QUERY_TYPE = unchecked((int)0x80041018),
 
         #region Description
         /// <summary>
