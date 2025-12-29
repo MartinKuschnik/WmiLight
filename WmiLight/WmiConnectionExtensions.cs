@@ -74,13 +74,56 @@ namespace WmiLight
         /// <returns>The created <see cref="WmiQuery"/>.</returns>
         /// <exception cref="System.ArgumentNullException"><paramref name="wql"/> is null.</exception>
         #endregion
-
         public static WmiQuery CreateQuery(this WmiConnection connection, string wql, TimeSpan enumeratorTimeout)
         {
             if (wql == null)
                 throw new ArgumentNullException(nameof(wql));
 
             return new WmiQuery(connection, wql, enumeratorTimeout);
+        }
+
+
+        #region Description
+        /// <summary>
+        /// Creates a WMI query to retrieve all objects related to the 
+        /// specified <see cref="WmiObject"/> using its <see cref="WmiObject.Relpath"/>.
+        /// The query is constructed as an <c>ASSOCIATORS OF {Relpath}</c> WQL statement.
+        /// </summary>
+        /// <param name="connection">the extended <see cref="WmiConnection"/> object.</param>
+        /// <param name="wmiObject">The source WMI object whose associated objects should be retrieved.</param>
+        /// <returns>
+        /// A <see cref="WmiQuery"/> representing an <c>ASSOCIATORS OF &#123;Relpath&#125;</c> WQL query.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException"><paramref name="wmiObject"/> is null.</exception>
+        #endregion
+        public static WmiQuery CreateQueryForRelated(this WmiConnection connection, WmiObject wmiObject)
+        {
+            if (wmiObject is null)
+                throw new ArgumentNullException(nameof(wmiObject));
+
+            return new WmiQuery(connection, $"ASSOCIATORS OF {{{wmiObject.Relpath}}}");
+        }
+
+        #region Description
+        /// <summary>
+        /// Creates a WMI query to retrieve all objects of a specific class related to the 
+        /// specified <see cref="WmiObject"/> using its <see cref="WmiObject.Relpath"/>.
+        /// The query is constructed as an <c>ASSOCIATORS OF {Relpath} WHERE ResultClass = &lt;relatedClass&gt;</c> WQL statement.
+        /// </summary>
+        /// <param name="connection">the extended <see cref="WmiConnection"/> object.</param>
+        /// <param name="wmiObject">The source WMI object whose associated objects should be retrieved.</param>
+        /// <param name="relatedClass">The name of the WMI class to filter the related objects.</param>
+        /// <returns>
+        /// A <see cref="WmiQuery"/> representing an <c>ASSOCIATORS OF {Relpath} WHERE ResultClass = &lt;relatedClass&gt;</c> WQL query.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException"><paramref name="wmiObject"/> is null.</exception>
+        #endregion
+        public static WmiQuery CreateQueryForRelated(this WmiConnection connection, WmiObject wmiObject, string relatedClass)
+        {
+            if (wmiObject is null)
+                throw new ArgumentNullException(nameof(wmiObject));
+
+            return new WmiQuery(connection, $"ASSOCIATORS OF {{{wmiObject.Relpath}}} WHERE ResultClass = {relatedClass}");
         }
 
         /// <summary>
