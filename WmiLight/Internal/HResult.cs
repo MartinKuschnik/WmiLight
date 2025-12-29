@@ -180,6 +180,12 @@
                     case (int)WbemStatus.WBEM_E_INVALID_NAMESPACE:
                         return new InvalidNamespaceException(new HResultInfo(hr, "The specified namespace did not exist on the server.", WbemStatus.WBEM_E_INVALID_NAMESPACE.ToString()));
 
+                    case (int)WbemStatus.WBEM_E_INVALID_CLASS:
+                        return new InvalidClassException(new HResultInfo(hr, "The specified class did not exist on the server.", WbemStatus.WBEM_E_INVALID_CLASS.ToString()));
+
+                    case (int)WbemStatus.WBEM_E_INVALID_QUERY:
+                        return new InvalidQueryException(new HResultInfo(hr, "The specified query is not valid.", WbemStatus.WBEM_E_INVALID_QUERY.ToString()));
+
                     case (int)WbemStatus.WBEM_E_TRANSPORT_FAILURE:
                         return new TransportFailureException(new HResultInfo(hr, "The remote procedure call (RPC) link between the current process and WMI failed.", WbemStatus.WBEM_E_TRANSPORT_FAILURE.ToString()));
 

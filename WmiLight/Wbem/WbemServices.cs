@@ -46,7 +46,17 @@ namespace WmiLight.Wbem
             HResult hResult = NativeMethods.ExecQuery(this, "WQL", query, behaviorOption, ctx, out pEnumerator);
 
             if (hResult.Failed)
-                throw (Exception)hResult;
+            {
+                switch (hResult)
+                {
+                    // The error indicating that the query is invalid is only returned here if the EnumeratorBehaviorOption DirectRead is set.
+                    case (int)WbemStatus.WBEM_E_INVALID_QUERY:
+                        throw new InvalidQueryException(query);
+
+                    default:
+                        throw (Exception)hResult;
+                }
+            }
 
             return new WbemClassObjectEnumerator(pEnumerator);
         }
@@ -60,7 +70,17 @@ namespace WmiLight.Wbem
             HResult hResult = NativeMethods.ExecQuery(this, "WQL", query, behaviorOption, ctx, out pEnumerator);
 
             if (hResult.Failed)
-                throw (Exception)hResult;
+            {
+                switch (hResult)
+                {
+                    // The error indicating that the query is invalid is only returned here if the EnumeratorBehaviorOption DirectRead is set.
+                    case (int)WbemStatus.WBEM_E_INVALID_QUERY:
+                        throw new InvalidQueryException(query);
+
+                    default:
+                        throw (Exception)hResult;
+                }
+            }
 
             hResult = NativeMethods.SetProxy(pEnumerator, userName, password, authority, impersonate, authLevel);
 
