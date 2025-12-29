@@ -26,7 +26,7 @@ namespace WmiLight.Wbem
             return cimType;
         }
 
-        public object Get(string propertyName)
+        public unsafe object Get(string propertyName)
         {
             if (this.Disposed)
                 throw new ObjectDisposedException(nameof(WbemClassObject));
@@ -36,7 +36,7 @@ namespace WmiLight.Wbem
 
             try
             {
-                HResult hResult = NativeMethods.Get(this, propertyName, ref value, out valueType);
+                HResult hResult = NativeMethods.Get(this, propertyName, &value, out valueType);
 
                 if (hResult.Failed)
                     throw (Exception)hResult;
@@ -48,11 +48,11 @@ namespace WmiLight.Wbem
             }
             finally
             {
-                NativeMethods.VariantClear(ref value);
+                NativeMethods.VariantClear(&value);
             }
         }
 
-        public TResult Get<TResult>(string propertyName)
+        public unsafe TResult Get<TResult>(string propertyName)
         {
             if (this.Disposed)
                 throw new ObjectDisposedException(nameof(WbemClassObject));
@@ -62,7 +62,7 @@ namespace WmiLight.Wbem
 
             try
             {
-                HResult hResult = NativeMethods.Get(this, propertyName, ref value, out valueType);
+                HResult hResult = NativeMethods.Get(this, propertyName, &value, out valueType);
 
                 if (hResult.Failed)
                     throw (Exception)hResult;
@@ -74,7 +74,7 @@ namespace WmiLight.Wbem
             }
             finally
             {
-                NativeMethods.VariantClear(ref value);
+                NativeMethods.VariantClear(&value);
             }
         }
 
@@ -126,124 +126,124 @@ namespace WmiLight.Wbem
             return new WbemClassObject(pNewInstance);
         }
 
-        internal void Put(string propertyName, sbyte propertyValue)
+        internal unsafe void Put(string propertyName, sbyte propertyValue)
         {
             if (this.Disposed)
                 throw new ObjectDisposedException(nameof(WbemClassObject));
 
             VARIANT value = new VARIANT() { vt = VARENUM.VT_I1, SInt8 = propertyValue };
 
-            HResult hResult = NativeMethods.Put(this, propertyName, ref value, CimType.None); /* Always CimType.None because this parameter is only for new properties. */
+            HResult hResult = NativeMethods.Put(this, propertyName, &value, CimType.None); /* Always CimType.None because this parameter is only for new properties. */
 
             if (hResult.Failed)
                 throw (Exception)hResult;
         }
 
-        internal void Put(string propertyName, byte propertyValue)
+        internal unsafe void Put(string propertyName, byte propertyValue)
         {
             if (this.Disposed)
                 throw new ObjectDisposedException(nameof(WbemClassObject));
 
             VARIANT value = new VARIANT() { vt = VARENUM.VT_UI1, UInt8 = propertyValue };
 
-            HResult hResult = NativeMethods.Put(this, propertyName, ref value, CimType.None); /* Always CimType.None because this parameter is only for new properties. */
+            HResult hResult = NativeMethods.Put(this, propertyName, &value, CimType.None); /* Always CimType.None because this parameter is only for new properties. */
 
             if (hResult.Failed)
                 throw (Exception)hResult;
         }
 
-        internal void Put(string propertyName, short propertyValue)
+        internal unsafe void Put(string propertyName, short propertyValue)
         {
             if (this.Disposed)
                 throw new ObjectDisposedException(nameof(WbemClassObject));
 
             VARIANT value = new VARIANT() { vt = VARENUM.VT_I2, SInt16 = propertyValue };
 
-            HResult hResult = NativeMethods.Put(this, propertyName, ref value, CimType.None); /* Always CimType.None because this parameter is only for new properties. */
+            HResult hResult = NativeMethods.Put(this, propertyName, &value, CimType.None); /* Always CimType.None because this parameter is only for new properties. */
 
             if (hResult.Failed)
                 throw (Exception)hResult;
         }
 
-        internal void Put(string propertyName, ushort propertyValue)
+        internal unsafe void Put(string propertyName, ushort propertyValue)
         {
             if (this.Disposed)
                 throw new ObjectDisposedException(nameof(WbemClassObject));
 
             VARIANT value = new VARIANT() { vt = VARENUM.VT_UI2, UInt16 = propertyValue };
 
-            HResult hResult = NativeMethods.Put(this, propertyName, ref value, CimType.None); /* Always CimType.None because this parameter is only for new properties. */
+            HResult hResult = NativeMethods.Put(this, propertyName, &value, CimType.None); /* Always CimType.None because this parameter is only for new properties. */
 
             if (hResult.Failed)
                 throw (Exception)hResult;
         }
 
-        internal void Put(string propertyName, int propertyValue)
+        internal unsafe void Put(string propertyName, int propertyValue)
         {
             if (this.Disposed)
                 throw new ObjectDisposedException(nameof(WbemClassObject));
 
             VARIANT value = new VARIANT() { vt = VARENUM.VT_I4, SInt32 = propertyValue };
 
-            HResult hResult = NativeMethods.Put(this, propertyName, ref value, CimType.None); /* Always CimType.None because this parameter is only for new properties. */
+            HResult hResult = NativeMethods.Put(this, propertyName, &value, CimType.None); /* Always CimType.None because this parameter is only for new properties. */
 
             if (hResult.Failed)
                 throw (Exception)hResult;
         }
 
-        internal void Put(string propertyName, uint propertyValue)
+        internal unsafe void Put(string propertyName, uint propertyValue)
         {
             if (this.Disposed)
                 throw new ObjectDisposedException(nameof(WbemClassObject));
 
             VARIANT value = new VARIANT() { vt = VARENUM.VT_UI4, UInt32 = propertyValue };
 
-            HResult hResult = NativeMethods.Put(this, propertyName, ref value, CimType.None); /* Always CimType.None because this parameter is only for new properties. */
+            HResult hResult = NativeMethods.Put(this, propertyName, &value, CimType.None); /* Always CimType.None because this parameter is only for new properties. */
 
             if (hResult.Failed)
                 throw (Exception)hResult;
         }
 
-        internal void Put(string propertyName, long propertyValue)
+        internal unsafe void Put(string propertyName, long propertyValue)
         {
             if (this.Disposed)
                 throw new ObjectDisposedException(nameof(WbemClassObject));
 
             VARIANT value = new VARIANT() { vt = VARENUM.VT_I8, SInt64 = propertyValue };
 
-            HResult hResult = NativeMethods.Put(this, propertyName, ref value, CimType.None); /* Always CimType.None because this parameter is only for new properties. */
+            HResult hResult = NativeMethods.Put(this, propertyName, &value, CimType.None); /* Always CimType.None because this parameter is only for new properties. */
 
             if (hResult.Failed)
                 throw (Exception)hResult;
         }
 
-        internal void Put(string propertyName, ulong propertyValue)
+        internal unsafe void Put(string propertyName, ulong propertyValue)
         {
             if (this.Disposed)
                 throw new ObjectDisposedException(nameof(WbemClassObject));
 
             VARIANT value = new VARIANT() { vt = VARENUM.VT_UI8, UInt64 = propertyValue };
 
-            HResult hResult = NativeMethods.Put(this, propertyName, ref value, CimType.None); /* Always CimType.None because this parameter is only for new properties. */
+            HResult hResult = NativeMethods.Put(this, propertyName, &value, CimType.None); /* Always CimType.None because this parameter is only for new properties. */
 
             if (hResult.Failed)
                 throw (Exception)hResult;
         }
 
-        internal void Put(string propertyName, bool propertyValue)
+        internal unsafe void Put(string propertyName, bool propertyValue)
         {
             if (this.Disposed)
                 throw new ObjectDisposedException(nameof(WbemClassObject));
 
             VARIANT value = new VARIANT() { vt = VARENUM.VT_BOOL, Boolean = propertyValue ? VT_BOOL.VARIANT_TRUE : VT_BOOL.VARIANT_FALSE };
 
-            HResult hResult = NativeMethods.Put(this, propertyName, ref value, CimType.None); /* Always CimType.None because this parameter is only for new properties. */
+            HResult hResult = NativeMethods.Put(this, propertyName, &value, CimType.None); /* Always CimType.None because this parameter is only for new properties. */
 
             if (hResult.Failed)
                 throw (Exception)hResult;
         }
 
-        internal void Put(string propertyName, string propertyValue)
+        internal unsafe void Put(string propertyName, string propertyValue)
         {
             if (this.Disposed)
                 throw new ObjectDisposedException(nameof(WbemClassObject));
@@ -254,7 +254,7 @@ namespace WmiLight.Wbem
 
             try
             {
-                HResult hResult = NativeMethods.Put(this, propertyName, ref value, CimType.None); /* Always CimType.None because this parameter is only for new properties. */
+                HResult hResult = NativeMethods.Put(this, propertyName, &value, CimType.None); /* Always CimType.None because this parameter is only for new properties. */
 
                 if (hResult.Failed)
                     throw (Exception)hResult;
@@ -266,7 +266,7 @@ namespace WmiLight.Wbem
             }
         }
 
-        internal void Put(string propertyName, string[] propertyValue)
+        internal unsafe void Put(string propertyName, string[] propertyValue)
         {
             if (this.Disposed)
                 throw new ObjectDisposedException(nameof(WbemClassObject));
@@ -300,7 +300,7 @@ namespace WmiLight.Wbem
 
                     VARIANT value = new VARIANT() { vt = VARENUM.VT_BSTR | VARENUM.VT_ARRAY, BStrVal = pSafeArray };
 
-                    hResult = NativeMethods.Put(this, propertyName, ref value, CimType.None); /* Always CimType.None because this parameter is only for new properties. */
+                    hResult = NativeMethods.Put(this, propertyName, &value, CimType.None); /* Always CimType.None because this parameter is only for new properties. */
 
                     if (hResult.Failed)
                         throw (Exception)hResult;
@@ -316,7 +316,7 @@ namespace WmiLight.Wbem
 
                 try
                 {
-                    HResult hResult = NativeMethods.Put(this, propertyName, ref value, CimType.None); /* Always CimType.None because this parameter is only for new properties. */
+                    HResult hResult = NativeMethods.Put(this, propertyName, &value, CimType.None); /* Always CimType.None because this parameter is only for new properties. */
 
                     if (hResult.Failed)
                         throw (Exception)hResult;
@@ -474,7 +474,7 @@ namespace WmiLight.Wbem
             }
         }
 
-        private static T[] VariantToArray<T>(ref VARIANT value, CimType type)
+        internal unsafe static T[] VariantToArray<T>(ref VARIANT value, CimType type)
         {
             uint arrayDims = NativeMethods.SafeArrayGetDim(value.Object);
 
@@ -495,7 +495,7 @@ namespace WmiLight.Wbem
                 }
                 finally
                 {
-                    NativeMethods.VariantClear(ref variant);
+                    NativeMethods.VariantClear(&variant);
                 }
             }
 
