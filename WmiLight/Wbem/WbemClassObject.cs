@@ -454,7 +454,7 @@ namespace WmiLight.Wbem
 
                         Guid iid = InterfaceIdentifier.IWbemClassObject;
 
-                        HResult hResult = Marshal.QueryInterface(value.Object, ref iid, out IntPtr pWbemObject);
+                        HResult hResult = NativeMethods.QueryInterface(value.Object, ref iid, out IntPtr pWbemObject);
 
                         if (hResult.Failed)
                             throw (Exception)hResult;

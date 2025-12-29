@@ -58,6 +58,9 @@ namespace WmiLight
             public static extern HResult CreateWbemUnsecuredApartment(out IntPtr pUnsecuredApartment);
 
             [DllImport(NATIVE_DLL_NAME_X64, CallingConvention = CallingConvention.StdCall)]
+            public static extern HResult QueryInterface(IntPtr unknown, ref Guid riid, out IntPtr ppvObject);
+
+            [DllImport(NATIVE_DLL_NAME_X64, CallingConvention = CallingConvention.StdCall)]
             public static extern HResult ConnectServer(
                 IntPtr pWbemLocator,
                 [MarshalAs(UnmanagedType.LPWStr)]
@@ -91,9 +94,9 @@ namespace WmiLight
             public static extern HResult ExecQuery(
                 IntPtr pWbemServices,
                 [MarshalAs(UnmanagedType.LPWStr)]
-            string ueryLanguage,
+                string ueryLanguage,
                 [MarshalAs(UnmanagedType.LPWStr)]
-            string query,
+                string query,
                 WbemClassObjectEnumeratorBehaviorOption behaviorOption,
                 IntPtr ctx,
                 out IntPtr pEnumerator);
@@ -102,9 +105,9 @@ namespace WmiLight
             public static extern HResult ExecNotificationQueryAsync(
                 IntPtr pWbemServices,
                 [MarshalAs(UnmanagedType.LPWStr)]
-            string queryLanguage,
+                string queryLanguage,
                 [MarshalAs(UnmanagedType.LPWStr)]
-            string query,
+                string query,
                 IntPtr ctx,
                 IntPtr pEventSinkProxy);
 
@@ -133,7 +136,7 @@ namespace WmiLight
             public static unsafe extern HResult Get(
                 IntPtr pClassObject,
                 [MarshalAs(UnmanagedType.LPWStr)]
-            string propertyName,
+                string propertyName,
                 VARIANT* value,
                 out CimType valueType);
 
@@ -166,20 +169,23 @@ namespace WmiLight
             public static extern HResult CreateWbemUnsecuredApartment(out IntPtr pUnsecuredApartment);
 
             [DllImport(NATIVE_DLL_NAME_X86, CallingConvention = CallingConvention.StdCall)]
+            public static extern HResult QueryInterface(IntPtr unknown, ref Guid riid, out IntPtr ppvObject);
+
+            [DllImport(NATIVE_DLL_NAME_X86, CallingConvention = CallingConvention.StdCall)]
             public static extern HResult ConnectServer(
                 IntPtr pWbemLocator,
                 [MarshalAs(UnmanagedType.LPWStr)]
-            string networkResource,
+                string networkResource,
                 [MarshalAs(UnmanagedType.LPWStr)]
-            string userName,
+                string userName,
                 [MarshalAs(UnmanagedType.LPWStr)]
-            string userPassword,
+                string userPassword,
                 [MarshalAs(UnmanagedType.LPWStr)]
-            string locale,
+                string locale,
                 [MarshalAs (UnmanagedType.U4)]
                 uint wbemConnectOption,
                 [MarshalAs(UnmanagedType.LPWStr)]
-            string authority,
+                string authority,
                 IntPtr pCtx,
                 out IntPtr pWbemServices);
 
@@ -187,11 +193,11 @@ namespace WmiLight
             public static extern HResult SetProxy(
                 IntPtr pIUnknown,
                 [MarshalAs(UnmanagedType.LPWStr)]
-            string username,
+                string username,
                 [MarshalAs(UnmanagedType.LPWStr)]
-            string password,
+                string password,
                 [MarshalAs(UnmanagedType.LPWStr)]
-            string authority,
+                string authority,
                 ImpersonationLevel impersonationLevel,
                 AuthenticationLevel authenticationLevel);
 
@@ -199,9 +205,9 @@ namespace WmiLight
             public static extern HResult ExecQuery(
                 IntPtr pWbemServices,
                 [MarshalAs(UnmanagedType.LPWStr)]
-            string ueryLanguage,
+                string ueryLanguage,
                 [MarshalAs(UnmanagedType.LPWStr)]
-            string query,
+                string query,
                 WbemClassObjectEnumeratorBehaviorOption behaviorOption,
                 IntPtr ctx,
                 out IntPtr pEnumerator);
@@ -210,9 +216,9 @@ namespace WmiLight
             public static extern HResult ExecNotificationQueryAsync(
                 IntPtr pWbemServices,
                 [MarshalAs(UnmanagedType.LPWStr)]
-            string queryLanguage,
+                string queryLanguage,
                 [MarshalAs(UnmanagedType.LPWStr)]
-            string query,
+                string query,
                 IntPtr ctx,
                 IntPtr pEventSinkProxy);
 
@@ -241,7 +247,7 @@ namespace WmiLight
             public static unsafe extern HResult Get(
                 IntPtr pClassObject,
                 [MarshalAs(UnmanagedType.LPWStr)]
-            string propertyName,
+                string propertyName,
                 VARIANT* value,
                 out CimType valueType);
 
@@ -279,6 +285,15 @@ namespace WmiLight
             else
                 return x86.CreateWbemUnsecuredApartment(out pUnsecuredApartment);
         }
+
+        public static HResult QueryInterface(IntPtr unknown, ref Guid riid, out IntPtr ppvObject)
+        {
+            if (Environment.Is64BitProcess)
+                return x64.QueryInterface(unknown, ref riid, out ppvObject);
+            else
+                return x86.QueryInterface(unknown, ref riid, out ppvObject);
+        }
+
         public static HResult ConnectServer(
             IntPtr pWbemLocator,
             string networkResource,
