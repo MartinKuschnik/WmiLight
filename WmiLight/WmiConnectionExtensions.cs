@@ -116,12 +116,19 @@ namespace WmiLight
         /// <returns>
         /// A <see cref="WmiQuery"/> representing an <c>ASSOCIATORS OF {Relpath} WHERE ResultClass = &lt;relatedClass&gt;</c> WQL query.
         /// </returns>
-        /// <exception cref="System.ArgumentNullException"><paramref name="wmiObject"/> is null.</exception>
+        /// <exception cref="System.ArgumentNullException"><paramref name="wmiObject"/> or <paramref name="relatedClass"/>> is null.</exception>
+        /// <exception cref="System.ArgumentNullException"><paramref name="relatedClass"/>> is empty.</exception>
         #endregion
         public static WmiQuery CreateQueryForRelated(this WmiConnection connection, WmiObject wmiObject, string relatedClass)
         {
             if (wmiObject is null)
                 throw new ArgumentNullException(nameof(wmiObject));
+
+            if (relatedClass is null)
+                throw new ArgumentNullException(nameof(relatedClass));
+
+            if (relatedClass.Length == 0)
+                throw new ArgumentException("The related class must not be empty.", nameof(relatedClass));
 
             return new WmiQuery(connection, $"ASSOCIATORS OF {{{wmiObject.Relpath}}} WHERE ResultClass = {relatedClass}");
         }
