@@ -23,7 +23,7 @@
 	</Target>
 	<PropertyGroup />
 	<PropertyGroup>
-		<Version>6.19.0</Version>
+		<Version>6.20.0</Version>
 		<PackageId>WmiLight</PackageId>
 		<Authors>Martin Kuschnik</Authors>
 		<Company>Martin Kuschnik</Company>
@@ -41,7 +41,7 @@
 
 		<!-- Workaround for https://github.com/dotnet/sdk/issues/43016. -->
 		<_NeedToDownloadMicrosoftNetSdkCompilersToolsetPackage>true</_NeedToDownloadMicrosoftNetSdkCompilersToolsetPackage>
-		<FileVersion>6.19.0</FileVersion>
+		<FileVersion>6.20.0</FileVersion>
 		
 	</PropertyGroup>
 	<ItemGroup>
