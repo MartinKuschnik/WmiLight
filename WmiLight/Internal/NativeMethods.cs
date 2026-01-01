@@ -1,4 +1,6 @@
-﻿namespace WmiLight
+﻿#if NETFRAMEWORK || NETSTANDARD
+
+namespace WmiLight
 {
     using System;
     using System.Runtime.InteropServices;
@@ -45,8 +47,6 @@
         #region Methods
 
         #region WmiLight.Native.dll
-
-#if NETFRAMEWORK
         private static class x64
         {
             private const string NATIVE_DLL_NAME_X64 = "WmiLight.Native.x64.dll";
@@ -56,6 +56,9 @@
 
             [DllImport(NATIVE_DLL_NAME_X64, CallingConvention = CallingConvention.StdCall)]
             public static extern HResult CreateWbemUnsecuredApartment(out IntPtr pUnsecuredApartment);
+
+            [DllImport(NATIVE_DLL_NAME_X64, CallingConvention = CallingConvention.StdCall)]
+            public static extern HResult QueryInterface(IntPtr unknown, ref Guid riid, out IntPtr ppvObject);
 
             [DllImport(NATIVE_DLL_NAME_X64, CallingConvention = CallingConvention.StdCall)]
             public static extern HResult ConnectServer(
@@ -69,7 +72,7 @@
                 [MarshalAs(UnmanagedType.LPWStr)]
                 string locale,
                 [MarshalAs (UnmanagedType.U4)]
-                WbemConnectOption wbemConnectOption,
+                uint wbemConnectOption,
                 [MarshalAs(UnmanagedType.LPWStr)]
                 string authority,
                 IntPtr pCtx,
@@ -91,9 +94,9 @@
             public static extern HResult ExecQuery(
                 IntPtr pWbemServices,
                 [MarshalAs(UnmanagedType.LPWStr)]
-            string ueryLanguage,
+                string queryLanguage,
                 [MarshalAs(UnmanagedType.LPWStr)]
-            string query,
+                string query,
                 WbemClassObjectEnumeratorBehaviorOption behaviorOption,
                 IntPtr ctx,
                 out IntPtr pEnumerator);
@@ -102,9 +105,9 @@
             public static extern HResult ExecNotificationQueryAsync(
                 IntPtr pWbemServices,
                 [MarshalAs(UnmanagedType.LPWStr)]
-            string queryLanguage,
+                string queryLanguage,
                 [MarshalAs(UnmanagedType.LPWStr)]
-            string query,
+                string query,
                 IntPtr ctx,
                 IntPtr pEventSinkProxy);
 
@@ -130,11 +133,11 @@
             public static extern HResult Reset(IntPtr pEnumerator);
 
             [DllImport(NATIVE_DLL_NAME_X64, CallingConvention = CallingConvention.StdCall)]
-            public static extern HResult Get(
+            public static unsafe extern HResult Get(
                 IntPtr pClassObject,
                 [MarshalAs(UnmanagedType.LPWStr)]
-            string propertyName,
-                ref VARIANT value,
+                string propertyName,
+                VARIANT* value,
                 out CimType valueType);
 
             [DllImport(NATIVE_DLL_NAME_X64, CallingConvention = CallingConvention.StdCall)]
@@ -144,7 +147,7 @@
             public static extern HResult SpawnInstance(IntPtr pClassObject, out IntPtr pNewInstance);
 
             [DllImport(NATIVE_DLL_NAME_X64, CallingConvention = CallingConvention.StdCall)]
-            public static extern HResult Put(IntPtr pClassObject, [MarshalAs(UnmanagedType.LPWStr)] string wszName, ref VARIANT pvar, CimType cimType);
+            public static unsafe extern HResult Put(IntPtr pClassObject, [MarshalAs(UnmanagedType.LPWStr)] string wszName, VARIANT* pvar, CimType cimType);
 
             [DllImport(NATIVE_DLL_NAME_X64, CallingConvention = CallingConvention.StdCall)]
             public static extern HResult PutInstance(IntPtr pWbemServices, IntPtr pInst, IntPtr ctx);
@@ -166,20 +169,23 @@
             public static extern HResult CreateWbemUnsecuredApartment(out IntPtr pUnsecuredApartment);
 
             [DllImport(NATIVE_DLL_NAME_X86, CallingConvention = CallingConvention.StdCall)]
+            public static extern HResult QueryInterface(IntPtr unknown, ref Guid riid, out IntPtr ppvObject);
+
+            [DllImport(NATIVE_DLL_NAME_X86, CallingConvention = CallingConvention.StdCall)]
             public static extern HResult ConnectServer(
                 IntPtr pWbemLocator,
                 [MarshalAs(UnmanagedType.LPWStr)]
-            string networkResource,
+                string networkResource,
                 [MarshalAs(UnmanagedType.LPWStr)]
-            string userName,
+                string userName,
                 [MarshalAs(UnmanagedType.LPWStr)]
-            string userPassword,
+                string userPassword,
                 [MarshalAs(UnmanagedType.LPWStr)]
-            string locale,
+                string locale,
                 [MarshalAs (UnmanagedType.U4)]
-            WbemConnectOption wbemConnectOption,
+                uint wbemConnectOption,
                 [MarshalAs(UnmanagedType.LPWStr)]
-            string authority,
+                string authority,
                 IntPtr pCtx,
                 out IntPtr pWbemServices);
 
@@ -187,11 +193,11 @@
             public static extern HResult SetProxy(
                 IntPtr pIUnknown,
                 [MarshalAs(UnmanagedType.LPWStr)]
-            string username,
+                string username,
                 [MarshalAs(UnmanagedType.LPWStr)]
-            string password,
+                string password,
                 [MarshalAs(UnmanagedType.LPWStr)]
-            string authority,
+                string authority,
                 ImpersonationLevel impersonationLevel,
                 AuthenticationLevel authenticationLevel);
 
@@ -199,9 +205,9 @@
             public static extern HResult ExecQuery(
                 IntPtr pWbemServices,
                 [MarshalAs(UnmanagedType.LPWStr)]
-            string ueryLanguage,
+                string queryLanguage,
                 [MarshalAs(UnmanagedType.LPWStr)]
-            string query,
+                string query,
                 WbemClassObjectEnumeratorBehaviorOption behaviorOption,
                 IntPtr ctx,
                 out IntPtr pEnumerator);
@@ -210,9 +216,9 @@
             public static extern HResult ExecNotificationQueryAsync(
                 IntPtr pWbemServices,
                 [MarshalAs(UnmanagedType.LPWStr)]
-            string queryLanguage,
+                string queryLanguage,
                 [MarshalAs(UnmanagedType.LPWStr)]
-            string query,
+                string query,
                 IntPtr ctx,
                 IntPtr pEventSinkProxy);
 
@@ -238,11 +244,11 @@
             public static extern HResult Reset(IntPtr pEnumerator);
 
             [DllImport(NATIVE_DLL_NAME_X86, CallingConvention = CallingConvention.StdCall)]
-            public static extern HResult Get(
+            public static unsafe extern HResult Get(
                 IntPtr pClassObject,
                 [MarshalAs(UnmanagedType.LPWStr)]
-            string propertyName,
-                ref VARIANT value,
+                string propertyName,
+                VARIANT* value,
                 out CimType valueType);
 
             [DllImport(NATIVE_DLL_NAME_X86, CallingConvention = CallingConvention.StdCall)]
@@ -252,7 +258,7 @@
             public static extern HResult SpawnInstance(IntPtr pClassObject, out IntPtr pNewInstance);
 
             [DllImport(NATIVE_DLL_NAME_X86, CallingConvention = CallingConvention.StdCall)]
-            public static extern HResult Put(IntPtr pClassObject, [MarshalAs(UnmanagedType.LPWStr)] string wszName, ref VARIANT pvar, CimType cimType);
+            public static unsafe extern HResult Put(IntPtr pClassObject, [MarshalAs(UnmanagedType.LPWStr)] string wszName, VARIANT* pvar, CimType cimType);
 
             [DllImport(NATIVE_DLL_NAME_X86, CallingConvention = CallingConvention.StdCall)]
             public static extern HResult PutInstance(IntPtr pWbemServices, IntPtr pInst, IntPtr ctx);
@@ -263,6 +269,7 @@
             [DllImport(NATIVE_DLL_NAME_X86, CallingConvention = CallingConvention.StdCall)]
             public static extern HResult GetNames(IntPtr pClassObject, out IntPtr pNames);
         }
+
         public static HResult CreateWbemLocator(out IntPtr pWbemLocator)
         {
             if (Environment.Is64BitProcess)
@@ -270,6 +277,7 @@
             else
                 return x86.CreateWbemLocator(out pWbemLocator);
         }
+
         public static HResult CreateWbemUnsecuredApartment(out IntPtr pUnsecuredApartment)
         {
             if (Environment.Is64BitProcess)
@@ -277,13 +285,22 @@
             else
                 return x86.CreateWbemUnsecuredApartment(out pUnsecuredApartment);
         }
+
+        public static HResult QueryInterface(IntPtr unknown, ref Guid riid, out IntPtr ppvObject)
+        {
+            if (Environment.Is64BitProcess)
+                return x64.QueryInterface(unknown, ref riid, out ppvObject);
+            else
+                return x86.QueryInterface(unknown, ref riid, out ppvObject);
+        }
+
         public static HResult ConnectServer(
             IntPtr pWbemLocator,
             string networkResource,
             string userName,
             string userPassword,
             string locale,
-            WbemConnectOption wbemConnectOption,
+            uint wbemConnectOption,
             string authority,
             IntPtr pCtx,
             out IntPtr pWbemServices)
@@ -308,16 +325,16 @@
         }
         public static HResult ExecQuery(
             IntPtr pWbemServices,
-            string ueryLanguage,
+            string queryLanguage,
             string query,
             WbemClassObjectEnumeratorBehaviorOption behaviorOption,
             IntPtr ctx,
             out IntPtr pEnumerator)
         {
             if (Environment.Is64BitProcess)
-                return x64.ExecQuery(pWbemServices, ueryLanguage, query, behaviorOption, ctx, out pEnumerator);
+                return x64.ExecQuery(pWbemServices, queryLanguage, query, behaviorOption, ctx, out pEnumerator);
             else
-                return x86.ExecQuery(pWbemServices, ueryLanguage, query, behaviorOption, ctx, out pEnumerator);
+                return x86.ExecQuery(pWbemServices, queryLanguage, query, behaviorOption, ctx, out pEnumerator);
         }
         public static HResult ExecNotificationQueryAsync(
             IntPtr pWbemServices,
@@ -387,12 +404,12 @@
                 return x86.Reset(pEnumerator);
         }
 
-        public static HResult Get(IntPtr pClassObject, string propertyName, ref VARIANT value, out CimType valueType)
+        public static unsafe HResult Get(IntPtr pClassObject, string propertyName, VARIANT* value, out CimType valueType)
         {
             if (Environment.Is64BitProcess)
-                return x64.Get(pClassObject, propertyName, ref value, out valueType);
+                return x64.Get(pClassObject, propertyName, value, out valueType);
             else
-                return x86.Get(pClassObject, propertyName, ref value, out valueType);
+                return x86.Get(pClassObject, propertyName, value, out valueType);
         }
 
         public static HResult GetMethod(IntPtr pClassObject, string methodName, out IntPtr pInSignature, out IntPtr pOutSignature)
@@ -411,12 +428,12 @@
                 return x86.SpawnInstance(pClassObject, out pNewInstance);
         }
 
-        public static HResult Put(IntPtr pClassObject, string wszName, ref VARIANT pvar, CimType cimType)
+        public static unsafe HResult Put(IntPtr pClassObject, string wszName, VARIANT* pvar, CimType cimType)
         {
             if (Environment.Is64BitProcess)
-                return x64.Put(pClassObject, wszName, ref pvar, cimType);
+                return x64.Put(pClassObject, wszName, pvar, cimType);
             else
-                return x86.Put(pClassObject, wszName, ref pvar, cimType);
+                return x86.Put(pClassObject, wszName, pvar, cimType);
         }
 
         public static HResult PutInstance(IntPtr pWbemServices, IntPtr pInst, IntPtr ctx)
@@ -442,120 +459,13 @@
             else
                 return x86.GetNames(pClassObject, out pNames);
         }
-#else
-
-        [DllImport(NATIVE_DLL_NAME, CallingConvention = CallingConvention.StdCall)]
-        public static extern HResult CreateWbemLocator(out IntPtr pWbemLocator);
-
-        [DllImport(NATIVE_DLL_NAME, CallingConvention = CallingConvention.StdCall)]
-        public static extern HResult CreateWbemUnsecuredApartment(out IntPtr pUnsecuredApartment);
-
-        [DllImport(NATIVE_DLL_NAME, CallingConvention = CallingConvention.StdCall)]
-        public static extern HResult ConnectServer(
-            IntPtr pWbemLocator,
-            [MarshalAs(UnmanagedType.LPWStr)]
-            string networkResource,
-            [MarshalAs(UnmanagedType.LPWStr)]
-            string userName,
-            [MarshalAs(UnmanagedType.LPWStr)]
-            string userPassword,
-            [MarshalAs(UnmanagedType.LPWStr)]
-            string locale,
-            [MarshalAs (UnmanagedType.U4)]
-            WbemConnectOption wbemConnectOption,
-            [MarshalAs(UnmanagedType.LPWStr)]
-            string authority,
-            IntPtr pCtx,
-            out IntPtr pWbemServices);
-
-        [DllImport(NATIVE_DLL_NAME, CallingConvention = CallingConvention.StdCall)]
-        public static extern HResult SetProxy(
-            IntPtr pIUnknown,
-            [MarshalAs(UnmanagedType.LPWStr)]
-            string username,
-            [MarshalAs(UnmanagedType.LPWStr)]
-            string password,
-            [MarshalAs(UnmanagedType.LPWStr)]
-            string authority,
-            ImpersonationLevel impersonationLevel,
-            AuthenticationLevel authenticationLevel);
-
-        [DllImport(NATIVE_DLL_NAME, CallingConvention = CallingConvention.StdCall)]
-        public static extern HResult ExecQuery(
-            IntPtr pWbemServices,
-            [MarshalAs(UnmanagedType.LPWStr)]
-            string ueryLanguage,
-            [MarshalAs(UnmanagedType.LPWStr)]
-            string query,
-            WbemClassObjectEnumeratorBehaviorOption behaviorOption,
-            IntPtr ctx,
-            out IntPtr pEnumerator);
-
-        [DllImport(NATIVE_DLL_NAME, CallingConvention = CallingConvention.StdCall)]
-        public static extern HResult ExecNotificationQueryAsync(
-            IntPtr pWbemServices,
-            [MarshalAs(UnmanagedType.LPWStr)]
-            string ueryLanguage,
-            [MarshalAs(UnmanagedType.LPWStr)]
-            string query,
-            IntPtr ctx,
-            IntPtr pEventSinkProxy);
-
-        [DllImport(NATIVE_DLL_NAME, CallingConvention = CallingConvention.StdCall)]
-        public static extern HResult CancelAsyncCall(IntPtr pWbemServices, IntPtr pEventSinkProxy);
-
-        [DllImport(NATIVE_DLL_NAME, CallingConvention = CallingConvention.StdCall)]
-        public static extern HResult GetClass(IntPtr pWbemServices, [MarshalAs(UnmanagedType.LPWStr)] string className, IntPtr ctx, out IntPtr pObject);
-
-        [DllImport(NATIVE_DLL_NAME, CallingConvention = CallingConvention.StdCall)]
-        public static extern HResult ExecMethod(IntPtr pWbemServices, [MarshalAs(UnmanagedType.LPWStr)] string classNameOrPath, [MarshalAs(UnmanagedType.LPWStr)] string methodName, IntPtr ctx, IntPtr inParams, out IntPtr outParams);
-
-        [DllImport(NATIVE_DLL_NAME, CallingConvention = CallingConvention.StdCall)]
-        public static extern HResult DeleteInstance(IntPtr pWbemServices, [MarshalAs(UnmanagedType.LPWStr)] string strObjectPath, IntPtr ctx);
-
-        [DllImport(NATIVE_DLL_NAME, CallingConvention = CallingConvention.StdCall)]
-        public static extern HResult CreateEventSinkStub(IntPtr pUnsecApp, IntPtr pEventSink, Indicate indicateFunction, SetStatus setStatusFunction, out IntPtr eventSinkStub);
-
-        [DllImport(NATIVE_DLL_NAME, CallingConvention = CallingConvention.StdCall)]
-        public static extern HResult Next(IntPtr pEnumerator, int timeout, out IntPtr pClassObject);
-
-        [DllImport(NATIVE_DLL_NAME, CallingConvention = CallingConvention.StdCall)]
-        public static extern HResult Reset(IntPtr pEnumerator);
-
-        [DllImport(NATIVE_DLL_NAME, CallingConvention = CallingConvention.StdCall)]
-        public static extern HResult Get(
-            IntPtr pClassObject,
-            [MarshalAs(UnmanagedType.LPWStr)]
-            string propertyName,
-            ref VARIANT value,
-            out CimType valueType);
-
-        [DllImport(NATIVE_DLL_NAME, CallingConvention = CallingConvention.StdCall)]
-        public static extern HResult GetMethod(IntPtr pClassObject, [MarshalAs(UnmanagedType.LPWStr)] string methodName, out IntPtr pInSignature, out IntPtr pOutSignature);
-
-        [DllImport(NATIVE_DLL_NAME, CallingConvention = CallingConvention.StdCall)]
-        public static extern HResult SpawnInstance(IntPtr pClassObject, out IntPtr pNewInstance);
-
-        [DllImport(NATIVE_DLL_NAME, CallingConvention = CallingConvention.StdCall)]
-        public static extern HResult Put(IntPtr pClassObject, [MarshalAs(UnmanagedType.LPWStr)] string wszName, ref VARIANT pvar, CimType cimType);
-     
-        [DllImport(NATIVE_DLL_NAME, CallingConvention = CallingConvention.StdCall)]
-        public static extern HResult PutInstance(IntPtr pWbemServices, IntPtr pInst, IntPtr ctx);
-
-        [DllImport(NATIVE_DLL_NAME, CallingConvention = CallingConvention.StdCall)]
-        public static extern HResult GetType(IntPtr pClassObject, [MarshalAs(UnmanagedType.LPWStr)] string propertyName, out CimType cimType);
-
-        [DllImport(NATIVE_DLL_NAME, CallingConvention = CallingConvention.StdCall)]
-        public static extern HResult GetNames(IntPtr pClassObject, out IntPtr pNames);
-
-#endif
 
         #endregion
 
         #region oleaut32.dll
 
         [DllImport("oleaut32.dll", CallingConvention = CallingConvention.StdCall)]
-        public static extern HResult VariantClear(ref VARIANT variant);
+        public static unsafe extern HResult VariantClear(VARIANT* variant);
 
         [DllImport("oleaut32.dll", CallingConvention = CallingConvention.StdCall)]
         public static extern HResult SafeArrayGetLBound(IntPtr psa, uint nDim, out int plLbound);
@@ -583,13 +493,14 @@
         #region Propsys.dll
 
         [DllImport("Propsys.dll", CallingConvention = CallingConvention.StdCall)]
-        public static extern uint VariantGetElementCount(ref VARIANT variant);
+        public static unsafe extern uint VariantGetElementCount(VARIANT* variant);
 
         [DllImport("Propsys.dll", CallingConvention = CallingConvention.StdCall)]
-        public static extern HResult InitVariantFromVariantArrayElem(ref VARIANT variant, uint iElem, ref VARIANT pvar);
+        public static unsafe extern HResult InitVariantFromVariantArrayElem(VARIANT* variant, uint iElem, VARIANT* pvar);
 
         #endregion
 
         #endregion
     }
 }
+#endif

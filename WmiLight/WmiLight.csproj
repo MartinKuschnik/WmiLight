@@ -41,8 +41,10 @@
 
 		<!-- Workaround for https://github.com/dotnet/sdk/issues/43016. -->
 		<_NeedToDownloadMicrosoftNetSdkCompilersToolsetPackage>true</_NeedToDownloadMicrosoftNetSdkCompilersToolsetPackage>
+    
 		<FileVersion>6.21.0</FileVersion>
-		
+		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>		
+    
 	</PropertyGroup>
 	<ItemGroup>
 	  <None Include=".nuget\.build\WmiLight.props" />
