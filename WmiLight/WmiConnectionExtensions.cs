@@ -323,6 +323,8 @@ namespace WmiLight
         /// <exception cref="System.ObjectDisposedException">Object already disposed.</exception>
         /// <exception cref="System.ArgumentNullException"><paramref name="className"/> is null.</exception>
         /// <exception cref="System.ArgumentNullException"><paramref name="methodName"/> is null.</exception>
+        /// <exception cref="InvalidClassException">The class was not found.</exception>
+        /// <exception cref="InvalidMethodException">The method was not found.</exception>
         #endregion
         public static WmiMethod GetMethod(this WmiConnection connection, string className, string methodName)
         {

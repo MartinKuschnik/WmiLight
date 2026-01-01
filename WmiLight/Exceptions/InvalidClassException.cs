@@ -22,6 +22,19 @@ namespace WmiLight
         {
         }
 
+        #region Description
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InvalidClassException"/> class.
+        /// </summary>
+        /// <param name="className">The class name.</param>
+        /// <param name="wbemStatus">The HRESULT.</param>
+        #endregion
+        internal InvalidClassException(string className, WbemStatus wbemStatus)
+            : base($"The class '{className}' did not exist on the server.")
+        {
+            this.HResult = (int)wbemStatus;
+        }
+
         #endregion
     }
 }

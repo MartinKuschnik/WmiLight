@@ -133,7 +133,16 @@ namespace WmiLight.Wbem
             HResult hResult = NativeMethods.GetClass(this, className, IntPtr.Zero, out pClassDef);
 
             if (hResult.Failed)
-                throw (Exception)hResult;
+            {
+                switch (hResult)
+                {
+                    case (int)WbemStatus.WBEM_E_NOT_FOUND:
+                        throw new InvalidClassException(className, WbemStatus.WBEM_E_NOT_FOUND);
+
+                    default:
+                        throw (Exception)hResult;
+                }
+            }
 
             return new WbemClassObject(pClassDef);
         }
@@ -157,7 +166,19 @@ namespace WmiLight.Wbem
             HResult hResult = NativeMethods.ExecMethod(this, classNameOrPath, methodName, IntPtr.Zero, inParams, out IntPtr pOutParams);
 
             if (hResult.Failed)
-                throw (Exception)hResult;
+            {
+                switch (hResult)
+                {
+                    case (int)WbemStatus.WBEM_E_INVALID_METHOD_PARAMETERS:
+                        throw new InvalidParameterException(methodName, classNameOrPath, WbemStatus.WBEM_E_INVALID_METHOD_PARAMETERS);
+
+                    case (int)WbemStatus.WBEM_E_INVALID_PARAMETER:
+                        throw new InvalidParameterException(methodName, classNameOrPath, WbemStatus.WBEM_E_INVALID_PARAMETER);
+
+                    default:
+                        throw (Exception)hResult;
+                }
+            }
 
             if (pOutParams != IntPtr.Zero)
                 outParams = new WbemClassObject(pOutParams);
