@@ -474,7 +474,7 @@ namespace WmiLight.Wbem
             }
         }
 
-        internal unsafe static T[] VariantToArray<T>(ref VARIANT value, CimType type)
+        private unsafe static T[] VariantToArray<T>(ref VARIANT value, CimType type)
         {
             uint arrayDims = NativeMethods.SafeArrayGetDim(value.Object);
 
