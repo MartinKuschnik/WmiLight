@@ -13,7 +13,7 @@ namespace WmiLight
 
         #region Description
         /// <summary>
-        /// Initializes a new instance of the <see cref="InvalidClassException"/> class.
+        /// Initializes a new instance of the <see cref="InvalidMethodException"/> class.
         /// </summary>
         /// <param name="method">The method name.</param>
         /// <param name="wbemStatus">The HRESULT.</param>
