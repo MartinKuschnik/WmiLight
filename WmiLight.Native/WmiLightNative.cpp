@@ -139,7 +139,7 @@ extern "C" {  // only need to export C interface if
 
 	__declspec(dllexport) HRESULT _stdcall ExecQuery(
 		IWbemServices* wbemServices,
-		wchar_t* ueryLanguage,
+		wchar_t* queryLanguage,
 		wchar_t* query,
 		WbemClassObjectEnumeratorBehaviorOption behaviorOption,
 		IWbemContext* ctx,
@@ -148,7 +148,7 @@ extern "C" {  // only need to export C interface if
 		if (wbemServices == nullptr)
 			return E_POINTER;
 
-		return wbemServices->ExecQuery(ueryLanguage, query, behaviorOption, ctx, pEnumerator);
+		return wbemServices->ExecQuery(queryLanguage, query, behaviorOption, ctx, pEnumerator);
 	}
 
 	__declspec(dllexport) HRESULT _stdcall CreateEventSinkStub(
@@ -196,12 +196,12 @@ extern "C" {  // only need to export C interface if
 		return wbemServices->CancelAsyncCall(pEventSinkProxy);
 	}
 
-	__declspec(dllexport) HRESULT _stdcall ExecNotificationQueryAsync(IWbemServices* wbemServices, wchar_t* ueryLanguage, wchar_t* query, IWbemContext* ctx, IWbemObjectSink* pStubSink)
+	__declspec(dllexport) HRESULT _stdcall ExecNotificationQueryAsync(IWbemServices* wbemServices, wchar_t* queryLanguage, wchar_t* query, IWbemContext* ctx, IWbemObjectSink* pStubSink)
 	{
 		if (wbemServices == nullptr)
 			return E_POINTER;
 
-		return wbemServices->ExecNotificationQueryAsync(ueryLanguage, query, 0, ctx, pStubSink);
+		return wbemServices->ExecNotificationQueryAsync(queryLanguage, query, 0, ctx, pStubSink);
 	}
 
 	__declspec(dllexport) HRESULT _stdcall Next(
