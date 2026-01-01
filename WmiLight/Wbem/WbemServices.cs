@@ -157,7 +157,16 @@ namespace WmiLight.Wbem
             HResult hResult = NativeMethods.ExecMethod(this, classNameOrPath, methodName, IntPtr.Zero, inParams, out IntPtr pOutParams);
 
             if (hResult.Failed)
-                throw (Exception)hResult;
+            {
+                switch (hResult)
+                {
+                    case (int)WbemStatus.WBEM_E_INVALID_METHOD_PARAMETERS:
+                        throw new InvalidMethodParametersException(methodName, WbemStatus.WBEM_E_INVALID_METHOD_PARAMETERS);
+
+                    default:
+                        throw (Exception)hResult;
+                }
+            }
 
             if (pOutParams != IntPtr.Zero)
                 outParams = new WbemClassObject(pOutParams);
