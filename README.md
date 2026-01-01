@@ -1,13 +1,16 @@
 # WmiLight [![Build](https://github.com/MartinKuschnik/WmiLight/actions/workflows/build.yml/badge.svg)](https://github.com/MartinKuschnik/WmiLight/actions/workflows/build.yml) [![NuGet Status](http://img.shields.io/nuget/v/WmiLight.svg?style=flat)](https://www.nuget.org/packages/WmiLight/)
 
 ## What is WmiLight?
-A simple and light wmi framework. It has only one function: sending WMI queries.
+A simple and lightweight WMI framework for querying WMI, calling WMI methods, and subscribing to WMI events.
 It's a subset of the System.Management.Instrumentation namespace.
 
 ## In which case should you use WmiLight?
-The .Net framework implementation has one big problem.
-It leaks a little bit memory on each remote operation.
-Use this framework if your application is a service or runs a long time and you're sending a lot of remote queries.
+
+The System.Management framework has some limitations:
+
+* **Memory leaks on .NET Framework**: The .NET Framework version of System.Management leaks a small amount of memory on each remote operation. Use WmiLight if your application is a service or runs a long time and you're sending a lot of remote queries.
+
+* **No Native AOT support**: System.Management does not support Native AOT deployment. Use WmiLight if you want to build Native AOT applications that interact with WMI.
 
 ## Installation
 
@@ -113,7 +116,7 @@ using (WmiConnection connection = new WmiConnection(@"\\MACHINENAME\root\cimv2",
             "SELECT * FROM __InstanceCreationEvent WITHIN 2 WHERE TargetInstance ISA 'Win32_Process'", 
             x => Console.WriteLine("Process '{0}' started", x.GetPropertyValue<WmiObject>("TargetInstance").GetPropertyValue<string>("Name"))))
     {
-        // ToDo: wait or do some other suff
+        // ToDo: wait or do some other stuff
     }
 }
 ```
@@ -129,7 +132,7 @@ using (WmiConnection connection = new WmiConnection(@"\\MACHINENAME\root\cimv2",
 
         eventWatcher.Start();
 
-        // ToDo: wait or do some other suff
+        // ToDo: wait or do some other stuff
 
         eventWatcher.Stop();
 
