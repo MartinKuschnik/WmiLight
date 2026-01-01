@@ -3,7 +3,7 @@
 #include <Wbemidl.h>
 
 /// <summary>
-/// Proxy that forewardes the event calls to the managed sink.
+/// Proxy that forwards the event calls to the managed sink.
 /// </summary>
 class EventSinkProxy : public IWbemObjectSink
 {
