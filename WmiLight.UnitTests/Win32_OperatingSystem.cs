@@ -52,7 +52,7 @@
 
             Assert.AreEqual(1u, operatingSystemCount, "No operating system found.");
 
-            Assert.AreNotEqual(0u, relatedCount, "No relates object found.");
+            Assert.AreNotEqual(0u, relatedCount, "No related object found.");
             Assert.AreNotEqual(1u, relatedCount, "There must be more than 1 related object.");
         }
     }
