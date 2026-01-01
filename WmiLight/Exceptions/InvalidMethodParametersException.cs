@@ -15,11 +15,12 @@ namespace WmiLight
         /// <summary>
         /// Initializes a new instance of the <see cref="InvalidMethodParametersException"/> class.
         /// </summary>
-        /// <param name="method">The method name.</param>
+        /// <param name="methodName">The method name.</param>
+        /// <param name="className">The class name.</param>
         /// <param name="hresult">The HRESULT.</param>
         #endregion
-        internal InvalidMethodParametersException(string method, WbemStatus hresult)
-            : base($"Parameters provided for the method '{method}' are not valid.")
+        internal InvalidMethodParametersException(string methodName, string className, WbemStatus hresult)
+            : base($"Parameters provided for the method {methodName} ({className}) are not valid.")
         {
             this.HResult = (int)hresult;
         }
