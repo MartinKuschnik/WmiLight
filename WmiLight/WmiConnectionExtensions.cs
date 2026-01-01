@@ -117,7 +117,7 @@ namespace WmiLight
         /// A <see cref="WmiQuery"/> representing an <c>ASSOCIATORS OF {Relpath} WHERE ResultClass = &lt;relatedClass&gt;</c> WQL query.
         /// </returns>
         /// <exception cref="System.ArgumentNullException"><paramref name="wmiObject"/> or <paramref name="relatedClass"/> is null.</exception>
-        /// <exception cref="System.ArgumentNullException"><paramref name="relatedClass"/> is empty.</exception>
+        /// <exception cref="System.ArgumentException"><paramref name="relatedClass"/> is empty.</exception>
         #endregion
         public static WmiQuery CreateQueryForRelated(this WmiConnection connection, WmiObject wmiObject, string relatedClass)
         {
@@ -148,7 +148,7 @@ namespace WmiLight
         /// A <see cref="WmiQuery"/> representing an <c>ASSOCIATORS OF {Relpath} WHERE ResultClass = &lt;relatedClass&gt;</c> WQL query.
         /// </returns>
         /// <exception cref="System.ArgumentNullException"><paramref name="wmiObject"/> or <paramref name="relatedClass"/> is null.</exception>
-        /// <exception cref="System.ArgumentNullException"><paramref name="relatedClass"/> is empty.</exception>
+        /// <exception cref="System.ArgumentException"><paramref name="relatedClass"/> is empty.</exception>
         #endregion
         public static WmiQuery CreateQueryForRelated(this WmiConnection connection, WmiObject wmiObject, string relatedClass, EnumeratorBehaviorOption enumeratorBehaviorOptions, TimeSpan enumeratorTimeout)
         {
@@ -178,7 +178,7 @@ namespace WmiLight
         /// A <see cref="WmiQuery"/> representing an <c>ASSOCIATORS OF {Relpath} WHERE ResultClass = &lt;relatedClass&gt;</c> WQL query.
         /// </returns>
         /// <exception cref="System.ArgumentNullException"><paramref name="wmiObject"/> or <paramref name="relatedClass"/> is null.</exception>
-        /// <exception cref="System.ArgumentNullException"><paramref name="relatedClass"/> is empty.</exception>
+        /// <exception cref="System.ArgumentException"><paramref name="relatedClass"/> is empty.</exception>
         #endregion
         public static WmiQuery CreateQueryForRelated(this WmiConnection connection, WmiObject wmiObject, string relatedClass, EnumeratorBehaviorOption enumeratorBehaviorOptions)
         {
@@ -208,7 +208,7 @@ namespace WmiLight
         /// A <see cref="WmiQuery"/> representing an <c>ASSOCIATORS OF {Relpath} WHERE ResultClass = &lt;relatedClass&gt;</c> WQL query.
         /// </returns>
         /// <exception cref="System.ArgumentNullException"><paramref name="wmiObject"/> or <paramref name="relatedClass"/> is null.</exception>
-        /// <exception cref="System.ArgumentNullException"><paramref name="relatedClass"/> is empty.</exception>
+        /// <exception cref="System.ArgumentException"><paramref name="relatedClass"/> is empty.</exception>
         #endregion
         public static WmiQuery CreateQueryForRelated(this WmiConnection connection, WmiObject wmiObject, string relatedClass, TimeSpan enumeratorTimeout)
         {
