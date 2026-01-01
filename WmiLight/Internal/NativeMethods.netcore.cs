@@ -97,7 +97,7 @@ namespace WmiLight
         public static partial HResult ExecQuery(
             IntPtr pWbemServices,
             [MarshalAs(UnmanagedType.LPWStr)]
-            string ueryLanguage,
+            string queryLanguage,
             [MarshalAs(UnmanagedType.LPWStr)]
             string query,
             WbemClassObjectEnumeratorBehaviorOption behaviorOption,
@@ -109,7 +109,7 @@ namespace WmiLight
         public static partial HResult ExecNotificationQueryAsync(
             IntPtr pWbemServices,
             [MarshalAs(UnmanagedType.LPWStr)]
-            string ueryLanguage,
+            string queryLanguage,
             [MarshalAs(UnmanagedType.LPWStr)]
             string query,
             IntPtr ctx,
