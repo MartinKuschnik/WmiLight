@@ -117,7 +117,7 @@ namespace WmiLight
         /// A <see cref="WmiQuery"/> representing an <c>ASSOCIATORS OF {Relpath} WHERE ResultClass = &lt;relatedClass&gt;</c> WQL query.
         /// </returns>
         /// <exception cref="System.ArgumentNullException"><paramref name="wmiObject"/> or <paramref name="relatedClass"/> is null.</exception>
-        /// <exception cref="System.ArgumentNullException"><paramref name="relatedClass"/> is empty.</exception>
+        /// <exception cref="System.ArgumentException"><paramref name="relatedClass"/> is empty.</exception>
         #endregion
         public static WmiQuery CreateQueryForRelated(this WmiConnection connection, WmiObject wmiObject, string relatedClass)
         {
@@ -131,6 +131,97 @@ namespace WmiLight
                 throw new ArgumentException("The related class must not be empty.", nameof(relatedClass));
 
             return new WmiQuery(connection, $"ASSOCIATORS OF {{{wmiObject.Relpath}}} WHERE ResultClass = {relatedClass}");
+        }
+
+        #region Description
+        /// <summary>
+        /// Creates a WMI query to retrieve all objects of a specific class related to the 
+        /// specified <see cref="WmiObject"/> using its <see cref="WmiObject.Relpath"/>.
+        /// The query is constructed as an <c>ASSOCIATORS OF {Relpath} WHERE ResultClass = &lt;relatedClass&gt;</c> WQL statement.
+        /// </summary>
+        /// <param name="connection">the extended <see cref="WmiConnection"/> object.</param>
+        /// <param name="wmiObject">The source WMI object whose associated objects should be retrieved.</param>
+        /// <param name="relatedClass">The name of the WMI class to filter the related objects.</param>
+        /// <param name="enumeratorBehaviorOptions">The options that can be used to adjust the behavior of the created enumerator.</param>
+        /// <param name="enumeratorTimeout">The timeout for the enumerator.</param>
+        /// <returns>
+        /// A <see cref="WmiQuery"/> representing an <c>ASSOCIATORS OF {Relpath} WHERE ResultClass = &lt;relatedClass&gt;</c> WQL query.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException"><paramref name="wmiObject"/> or <paramref name="relatedClass"/> is null.</exception>
+        /// <exception cref="System.ArgumentException"><paramref name="relatedClass"/> is empty.</exception>
+        #endregion
+        public static WmiQuery CreateQueryForRelated(this WmiConnection connection, WmiObject wmiObject, string relatedClass, EnumeratorBehaviorOption enumeratorBehaviorOptions, TimeSpan enumeratorTimeout)
+        {
+            if (wmiObject is null)
+                throw new ArgumentNullException(nameof(wmiObject));
+
+            if (relatedClass is null)
+                throw new ArgumentNullException(nameof(relatedClass));
+
+            if (relatedClass.Length == 0)
+                throw new ArgumentException("The related class must not be empty.", nameof(relatedClass));
+
+            return new WmiQuery(connection, $"ASSOCIATORS OF {{{wmiObject.Relpath}}} WHERE ResultClass = {relatedClass}", enumeratorBehaviorOptions, enumeratorTimeout);
+        }
+
+        #region Description
+        /// <summary>
+        /// Creates a WMI query to retrieve all objects of a specific class related to the 
+        /// specified <see cref="WmiObject"/> using its <see cref="WmiObject.Relpath"/>.
+        /// The query is constructed as an <c>ASSOCIATORS OF {Relpath} WHERE ResultClass = &lt;relatedClass&gt;</c> WQL statement.
+        /// </summary>
+        /// <param name="connection">the extended <see cref="WmiConnection"/> object.</param>
+        /// <param name="wmiObject">The source WMI object whose associated objects should be retrieved.</param>
+        /// <param name="relatedClass">The name of the WMI class to filter the related objects.</param>
+        /// <param name="enumeratorBehaviorOptions">The options that can be used to adjust the behavior of the created enumerator.</param>
+        /// <returns>
+        /// A <see cref="WmiQuery"/> representing an <c>ASSOCIATORS OF {Relpath} WHERE ResultClass = &lt;relatedClass&gt;</c> WQL query.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException"><paramref name="wmiObject"/> or <paramref name="relatedClass"/> is null.</exception>
+        /// <exception cref="System.ArgumentException"><paramref name="relatedClass"/> is empty.</exception>
+        #endregion
+        public static WmiQuery CreateQueryForRelated(this WmiConnection connection, WmiObject wmiObject, string relatedClass, EnumeratorBehaviorOption enumeratorBehaviorOptions)
+        {
+            if (wmiObject is null)
+                throw new ArgumentNullException(nameof(wmiObject));
+
+            if (relatedClass is null)
+                throw new ArgumentNullException(nameof(relatedClass));
+
+            if (relatedClass.Length == 0)
+                throw new ArgumentException("The related class must not be empty.", nameof(relatedClass));
+
+            return new WmiQuery(connection, $"ASSOCIATORS OF {{{wmiObject.Relpath}}} WHERE ResultClass = {relatedClass}", enumeratorBehaviorOptions);
+        }
+
+        #region Description
+        /// <summary>
+        /// Creates a WMI query to retrieve all objects of a specific class related to the 
+        /// specified <see cref="WmiObject"/> using its <see cref="WmiObject.Relpath"/>.
+        /// The query is constructed as an <c>ASSOCIATORS OF {Relpath} WHERE ResultClass = &lt;relatedClass&gt;</c> WQL statement.
+        /// </summary>
+        /// <param name="connection">the extended <see cref="WmiConnection"/> object.</param>
+        /// <param name="wmiObject">The source WMI object whose associated objects should be retrieved.</param>
+        /// <param name="relatedClass">The name of the WMI class to filter the related objects.</param>
+        /// <param name="enumeratorTimeout">The timeout for the enumerator.</param>
+        /// <returns>
+        /// A <see cref="WmiQuery"/> representing an <c>ASSOCIATORS OF {Relpath} WHERE ResultClass = &lt;relatedClass&gt;</c> WQL query.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException"><paramref name="wmiObject"/> or <paramref name="relatedClass"/> is null.</exception>
+        /// <exception cref="System.ArgumentException"><paramref name="relatedClass"/> is empty.</exception>
+        #endregion
+        public static WmiQuery CreateQueryForRelated(this WmiConnection connection, WmiObject wmiObject, string relatedClass, TimeSpan enumeratorTimeout)
+        {
+            if (wmiObject is null)
+                throw new ArgumentNullException(nameof(wmiObject));
+
+            if (relatedClass is null)
+                throw new ArgumentNullException(nameof(relatedClass));
+
+            if (relatedClass.Length == 0)
+                throw new ArgumentException("The related class must not be empty.", nameof(relatedClass));
+
+            return new WmiQuery(connection, $"ASSOCIATORS OF {{{wmiObject.Relpath}}} WHERE ResultClass = {relatedClass}", enumeratorTimeout);
         }
 
         /// <summary>
