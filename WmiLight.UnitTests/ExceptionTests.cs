@@ -72,5 +72,37 @@ namespace WmiLight.UnitTests
             // DirectRead -> Query not set 
             Assert.AreEqual("THIS IS NOT VALID", ex.Query, "Query is different.");
         }
+
+        [TestMethod]
+        public void InvalidParameterException_Is_Thrown_For_WBEM_E_INVALID_METHOD_PARAMETERS()
+        {
+            Assert.ThrowsException<InvalidParameterException>(() => {
+
+                using (WmiConnection connection = new WmiConnection(@"root\Microsoft\Windows\Storage"))
+                using (WmiMethod method = connection.GetMethod("MSFT_Volume", "GetSupportedFileSystems"))
+                {
+                    // Don't set required parameters and try to execute                    
+                    connection.ExecuteMethod(method, null, out WmiMethodParameters outParameters);
+
+                    Assert.Fail("Should not reach here.");
+                }
+            });
+        }
+
+        [TestMethod]
+        public void InvalidParameterException_Is_Thrown_For_WBEM_E_INVALID_PARAMETER()
+        {
+            InvalidParameterException ex = Assert.ThrowsException<InvalidParameterException>(() =>
+            {
+                using (WmiConnection connection = new WmiConnection())
+                using (WmiMethod method = connection.GetMethod("Win32_Process", "Create"))
+                {
+                    // Don't set required parameters and try to execute                    
+                    connection.ExecuteMethod(method, null, out WmiMethodParameters outParameters);
+
+                    Assert.Fail("Should not reach here.");
+                }
+            });
+        }
     }
 }
