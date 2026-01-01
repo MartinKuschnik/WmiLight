@@ -43,7 +43,7 @@
                 {
                     operatingSystemCount++;
 
-                    foreach (WmiObject Win32_ComputerSystem in connection.CreateQueryForRelated(Win32_OperatingSystem))
+                    foreach (WmiObject _ in connection.CreateQueryForRelated(Win32_OperatingSystem))
                     {
                         relatedCount++;
                     }
