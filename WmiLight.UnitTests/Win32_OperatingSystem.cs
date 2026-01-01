@@ -33,7 +33,7 @@
         }
 
         [TestMethod]
-        public void Win32_OperatingSystem_GetRelated_Without_Related_Class_Returns_Multiple_Instance()
+        public void Win32_OperatingSystem_GetRelated_Without_Related_Class_Returns_Multiple_Instances()
         {
             uint operatingSystemCount = 0, relatedCount = 0;
 
