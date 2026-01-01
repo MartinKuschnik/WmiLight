@@ -428,7 +428,7 @@
         /// <returns>The value returned by the method.</returns>
         /// <exception cref="System.ArgumentNullException">The <paramref name="method"/> parameter is <c>null</c>.</exception>
         /// <exception cref="System.ObjectDisposedException">Object already disposed.</exception>
-        /// <exception cref="InvalidParameterException">The WMI method parameters are invalid.</exception>
+        /// <exception cref="InvalidMethodParametersException">The WMI method parameters are invalid.</exception>
         #endregion
         public object ExecuteMethod(WmiMethod method, out WmiMethodParameters outParameters)
         {
@@ -447,7 +447,7 @@
         /// <returns>The value returned by the method.</returns>
         /// <exception cref="System.ArgumentNullException">The <paramref name="method"/> parameter is <c>null</c>.</exception>
         /// <exception cref="System.ObjectDisposedException">Object already disposed.</exception>
-        /// <exception cref="InvalidParameterException">The WMI method parameters are invalid.</exception>
+        /// <exception cref="InvalidMethodParametersException">The WMI method parameters are invalid.</exception>
         #endregion
         public TResult ExecuteMethod<TResult>(WmiMethod method, out WmiMethodParameters outParameters)
         {
@@ -467,7 +467,7 @@
         /// <returns>The value returned by the method.</returns>
         /// <exception cref="System.ArgumentNullException">The <paramref name="method"/> parameter is <c>null</c>.</exception>
         /// <exception cref="System.ObjectDisposedException">Object already disposed.</exception>
-        /// <exception cref="InvalidParameterException">The WMI method parameters are invalid.</exception>
+        /// <exception cref="InvalidMethodParametersException">The WMI method parameters are invalid.</exception>
         #endregion
         public object ExecuteMethod(WmiMethod method, WmiMethodParameters inParameters, out WmiMethodParameters outParameters)
         {
@@ -487,7 +487,7 @@
         /// <returns>The value returned by the method.</returns>
         /// <exception cref="System.ArgumentNullException">The <paramref name="method"/> parameter is <c>null</c>.</exception>
         /// <exception cref="System.ObjectDisposedException">Object already disposed.</exception>
-        /// <exception cref="InvalidParameterException">The WMI method parameters are invalid.</exception>
+        /// <exception cref="InvalidMethodParametersException">The WMI method parameters are invalid.</exception>
         #endregion
         public TResult ExecuteMethod<TResult>(WmiMethod method, WmiMethodParameters inParameters, out WmiMethodParameters outParameters)
         {
@@ -507,7 +507,7 @@
         /// <returns>The value returned by the method.</returns>
         /// <exception cref="System.ArgumentNullException">The <paramref name="method"/> parameter is <c>null</c>.</exception>
         /// <exception cref="System.ObjectDisposedException">Object already disposed.</exception>
-        /// <exception cref="InvalidParameterException">The WMI method parameters are invalid.</exception>
+        /// <exception cref="InvalidMethodParametersException">The WMI method parameters are invalid.</exception>
         #endregion
         public object ExecuteMethod(WmiMethod method, WmiObject instance, out WmiMethodParameters outParameters)
         {
@@ -527,7 +527,7 @@
         /// <returns>The value returned by the method.</returns>
         /// <exception cref="System.ArgumentNullException">The <paramref name="method"/> parameter is <c>null</c>.</exception>
         /// <exception cref="System.ObjectDisposedException">Object already disposed.</exception>
-        /// <exception cref="InvalidParameterException">The WMI method parameters are invalid.</exception>
+        /// <exception cref="InvalidMethodParametersException">The WMI method parameters are invalid.</exception>
         #endregion
         public TResult ExecuteMethod<TResult>(WmiMethod method, WmiObject instance, out WmiMethodParameters outParameters)
         {
@@ -548,7 +548,7 @@
         /// <returns>The value returned by the method.</returns>
         /// <exception cref="System.ArgumentNullException">The <paramref name="method"/> parameter is <c>null</c>.</exception>
         /// <exception cref="System.ObjectDisposedException">Object already disposed.</exception>
-        /// <exception cref="InvalidParameterException">The WMI method parameters are invalid.</exception>
+        /// <exception cref="InvalidMethodParametersException">The WMI method parameters are invalid.</exception>
         #endregion
         public object ExecuteMethod(WmiMethod method, WmiObject instance, WmiMethodParameters inParameters, out WmiMethodParameters outParameters)
         {
@@ -569,7 +569,7 @@
         /// <returns>The value returned by the method.</returns>
         /// <exception cref="System.ArgumentNullException">The <paramref name="method"/> parameter is <c>null</c>.</exception>
         /// <exception cref="System.ObjectDisposedException">Object already disposed.</exception>
-        /// <exception cref="InvalidParameterException">The WMI method parameters are invalid.</exception>
+        /// <exception cref="InvalidMethodParametersException">The WMI method parameters are invalid.</exception>
         #endregion
         public TResult ExecuteMethod<TResult>(WmiMethod method, WmiObject instance, WmiMethodParameters inParameters, out WmiMethodParameters outParameters)
         {
