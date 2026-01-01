@@ -94,7 +94,7 @@ namespace WmiLight
             public static extern HResult ExecQuery(
                 IntPtr pWbemServices,
                 [MarshalAs(UnmanagedType.LPWStr)]
-                string ueryLanguage,
+                string queryLanguage,
                 [MarshalAs(UnmanagedType.LPWStr)]
                 string query,
                 WbemClassObjectEnumeratorBehaviorOption behaviorOption,
@@ -205,7 +205,7 @@ namespace WmiLight
             public static extern HResult ExecQuery(
                 IntPtr pWbemServices,
                 [MarshalAs(UnmanagedType.LPWStr)]
-                string ueryLanguage,
+                string queryLanguage,
                 [MarshalAs(UnmanagedType.LPWStr)]
                 string query,
                 WbemClassObjectEnumeratorBehaviorOption behaviorOption,
@@ -325,7 +325,7 @@ namespace WmiLight
         }
         public static HResult ExecQuery(
             IntPtr pWbemServices,
-            string ueryLanguage,
+            string queryLanguage,
             string query,
             WbemClassObjectEnumeratorBehaviorOption behaviorOption,
             IntPtr ctx,
