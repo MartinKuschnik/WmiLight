@@ -106,7 +106,6 @@ namespace WmiLight.Wbem
 
             HResult hResult = NativeMethods.GetMethod(this, methodName, out IntPtr pInSignatur, out IntPtr pOutSignatur);
 
-
             if (hResult.Failed)
             {
                 switch (hResult)
