@@ -7,7 +7,7 @@ namespace WmiLight
     /// The exception that is thrown when the specified WMI method is invalid.
     /// </summary>
     #endregion
-    internal class InvalidMethodException : WmiException
+    public sealed class InvalidMethodException : WmiException
     {
         #region Constructors
 
