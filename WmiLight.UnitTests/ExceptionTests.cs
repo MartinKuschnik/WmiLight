@@ -92,7 +92,7 @@ namespace WmiLight.UnitTests
         [TestMethod]
         public void InvalidParameterException_Is_Thrown_For_WBEM_E_INVALID_PARAMETER()
         {
-            InvalidParameterException ex = Assert.ThrowsException<InvalidParameterException>(() =>
+            Assert.ThrowsException<InvalidParameterException>(() =>
             {
                 using (WmiConnection connection = new WmiConnection())
                 using (WmiMethod method = connection.GetMethod("Win32_Process", "Create"))
