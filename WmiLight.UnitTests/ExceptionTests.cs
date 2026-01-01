@@ -32,7 +32,7 @@ namespace WmiLight.UnitTests
                 {
                     foreach (WmiObject _ in connection.CreateQuery("SELECT * FROM INVALID_CLASS_123"))
                     {
-                        Assert.Fail("Should not reach here due to timeout.");
+                        Assert.Fail("Should not reach here.");
                     }
                 }
             });
@@ -47,7 +47,7 @@ namespace WmiLight.UnitTests
                 {
                     foreach (WmiObject _ in connection.CreateQuery("THIS IS NOT VALID"))
                     {
-                        Assert.Fail("Should not reach here due to timeout.");
+                        Assert.Fail("Should not reach here.");
                     }
                 }
             });
@@ -64,7 +64,7 @@ namespace WmiLight.UnitTests
                 {
                     foreach (WmiObject _ in connection.CreateQuery("THIS IS NOT VALID", EnumeratorBehaviorOption.DirectRead))
                     {
-                        Assert.Fail("Should not reach here due to timeout.");
+                        Assert.Fail("Should not reach here.");
                     }
                 }
             });
