@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFrameworks>netstandard2.0;net46;.Net8.0;.Net9.0</TargetFrameworks>
+		<TargetFrameworks>netstandard2.0;net46;.Net8.0;.Net9.0;.Net10.0</TargetFrameworks>
 		<OutputType>Library</OutputType>
 		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
 	</PropertyGroup>
