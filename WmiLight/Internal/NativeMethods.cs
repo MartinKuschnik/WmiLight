@@ -332,9 +332,9 @@ namespace WmiLight
             out IntPtr pEnumerator)
         {
             if (Environment.Is64BitProcess)
-                return x64.ExecQuery(pWbemServices, ueryLanguage, query, behaviorOption, ctx, out pEnumerator);
+                return x64.ExecQuery(pWbemServices, queryLanguage, query, behaviorOption, ctx, out pEnumerator);
             else
-                return x86.ExecQuery(pWbemServices, ueryLanguage, query, behaviorOption, ctx, out pEnumerator);
+                return x86.ExecQuery(pWbemServices, queryLanguage, query, behaviorOption, ctx, out pEnumerator);
         }
         public static HResult ExecNotificationQueryAsync(
             IntPtr pWbemServices,
