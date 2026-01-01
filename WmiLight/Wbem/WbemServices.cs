@@ -161,7 +161,10 @@ namespace WmiLight.Wbem
                 switch (hResult)
                 {
                     case (int)WbemStatus.WBEM_E_INVALID_METHOD_PARAMETERS:
-                        throw new InvalidMethodParametersException(methodName, classNameOrPath, WbemStatus.WBEM_E_INVALID_METHOD_PARAMETERS);
+                        throw new InvalidParameterException(methodName, classNameOrPath, WbemStatus.WBEM_E_INVALID_METHOD_PARAMETERS);
+
+                    case (int)WbemStatus.WBEM_E_INVALID_PARAMETER:
+                        throw new InvalidParameterException(methodName, classNameOrPath, WbemStatus.WBEM_E_INVALID_METHOD_PARAMETERS);
 
                     default:
                         throw (Exception)hResult;
