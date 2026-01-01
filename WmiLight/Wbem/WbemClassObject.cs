@@ -107,7 +107,16 @@ namespace WmiLight.Wbem
             HResult hResult = NativeMethods.GetMethod(this, methodName, out IntPtr pInSignatur, out IntPtr pOutSignatur);
 
             if (hResult.Failed)
-                throw (Exception)hResult;
+            {
+                switch (hResult)
+                {
+                    case (int)WbemStatus.WBEM_E_NOT_FOUND:
+                        throw new InvalidMethodException(methodName, WbemStatus.WBEM_E_NOT_FOUND);
+
+                    default:
+                        throw (Exception)hResult;
+                }
+            }
 
             inSignatur = pInSignatur == IntPtr.Zero ? null : new WbemClassObject(pInSignatur);
             outSignatur = pOutSignatur == IntPtr.Zero ? null : new WbemClassObject(pOutSignatur);

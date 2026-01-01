@@ -133,7 +133,16 @@ namespace WmiLight.Wbem
             HResult hResult = NativeMethods.GetClass(this, className, IntPtr.Zero, out pClassDef);
 
             if (hResult.Failed)
-                throw (Exception)hResult;
+            {
+                switch (hResult)
+                {
+                    case (int)WbemStatus.WBEM_E_NOT_FOUND:
+                        throw new InvalidClassException(className, WbemStatus.WBEM_E_NOT_FOUND);
+
+                    default:
+                        throw (Exception)hResult;
+                }
+            }
 
             return new WbemClassObject(pClassDef);
         }
