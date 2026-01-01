@@ -4,7 +4,7 @@ namespace WmiLight
 {
     #region Description
     /// <summary>
-    /// The exception that is thrown when the provided parameters for a WMI method are not valid .
+    /// The exception that is thrown when the provided parameters for a WMI method are not valid.
     /// </summary>
     #endregion
     public sealed class InvalidMethodParametersException : WmiException
