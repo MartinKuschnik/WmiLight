@@ -155,6 +155,23 @@ To link WmiLight statically, add `<PublishWmiLightStaticallyLinked>true</Publish
 </PropertyGroup>
 ```
 
+### Trimming issue with .NET Standard libraries (Native AOT only)
+
+When building a **Native AOT application** that encapsulates your WMI code in a .NET Standard library, the trimmer may remove essential code from WmiLight.
+In this scenario, the trimmer cannot detect that WmiLight is actually used by the Native AOT application and may remove necessary code.
+
+**Note:** This issue only affects Native AOT builds.
+
+**Solution:** Add the following to your **Native AOT application's** project file to prevent excessive trimming:
+
+```xml
+<ItemGroup>
+  <TrimmerRootAssembly Include="WmiLight" />
+</ItemGroup>
+```
+
+This marks WmiLight as a root assembly for the trimmer, ensuring that all necessary code is preserved during the Native AOT compilation.
+
 ## Other benefits:
 
 * easy usage
