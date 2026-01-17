@@ -190,7 +190,7 @@
                         return new TransportFailureException(new HResultInfo(hr, "The remote procedure call (RPC) link between the current process and WMI failed.", WbemStatus.WBEM_E_TRANSPORT_FAILURE.ToString()));
 
                     case (int)WbemStatus.WBEM_E_LOCAL_CREDENTIALS:
-                        return new LocalCredentialsException(new HResultInfo(hr, "Username, password, or authority can only used on a remote connection.", WbemStatus.WBEM_E_LOCAL_CREDENTIALS.ToString()));
+                        return new LocalCredentialsException(new HResultInfo(hr, "Username, password, or domain can only used on a remote connection.", WbemStatus.WBEM_E_LOCAL_CREDENTIALS.ToString()));
 
                     case (int)WbemStatus.WBEM_E_FAILED:
                         return new WmiException(new HResultInfo(hr, "An unspecified error occurred.", WbemStatus.WBEM_E_FAILED.ToString()));

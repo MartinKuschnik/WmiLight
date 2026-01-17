@@ -2,7 +2,7 @@
 {
     #region Description
     /// <summary>
-    /// The Exception for the case that the Username, password, or authority are specified for a local <see cref="WmiLight.WmiConnection"/>.
+    /// The Exception that is thrown when the WMI service returns WBEM_E_TRANSPORT_FAILURE.
     /// </summary>
     #endregion
     public class TransportFailureException : WmiException

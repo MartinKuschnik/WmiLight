@@ -26,12 +26,12 @@ namespace WmiLight.Wbem
                 throw (Exception)hResult;
         }
 
-        internal void SetProxy(string userName, string password, string authority, ImpersonationLevel impersonate, AuthenticationLevel authLevel)
+        internal void SetProxy(string userName, string password, string domain, ImpersonationLevel impersonate, AuthenticationLevel authLevel)
         {
             if (this.Disposed)
                 throw new ObjectDisposedException(nameof(WbemServices));
 
-            HResult hResult = NativeMethods.SetProxy(this, userName, password, authority, impersonate, authLevel);
+            HResult hResult = NativeMethods.SetProxy(this, userName, password, domain, impersonate, authLevel);
 
             if (hResult.Failed)
                 throw (Exception)hResult;
@@ -61,7 +61,7 @@ namespace WmiLight.Wbem
             return new WbemClassObjectEnumerator(pEnumerator);
         }
 
-        internal WbemClassObjectEnumerator ExecQuery(string query, WbemClassObjectEnumeratorBehaviorOption behaviorOption, IntPtr ctx, string userName, string password, string authority, AuthenticationLevel authLevel, ImpersonationLevel impersonate)
+        internal WbemClassObjectEnumerator ExecQuery(string query, WbemClassObjectEnumeratorBehaviorOption behaviorOption, IntPtr ctx, string userName, string password, string domain, AuthenticationLevel authLevel, ImpersonationLevel impersonate)
         {
             if (this.Disposed)
                 throw new ObjectDisposedException(nameof(WbemServices));
@@ -82,7 +82,7 @@ namespace WmiLight.Wbem
                 }
             }
 
-            hResult = NativeMethods.SetProxy(pEnumerator, userName, password, authority, impersonate, authLevel);
+            hResult = NativeMethods.SetProxy(pEnumerator, userName, password, domain, impersonate, authLevel);
 
             if (hResult.Failed)
                 throw (Exception)hResult;

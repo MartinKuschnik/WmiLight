@@ -88,7 +88,7 @@ namespace WmiLight
             [MarshalAs(UnmanagedType.LPWStr)]
             string password,
             [MarshalAs(UnmanagedType.LPWStr)]
-            string authority,
+            string domain,
             ImpersonationLevel impersonationLevel,
             AuthenticationLevel authenticationLevel);
 
