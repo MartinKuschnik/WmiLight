@@ -39,7 +39,7 @@ Query all partitions for a remote machine with credentials (UPN format recommend
 ```C#
 
 var opt = new WmiConnectionOptions() { EnablePackageEncryption = true };
-var cred = new NetworkCredential("wmi_user@WMI-Test", "PASSWORD");
+var cred = new NetworkCredential("USER@DOMAIN", "PASSWORD");
 
 using (WmiConnection con = new WmiConnection(@"\\MACHINENAME\root\cimv2", cred, opt))
 {
