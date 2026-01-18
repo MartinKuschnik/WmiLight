@@ -160,7 +160,7 @@
 
         #region Description
         /// <summary>
-        /// The user specified a username, password, or authority on a
+        /// The user specified a username, password, or domain on a
         /// local connection. The user must use an empty user name and password and rely on
         /// default security.
         /// </summary>

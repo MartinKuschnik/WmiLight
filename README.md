@@ -35,11 +35,11 @@ using (WmiConnection con = new WmiConnection())
 }
 ```
 
-Query all partitions for a remote machine with credentials:
+Query all partitions for a remote machine with credentials (UPN format recommended):
 ```C#
 
 var opt = new WmiConnectionOptions() { EnablePackageEncryption = true };
-var cred = new NetworkCredential("USERNAME", "PASSWORD", "DOMAIN");
+var cred = new NetworkCredential("USER@DOMAIN", "PASSWORD");
 
 using (WmiConnection con = new WmiConnection(@"\\MACHINENAME\root\cimv2", cred, opt))
 {

@@ -87,19 +87,18 @@ extern "C" {  // only need to export C interface if
 		);
 	}
 
-
 	__declspec(dllexport) HRESULT _stdcall SetProxy(
 		IUnknown* pIUnknown,
 		wchar_t* username,
 		wchar_t* password,
-		wchar_t* authority,
+		wchar_t* domain,
 		ImpersonationLevel impersonationLevel,
 		AuthenticationLevel authenticationLevel)
 	{
 		if (pIUnknown == nullptr)
 			return E_POINTER;
 
-		if (username == nullptr && password == nullptr && authority == nullptr)
+		if (username == nullptr && password == nullptr && domain == nullptr)
 		{
 			return CoSetProxyBlanket(
 				pIUnknown,
@@ -116,9 +115,9 @@ extern "C" {  // only need to export C interface if
 
 		authInfo.User = (unsigned short*)username;
 		authInfo.UserLength = username == nullptr ? 0 : static_cast<unsigned long>(wcslen(username));
-
-		authInfo.Domain = (unsigned short*)authority;
-		authInfo.DomainLength = authority == nullptr ? 0 : static_cast<unsigned long>(wcslen(authority));
+		 
+		authInfo.Domain = (unsigned short*)domain;
+		authInfo.DomainLength = domain == nullptr ? 0 : static_cast<unsigned long>(wcslen(domain));
 
 		authInfo.Password = (unsigned short*)password;
 		authInfo.PasswordLength = password == nullptr ? 0 : static_cast<unsigned long>(wcslen(password));
@@ -129,7 +128,7 @@ extern "C" {  // only need to export C interface if
 			pIUnknown,
 			RPC_C_AUTHN_DEFAULT,
 			RPC_C_AUTHZ_DEFAULT,
-			nullptr,
+			COLE_DEFAULT_PRINCIPAL,
 			authenticationLevel,
 			impersonationLevel,
 			&authInfo,

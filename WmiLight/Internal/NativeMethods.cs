@@ -86,7 +86,7 @@ namespace WmiLight
                 [MarshalAs(UnmanagedType.LPWStr)]
                 string password,
                 [MarshalAs(UnmanagedType.LPWStr)]
-                string authority,
+                string domain,
                 ImpersonationLevel impersonationLevel,
                 AuthenticationLevel authenticationLevel);
 
@@ -197,7 +197,7 @@ namespace WmiLight
                 [MarshalAs(UnmanagedType.LPWStr)]
                 string password,
                 [MarshalAs(UnmanagedType.LPWStr)]
-                string authority,
+                string domain,
                 ImpersonationLevel impersonationLevel,
                 AuthenticationLevel authenticationLevel);
 
@@ -314,14 +314,14 @@ namespace WmiLight
             IntPtr pIUnknown,
             string username,
             string password,
-            string authority,
+            string domain,
             ImpersonationLevel impersonationLevel,
             AuthenticationLevel authenticationLevel)
         {
             if (Environment.Is64BitProcess)
-                return x64.SetProxy(pIUnknown, username, password, authority, impersonationLevel, authenticationLevel);
+                return x64.SetProxy(pIUnknown, username, password, domain, impersonationLevel, authenticationLevel);
             else
-                return x86.SetProxy(pIUnknown, username, password, authority, impersonationLevel, authenticationLevel);
+                return x86.SetProxy(pIUnknown, username, password, domain, impersonationLevel, authenticationLevel);
         }
         public static HResult ExecQuery(
             IntPtr pWbemServices,

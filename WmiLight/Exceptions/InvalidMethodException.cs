@@ -27,6 +27,11 @@ namespace WmiLight
 
         #endregion
 
+        #region Description
+        /// <summary>
+        /// Gets the name of the invalid Method.
+        /// </summary>
+        #endregion
         public string Method { get;  }
     }
 }

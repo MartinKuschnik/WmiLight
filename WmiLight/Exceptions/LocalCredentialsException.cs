@@ -2,7 +2,7 @@
 {        
     #region Description
     /// <summary>
-    /// The Exception for the case that the Username, password, or authority are specified for a local <see cref="WmiLight.WmiConnection"/>.
+    /// The Exception for the case that the Username, password, or domain are specified for a local <see cref="WmiLight.WmiConnection"/>.
     /// </summary>
     #endregion
     public class LocalCredentialsException : WmiException
