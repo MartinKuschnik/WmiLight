@@ -41,7 +41,7 @@
         /// </summary>
         #endregion
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private readonly NetworkCredential credential;
+        private readonly NormalizedCredential credential;
 
         #region Description
         /// <summary>
@@ -163,7 +163,9 @@
         public WmiConnection(string path, WmiConnectionOptions options)
         {
             this.path = path;
-            this.options = options;
+
+            if (options != null)
+                this.options = options;
         }
 
         #region Description
@@ -182,7 +184,9 @@
         public WmiConnection(string path, NetworkCredential credential)
         {
             this.path = path;
-            this.credential = credential;
+
+            if (credential != null)
+                this.credential = new NormalizedCredential(credential);
         }
 
         #region Description
@@ -202,8 +206,12 @@
         public WmiConnection(string path, NetworkCredential credential, WmiConnectionOptions options)
         {
             this.path = path;
-            this.credential = credential;
-            this.options = options;
+
+            if (credential != null)
+                this.credential = new NormalizedCredential(credential);
+
+            if (options != null)
+                this.options = options;
         }
 
         #endregion
@@ -226,34 +234,6 @@
                 }
 
                 return this.isConnected ? true : false;
-            }
-        }
-
-        #region Description
-        /// <summary>
-        /// Gets the Authority for a remote connection.
-        /// </summary>
-        #endregion
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private string Authority
-        {
-            get
-            {
-                if (this.credential != null && !string.IsNullOrWhiteSpace(this.credential.Domain))
-                {
-                    if (this.options.AuthenticationProtocol == AuthenticationProtocol.Kerberos)
-                    {
-                        return string.Format("Kerberos: {0}", this.credential.Domain);
-                    }
-                    else
-                    {
-                        return string.Format("NTLMDOMAIN: {0}", this.credential.Domain);
-                    }
-                }
-                else
-                {
-                    return null;
-                }
             }
         }
 
@@ -301,8 +281,20 @@
                             {
                                 try
                                 {
-                                    this.wbemServices = locator.ConnectServer(this.path, this.credential.UserName, this.credential.Password, null, WbemConnectOption.None, this.Authority, this.context);
-                                    this.wbemServices.SetProxy(this.credential.UserName, this.credential.Password, this.Authority, ImpersonationLevel.Impersonate, authLevel);
+                                    // Authority is always null. Therefore, the operating system negotiates with COM to determine whether NTLM or Kerberos authentication is used. 
+                                    //
+                                    // Until version 8.0.0, I attempted to let the user decide whether NTLM or Kerberos should be used.
+                                    // When NTLM was chosen, the Authority was set to "NTLMDomain:" to enforce NTLM usage. This worked well for NTLM.
+                                    // Unfortunately, with "Kerberos:", it always resulted in the following DCOM error, regardless of how the domain was configured.
+                                    // 
+                                    //      DCOM was unable to communicate with the computer COMPUTER.DOMAIN using any of the configured protocols;
+                                    //      requested by PID 1dd8 (EXE PATH), while activating CLSID {8BC3F05E-D86B-11D0-A075-00C04FB68820}.
+                                    //
+                                    // To minimize support requests and frustration for the end user, I now rely on Windows to negotiate the correct protocol automatically.
+
+                                    this.wbemServices = locator.ConnectServer(this.path, this.credential.UserNameWithDomain, this.credential.Password, null, WbemConnectOption.None, null, this.context);
+
+                                    this.wbemServices.SetProxy(this.credential.UserNameWithoutDomain, this.credential.Password, this.credential.Domain, ImpersonationLevel.Impersonate, authLevel);
                                 }
                                 catch (LocalCredentialsException)
                                 {
@@ -612,6 +604,9 @@
 
             this.Open();
 
+            if (this.IsRemote)
+                throw new NotSupportedException("Event subscriptions are currently not supported for remote connections.");
+
             WbemObjectSink sink = this.wbemUnsecuredApartment.Value.CreateObjectSink();
 
             // no distinction between remote and local needed
@@ -661,7 +656,7 @@
             {
                 AuthenticationLevel authLevel = this.options.EnablePackageEncryption ? AuthenticationLevel.PacketPrivacy : AuthenticationLevel.PacketIntegrity;
 
-                return this.wbemServices.ExecQuery(query.ToString(), behaviorOption, this.context, this.credential.UserName, this.credential.Password, this.Authority, authLevel, ImpersonationLevel.Impersonate);
+                return this.wbemServices.ExecQuery(query.ToString(), behaviorOption, this.context, this.credential.UserNameWithoutDomain, this.credential.Password, this.credential.Domain, authLevel, ImpersonationLevel.Impersonate);
             }
             else
             {

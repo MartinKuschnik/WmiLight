@@ -128,7 +128,7 @@ extern "C" {  // only need to export C interface if
 			pIUnknown,
 			RPC_C_AUTHN_DEFAULT,
 			RPC_C_AUTHZ_DEFAULT,
-			nullptr,
+			COLE_DEFAULT_PRINCIPAL,
 			authenticationLevel,
 			impersonationLevel,
 			&authInfo,
