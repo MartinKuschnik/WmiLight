@@ -283,7 +283,7 @@
                                 {
                                     // Authority is always null. Therefore, the operating system negotiates with COM to determine whether NTLM or Kerberos authentication is used. 
                                     //
-                                    // Until version 8.0.0, I attempted to let the user decide whether NTLM or Kerberos should be used.
+                                    // Until version 7.0.0, I attempted to let the user decide whether NTLM or Kerberos should be used.
                                     // When NTLM was chosen, the Authority was set to "NTLMDomain:" to enforce NTLM usage. This worked well for NTLM.
                                     // Unfortunately, with "Kerberos:", it always resulted in the following DCOM error, regardless of how the domain was configured.
                                     // 
