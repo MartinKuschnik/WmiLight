@@ -6,6 +6,7 @@
     <RootNamespace>WmiLight.TestApp_NetCore</RootNamespace>
     <Platforms>x64;x86;ARM64</Platforms>
 	<PublishAot>True</PublishAot>
+	<VerifyReferenceAotCompatibility>true</VerifyReferenceAotCompatibility>
   </PropertyGroup>
 
   <ItemGroup>

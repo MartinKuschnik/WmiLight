@@ -46,6 +46,11 @@
 		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>		
     
 	</PropertyGroup>
+	<!-- net8.0 or later is required for AOT analysis support -->
+	<PropertyGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
+		<IsAotCompatible>true</IsAotCompatible>
+		<VerifyReferenceAotCompatibility>true</VerifyReferenceAotCompatibility>
+	</PropertyGroup>
 	<ItemGroup>
 	  <None Include=".nuget\.build\WmiLight.props" />
 	  <None Include=".nuget\.build\WmiLight.targets" />
