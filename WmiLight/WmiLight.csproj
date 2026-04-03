@@ -14,9 +14,12 @@
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
 	<SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>private_key.snk</AssemblyOriginatorKeyFile>
-  </PropertyGroup>
-	<PropertyGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0')) Or $([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net9.0'))">
+    </PropertyGroup>
+	<!-- net8.0 or later is required for AOT analysis support -->
+	<PropertyGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
 		<IsTrimmable>true</IsTrimmable>
+		<IsAotCompatible>true</IsAotCompatible>
+		<VerifyReferenceAotCompatibility>true</VerifyReferenceAotCompatibility>
 	</PropertyGroup>
 	<Target Name="AfterBuild" />
 	<Target Name="AfterClean">
@@ -45,11 +48,6 @@
 		<FileVersion>7.1.0</FileVersion>
 		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>		
     
-	</PropertyGroup>
-	<!-- net8.0 or later is required for AOT analysis support -->
-	<PropertyGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
-		<IsAotCompatible>true</IsAotCompatible>
-		<VerifyReferenceAotCompatibility>true</VerifyReferenceAotCompatibility>
 	</PropertyGroup>
 	<ItemGroup>
 	  <None Include=".nuget\.build\WmiLight.props" />
