@@ -10,20 +10,20 @@
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
 		<DocumentationFile>bin\Release\WmiLight.xml</DocumentationFile>
+		<AssemblyOriginatorKeyFile>private_key.snk</AssemblyOriginatorKeyFile>
 	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-	<SignAssembly>True</SignAssembly>
-    <AssemblyOriginatorKeyFile>private_key.snk</AssemblyOriginatorKeyFile>
-  </PropertyGroup>
-	<PropertyGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0')) Or $([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net9.0'))">
+	<!-- net8.0 or later is required for AOT analysis support -->
+	<PropertyGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
 		<IsTrimmable>true</IsTrimmable>
+		<IsAotCompatible>true</IsAotCompatible>
+		<VerifyReferenceAotCompatibility>true</VerifyReferenceAotCompatibility>
 	</PropertyGroup>
 	<Target Name="AfterBuild" />
 	<Target Name="AfterClean">
 	</Target>
 	<PropertyGroup />
 	<PropertyGroup>
-		<Version>7.1.0</Version>
+		<Version>7.1.1</Version>
 		<PackageId>WmiLight</PackageId>
 		<Authors>Martin Kuschnik</Authors>
 		<Company>Martin Kuschnik</Company>
@@ -42,7 +42,7 @@
 		<!-- Workaround for https://github.com/dotnet/sdk/issues/43016. -->
 		<_NeedToDownloadMicrosoftNetSdkCompilersToolsetPackage>true</_NeedToDownloadMicrosoftNetSdkCompilersToolsetPackage>
     
-		<FileVersion>7.1.0</FileVersion>
+		<FileVersion>7.1.1</FileVersion>
 		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>		
     
 	</PropertyGroup>
