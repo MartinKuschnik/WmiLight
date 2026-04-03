@@ -10,11 +10,8 @@
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
 		<DocumentationFile>bin\Release\WmiLight.xml</DocumentationFile>
+		<AssemblyOriginatorKeyFile>private_key.snk</AssemblyOriginatorKeyFile>
 	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-	<SignAssembly>True</SignAssembly>
-    <AssemblyOriginatorKeyFile>private_key.snk</AssemblyOriginatorKeyFile>
-    </PropertyGroup>
 	<!-- net8.0 or later is required for AOT analysis support -->
 	<PropertyGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
 		<IsTrimmable>true</IsTrimmable>
