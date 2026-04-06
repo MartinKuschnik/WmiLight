@@ -391,6 +391,9 @@ namespace WmiLight.Wbem
                     case CimType.Object:
                         return VariantToArray<WbemClassObject>(ref value, typeWithoutArrayFlag);
 
+                    case CimType.Reference:
+                        return VariantToArray<string>(ref value, typeWithoutArrayFlag);
+
                     default:
                         throw new NotSupportedException($"CimType '{typeWithoutArrayFlag}[]' currently not supported.");
                 }
