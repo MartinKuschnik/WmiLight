@@ -13,20 +13,7 @@
 
             using WmiConnection connection = new(WmiNamespace);
 
-            WmiObject instance;
-
-            try
-            {
-                instance = WmiHelper.GetFirstWmiLightObjects(connection, WmiClassName);
-            }
-            catch
-            {
-                Assert.Inconclusive("Hyper-V namespace or class not available.");
-                return;
-            }
-
-            using (instance)
-            using (WmiMethod method = instance.GetMethod(MethodName))
+            using (WmiMethod method = connection.GetMethod(WmiClassName, MethodName))
             using (WmiMethodParameters inParams = method.CreateInParameters())
             {
                 string[] testPaths = [@"\\server\root\virtualization\v2:Path1", @"\\server\root\virtualization\v2:Path2"];
