@@ -78,6 +78,23 @@
 
         #region Description
         /// <summary>
+        /// Creates a new instance of the class.    
+        /// </summary>
+        /// <returns>A new instance of the class.</returns>
+        /// <exception cref="ObjectDisposedException">Object already disposed.</exception>
+        #endregion
+        public WmiObject CreateInstance()
+        {
+            if (this.disposed)
+                throw new ObjectDisposedException(nameof(WmiClass));
+
+            WbemClassObject instance = this.wbemClassObject.SpawnInstance();
+
+            return new WmiObject(this.wbemServices, instance);
+        }
+
+        #region Description
+        /// <summary>
         /// Releases all resources used by the <see cref="WmiClass"/>.
         /// </summary>
         #endregion
@@ -89,6 +106,5 @@
                 this.disposed = true;
             }
         }
-
     }
 }

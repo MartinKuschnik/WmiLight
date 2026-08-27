@@ -333,8 +333,29 @@ namespace WmiLight
 
             if (methodName is null)
                 throw new ArgumentNullException(nameof(methodName));
-
+            
             return connection.GetClass(className).GetMethod(methodName);
+        }
+
+        #region Description
+        /// <summary>
+        /// Creates a new instance of a specified WMI class.
+        /// </summary>
+        /// <param name="connection">The extended <see cref="WmiConnection"/> object.</param>
+        /// <param name="className">The WMI class name.</param>
+        /// <returns>The requested object.</returns>
+        /// <exception cref="System.ObjectDisposedException">Object already disposed.</exception>
+        /// <exception cref="System.ArgumentNullException"><paramref name="className"/> is null.</exception>
+        #endregion
+        public static WmiObject CreateInstance(this WmiConnection connection, string className)
+        {
+            if (className is null)
+                throw new ArgumentNullException(nameof(className));
+
+            using (WmiClass wmiClass = connection.GetClass(className))
+            {
+                return wmiClass.CreateInstance();
+            }
         }
     }
 }

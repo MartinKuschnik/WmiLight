@@ -42,7 +42,7 @@
 		<!-- Workaround for https://github.com/dotnet/sdk/issues/43016. -->
 		<_NeedToDownloadMicrosoftNetSdkCompilersToolsetPackage>true</_NeedToDownloadMicrosoftNetSdkCompilersToolsetPackage>
     
-		<FileVersion>7.2.0</FileVersion>
+		<FileVersion>7.3.0</FileVersion>
 		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>		
     
 	</PropertyGroup>
