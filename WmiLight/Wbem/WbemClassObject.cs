@@ -384,6 +384,34 @@ namespace WmiLight.Wbem
             }
         }
 
+        internal unsafe void Put(string propertyName, WbemClassObject propertyValue)
+        {
+            if (this.Disposed)
+                throw new ObjectDisposedException(nameof(WbemClassObject));
+
+            if (propertyValue != null)
+            {
+                if (propertyValue.Disposed)
+                    throw new ObjectDisposedException(nameof(propertyValue));
+
+                VARIANT value = new VARIANT() { vt = VARENUM.VT_UNKNOWN, Object = propertyValue }; /* Put copies the object, so no reference is added or released here. */
+
+                HResult hResult = NativeMethods.Put(this, propertyName, &value, CimType.None); /* Always CimType.None because this parameter is only for new properties. */
+
+                if (hResult.Failed)
+                    throw (Exception)hResult;
+            }
+            else
+            {
+                VARIANT value = new VARIANT() { vt = VARENUM.VT_NULL };
+
+                HResult hResult = NativeMethods.Put(this, propertyName, &value, CimType.None); /* Always CimType.None because this parameter is only for new properties. */
+
+                if (hResult.Failed)
+                    throw (Exception)hResult;
+            }
+        }
+
         private static object VariantToObject(ref VARIANT value, CimType type)
         {
             if (type.HasFlag(CimType.ArrayFlag))
