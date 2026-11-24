@@ -338,6 +338,52 @@ namespace WmiLight.Wbem
             }
         }
 
+        internal unsafe void Put(string propertyName, byte[] propertyValue)
+        {
+            if (this.Disposed)
+                throw new ObjectDisposedException(nameof(WbemClassObject));
+
+            if (propertyValue != null)
+            {
+                IntPtr pSafeArray = NativeMethods.SafeArrayCreateVector(VARENUM.VT_UI1, 0, (uint)propertyValue.Length);
+
+                int index = 0;
+
+                HResult hResult;
+
+                try
+                {
+                    foreach (byte currentPropValue in propertyValue)
+                    {
+                        hResult = NativeMethods.SafeArrayPutElement(pSafeArray, new int[] { index++ }, (IntPtr)(&currentPropValue));
+
+                        if (hResult.Failed)
+                            throw (Exception)hResult;
+                    }
+
+                    VARIANT value = new VARIANT() { vt = VARENUM.VT_UI1 | VARENUM.VT_ARRAY, BStrVal = pSafeArray };
+
+                    hResult = NativeMethods.Put(this, propertyName, &value, CimType.None); /* Always CimType.None because this parameter is only for new properties. */
+
+                    if (hResult.Failed)
+                        throw (Exception)hResult;
+                }
+                finally
+                {
+                    NativeMethods.SafeArrayDestroy(pSafeArray);
+                }
+            }
+            else
+            {
+                VARIANT value = new VARIANT() { vt = VARENUM.VT_NULL };
+
+                HResult hResult = NativeMethods.Put(this, propertyName, &value, CimType.None); /* Always CimType.None because this parameter is only for new properties. */
+
+                if (hResult.Failed)
+                    throw (Exception)hResult;
+            }
+        }
+
         private static object VariantToObject(ref VARIANT value, CimType type)
         {
             if (type.HasFlag(CimType.ArrayFlag))
@@ -513,5 +559,6 @@ namespace WmiLight.Wbem
 
             return array;
         }
+
     }
 }

@@ -345,6 +345,18 @@
         /// <param name="propertyName">The name of the property that should be changed.</param>
         /// <param name="propertyValue">The new property value.</param>
         #endregion
+        public void SetPropertyValue(string propertyName, byte[] propertyValue)
+        {
+            this.wbemClassObject.Put(propertyName, propertyValue);
+        }
+
+        #region Description
+        /// <summary>
+        /// Sets the value of a property.
+        /// </summary>
+        /// <param name="propertyName">The name of the property that should be changed.</param>
+        /// <param name="propertyValue">The new property value.</param>
+        #endregion
         public void SetPropertyValue(string propertyName, byte propertyValue)
         {
             this.wbemClassObject.Put(propertyName, propertyValue);
