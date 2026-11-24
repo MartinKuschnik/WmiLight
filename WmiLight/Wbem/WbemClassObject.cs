@@ -398,8 +398,6 @@ namespace WmiLight.Wbem
 
                 HResult hResult = NativeMethods.Put(this, propertyName, &value, CimType.None); /* Always CimType.None because this parameter is only for new properties. */
 
-                GC.KeepAlive(propertyValue);
-
                 if (hResult.Failed)
                     throw (Exception)hResult;
             }
