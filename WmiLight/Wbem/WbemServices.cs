@@ -158,7 +158,7 @@ namespace WmiLight.Wbem
                 throw (Exception)hResult;
         }
 
-        internal void ExecuteMethod(string classNameOrPath, string methodName, IntPtr inParams, out WbemClassObject outParams)
+        internal void ExecuteMethod(string classNameOrPath, string methodName, IUnknown inParams, out WbemClassObject outParams)
         {
             if (this.Disposed)
                 throw new ObjectDisposedException(nameof(WbemServices));

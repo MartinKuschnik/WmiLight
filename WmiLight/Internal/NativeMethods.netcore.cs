@@ -5,6 +5,7 @@ namespace WmiLight
     using System;
     using System.Runtime.CompilerServices;
     using System.Runtime.InteropServices;
+    using System.Runtime.InteropServices.Marshalling;
     using WmiLight.Wbem;
 
     #region Description
@@ -63,7 +64,7 @@ namespace WmiLight
         [LibraryImport(NATIVE_DLL_NAME)]
         [UnmanagedCallConv(CallConvs = new Type[] { typeof(CallConvStdcall) })]
         public static partial HResult ConnectServer(
-            IntPtr pWbemLocator,
+            [MarshalUsing(typeof(IUnknownMarshaller))] IUnknown pWbemLocator,
             [MarshalAs(UnmanagedType.LPWStr)]
             string networkResource,
             [MarshalAs(UnmanagedType.LPWStr)]
@@ -82,7 +83,7 @@ namespace WmiLight
         [LibraryImport(NATIVE_DLL_NAME)]
         [UnmanagedCallConv(CallConvs = new Type[] { typeof(CallConvStdcall) })]
         public static partial HResult SetProxy(
-            IntPtr pIUnknown,
+            [MarshalUsing(typeof(IUnknownMarshaller))] IUnknown pIUnknown,
             [MarshalAs(UnmanagedType.LPWStr)]
             string username,
             [MarshalAs(UnmanagedType.LPWStr)]
@@ -95,7 +96,7 @@ namespace WmiLight
         [LibraryImport(NATIVE_DLL_NAME)]
         [UnmanagedCallConv(CallConvs = new Type[] { typeof(CallConvStdcall) })]
         public static partial HResult ExecQuery(
-            IntPtr pWbemServices,
+            [MarshalUsing(typeof(IUnknownMarshaller))] IUnknown pWbemServices,
             [MarshalAs(UnmanagedType.LPWStr)]
             string queryLanguage,
             [MarshalAs(UnmanagedType.LPWStr)]
@@ -107,46 +108,46 @@ namespace WmiLight
         [LibraryImport(NATIVE_DLL_NAME)]
         [UnmanagedCallConv(CallConvs = new Type[] { typeof(CallConvStdcall) })]
         public static partial HResult ExecNotificationQueryAsync(
-            IntPtr pWbemServices,
+            [MarshalUsing(typeof(IUnknownMarshaller))] IUnknown pWbemServices,
             [MarshalAs(UnmanagedType.LPWStr)]
             string queryLanguage,
             [MarshalAs(UnmanagedType.LPWStr)]
             string query,
             IntPtr ctx,
-            IntPtr pEventSinkProxy);
+            [MarshalUsing(typeof(IUnknownMarshaller))] IUnknown pEventSinkProxy);
 
         [LibraryImport(NATIVE_DLL_NAME)]
         [UnmanagedCallConv(CallConvs = new Type[] { typeof(CallConvStdcall) })]
-        public static partial HResult CancelAsyncCall(IntPtr pWbemServices, IntPtr pEventSinkProxy);
+        public static partial HResult CancelAsyncCall([MarshalUsing(typeof(IUnknownMarshaller))] IUnknown pWbemServices, [MarshalUsing(typeof(IUnknownMarshaller))] IUnknown pEventSinkProxy);
 
         [LibraryImport(NATIVE_DLL_NAME)]
         [UnmanagedCallConv(CallConvs = new Type[] { typeof(CallConvStdcall) })]
-        public static partial HResult GetClass(IntPtr pWbemServices, [MarshalAs(UnmanagedType.LPWStr)] string className, IntPtr ctx, out IntPtr pObject);
+        public static partial HResult GetClass([MarshalUsing(typeof(IUnknownMarshaller))] IUnknown pWbemServices, [MarshalAs(UnmanagedType.LPWStr)] string className, IntPtr ctx, out IntPtr pObject);
 
         [LibraryImport(NATIVE_DLL_NAME)]
         [UnmanagedCallConv(CallConvs = new Type[] { typeof(CallConvStdcall) })]
-        public static partial HResult ExecMethod(IntPtr pWbemServices, [MarshalAs(UnmanagedType.LPWStr)] string classNameOrPath, [MarshalAs(UnmanagedType.LPWStr)] string methodName, IntPtr ctx, IntPtr inParams, out IntPtr outParams);
+        public static partial HResult ExecMethod([MarshalUsing(typeof(IUnknownMarshaller))] IUnknown pWbemServices, [MarshalAs(UnmanagedType.LPWStr)] string classNameOrPath, [MarshalAs(UnmanagedType.LPWStr)] string methodName, IntPtr ctx, [MarshalUsing(typeof(IUnknownMarshaller))] IUnknown inParams, out IntPtr outParams);
 
         [LibraryImport(NATIVE_DLL_NAME)]
         [UnmanagedCallConv(CallConvs = new Type[] { typeof(CallConvStdcall) })]
-        public static partial HResult DeleteInstance(IntPtr pWbemServices, [MarshalAs(UnmanagedType.LPWStr)] string strObjectPath, IntPtr ctx);
+        public static partial HResult DeleteInstance([MarshalUsing(typeof(IUnknownMarshaller))] IUnknown pWbemServices, [MarshalAs(UnmanagedType.LPWStr)] string strObjectPath, IntPtr ctx);
 
         [LibraryImport(NATIVE_DLL_NAME)]
         [UnmanagedCallConv(CallConvs = new Type[] { typeof(CallConvStdcall) })]
-        public static partial HResult CreateEventSinkStub(IntPtr pUnsecApp, IntPtr pEventSink, Indicate indicateFunction, SetStatus setStatusFunction, out IntPtr eventSinkStub);
+        public static partial HResult CreateEventSinkStub([MarshalUsing(typeof(IUnknownMarshaller))] IUnknown pUnsecApp, IntPtr pEventSink, Indicate indicateFunction, SetStatus setStatusFunction, out IntPtr eventSinkStub);
 
         [LibraryImport(NATIVE_DLL_NAME)]
         [UnmanagedCallConv(CallConvs = new Type[] { typeof(CallConvStdcall) })]
-        public static partial HResult Next(IntPtr pEnumerator, int timeout, out IntPtr pClassObject);
+        public static partial HResult Next([MarshalUsing(typeof(IUnknownMarshaller))] IUnknown pEnumerator, int timeout, out IntPtr pClassObject);
 
         [LibraryImport(NATIVE_DLL_NAME)]
         [UnmanagedCallConv(CallConvs = new Type[] { typeof(CallConvStdcall) })]
-        public static partial HResult Reset(IntPtr pEnumerator);
+        public static partial HResult Reset([MarshalUsing(typeof(IUnknownMarshaller))] IUnknown pEnumerator);
 
         [LibraryImport(NATIVE_DLL_NAME)]
         [UnmanagedCallConv(CallConvs = new Type[] { typeof(CallConvStdcall) })]
         public static unsafe partial HResult Get(
-            IntPtr pClassObject,
+            [MarshalUsing(typeof(IUnknownMarshaller))] IUnknown pClassObject,
             [MarshalAs(UnmanagedType.LPWStr)]
             string propertyName,
             VARIANT* value,
@@ -154,27 +155,41 @@ namespace WmiLight
 
         [LibraryImport(NATIVE_DLL_NAME)]
         [UnmanagedCallConv(CallConvs = new Type[] { typeof(CallConvStdcall) })]
-        public static partial HResult GetMethod(IntPtr pClassObject, [MarshalAs(UnmanagedType.LPWStr)] string methodName, out IntPtr pInSignature, out IntPtr pOutSignature);
+        public static partial HResult GetMethod([MarshalUsing(typeof(IUnknownMarshaller))] IUnknown pClassObject, [MarshalAs(UnmanagedType.LPWStr)] string methodName, out IntPtr pInSignature, out IntPtr pOutSignature);
 
         [LibraryImport(NATIVE_DLL_NAME)]
         [UnmanagedCallConv(CallConvs = new Type[] { typeof(CallConvStdcall) })]
-        public static partial HResult SpawnInstance(IntPtr pClassObject, out IntPtr pNewInstance);
+        public static partial HResult SpawnInstance([MarshalUsing(typeof(IUnknownMarshaller))] IUnknown pClassObject, out IntPtr pNewInstance);
 
         [LibraryImport(NATIVE_DLL_NAME)]
         [UnmanagedCallConv(CallConvs = new Type[] { typeof(CallConvStdcall) })]
-        public static unsafe partial HResult Put(IntPtr pClassObject, [MarshalAs(UnmanagedType.LPWStr)] string wszName, VARIANT* pvar, CimType cimType);
+        public static unsafe partial HResult Put([MarshalUsing(typeof(IUnknownMarshaller))] IUnknown pClassObject, [MarshalAs(UnmanagedType.LPWStr)] string wszName, VARIANT* pvar, CimType cimType);
+
+        // Puts an embedded object. The object is passed inside a VARIANT and not as an IUnknown parameter, so it has to be kept alive here.
+        public static unsafe HResult Put(IUnknown pClassObject, string wszName, IUnknown value)
+        {
+            VARIANT variant = new VARIANT() { vt = VARENUM.VT_UNKNOWN, Object = (IntPtr)value }; /* Put copies the object, so no reference is added or released here. */
+
+            HResult hResult = Put(pClassObject, wszName, &variant, CimType.None); /* Always CimType.None because this parameter is only for new properties. */
+
+            // Only the raw COM pointer of value is in the VARIANT, so value must stay reachable until Put has returned.
+            // Otherwise the GC could finalize it during the call and release the native object while Put is still copying it.
+            GC.KeepAlive(value);
+
+            return hResult;
+        }
 
         [LibraryImport(NATIVE_DLL_NAME)]
         [UnmanagedCallConv(CallConvs = new Type[] { typeof(CallConvStdcall) })]
-        public static partial HResult PutInstance(IntPtr pWbemServices, IntPtr pInst, IntPtr ctx);
+        public static partial HResult PutInstance([MarshalUsing(typeof(IUnknownMarshaller))] IUnknown pWbemServices, [MarshalUsing(typeof(IUnknownMarshaller))] IUnknown pInst, IntPtr ctx);
 
         [LibraryImport(NATIVE_DLL_NAME)]
         [UnmanagedCallConv(CallConvs = new Type[] { typeof(CallConvStdcall) })]
-        public static partial HResult GetType(IntPtr pClassObject, [MarshalAs(UnmanagedType.LPWStr)] string propertyName, out CimType cimType);
+        public static partial HResult GetType([MarshalUsing(typeof(IUnknownMarshaller))] IUnknown pClassObject, [MarshalAs(UnmanagedType.LPWStr)] string propertyName, out CimType cimType);
 
         [LibraryImport(NATIVE_DLL_NAME)]
         [UnmanagedCallConv(CallConvs = new Type[] { typeof(CallConvStdcall) })]
-        public static partial HResult GetNames(IntPtr pClassObject, out IntPtr pNames);
+        public static partial HResult GetNames([MarshalUsing(typeof(IUnknownMarshaller))] IUnknown pClassObject, out IntPtr pNames);
 
 
         #endregion

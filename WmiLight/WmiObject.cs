@@ -68,6 +68,18 @@
 
         #region Description
         /// <summary>
+        /// Gets the native <see cref="Wbem.WbemClassObject"/> object.
+        /// </summary>
+        /// <remarks>
+        /// Used to pass the object, and not its raw COM pointer, to native calls, so that it is kept alive until the native call has returned.
+        /// Needed in particular for static method calls: <see cref="WmiConnection"/> executes them and has to pass the in parameters
+        /// of a <see cref="WmiMethodParameters"/>, whose native object it cannot access otherwise.
+        /// </remarks>
+        #endregion
+        internal WbemClassObject WbemClassObject => this.wbemClassObject;
+
+        #region Description
+        /// <summary>
         /// Gets the value that is used to distinguish between classes and instances.
         /// </summary>
         #endregion
@@ -506,7 +518,7 @@
             if (method is null)
                 throw new ArgumentNullException(nameof(method));
 
-            return this.ExecuteMethod<object>(method.Name, IntPtr.Zero, out outParameters);
+            return this.ExecuteMethod<object>(method.Name, null, out outParameters);
         }
 
         #region Description
@@ -524,7 +536,7 @@
             if (method is null)
                 throw new ArgumentNullException(nameof(method));
 
-            return this.ExecuteMethod<TReturnValue>(method.Name, IntPtr.Zero, out outParameters);
+            return this.ExecuteMethod<TReturnValue>(method.Name, null, out outParameters);
         }
 
         #region Description
@@ -572,9 +584,9 @@
             return this.ExecuteMethod<TReturnValue>(method.Name, inParameters, out outParameters);
         }
 
-        private TReturnValue ExecuteMethod<TReturnValue>(string method, IntPtr inParameters, out WmiMethodParameters outParameters)
+        private TReturnValue ExecuteMethod<TReturnValue>(string method, WmiMethodParameters inParameters, out WmiMethodParameters outParameters)
         {
-            this.wbemServices.ExecuteMethod(this.Path, method, inParameters, out WbemClassObject wbemOutParams);
+            this.wbemServices.ExecuteMethod(this.Path, method, inParameters?.WbemClassObject, out WbemClassObject wbemOutParams);
 
             if (wbemOutParams != null)
             {

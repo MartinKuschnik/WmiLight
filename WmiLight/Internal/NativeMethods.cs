@@ -295,7 +295,7 @@ namespace WmiLight
         }
 
         public static HResult ConnectServer(
-            IntPtr pWbemLocator,
+            IUnknown pWbemLocator,
             string networkResource,
             string userName,
             string userPassword,
@@ -305,159 +305,323 @@ namespace WmiLight
             IntPtr pCtx,
             out IntPtr pWbemServices)
         {
+            HResult hResult;
+
             if (Environment.Is64BitProcess)
-                return x64.ConnectServer(pWbemLocator, networkResource, userName, userPassword, locale, wbemConnectOption, authority, pCtx, out pWbemServices);
+                hResult = x64.ConnectServer((IntPtr)pWbemLocator, networkResource, userName, userPassword, locale, wbemConnectOption, authority, pCtx, out pWbemServices);
             else
-                return x86.ConnectServer(pWbemLocator, networkResource, userName, userPassword, locale, wbemConnectOption, authority, pCtx, out pWbemServices);
+                hResult = x86.ConnectServer((IntPtr)pWbemLocator, networkResource, userName, userPassword, locale, wbemConnectOption, authority, pCtx, out pWbemServices);
+
+            // Only the raw COM pointer was passed to native code, so pWbemLocator must stay reachable until the call has returned.
+            // Otherwise the GC could finalize it during the call and release the native object while it is still in use.
+            GC.KeepAlive(pWbemLocator);
+
+            return hResult;
         }
         public static HResult SetProxy(
-            IntPtr pIUnknown,
+            IUnknown pIUnknown,
             string username,
             string password,
             string domain,
             ImpersonationLevel impersonationLevel,
             AuthenticationLevel authenticationLevel)
         {
+            HResult hResult;
+
             if (Environment.Is64BitProcess)
-                return x64.SetProxy(pIUnknown, username, password, domain, impersonationLevel, authenticationLevel);
+                hResult = x64.SetProxy((IntPtr)pIUnknown, username, password, domain, impersonationLevel, authenticationLevel);
             else
-                return x86.SetProxy(pIUnknown, username, password, domain, impersonationLevel, authenticationLevel);
+                hResult = x86.SetProxy((IntPtr)pIUnknown, username, password, domain, impersonationLevel, authenticationLevel);
+
+            // Only the raw COM pointer was passed to native code, so pIUnknown must stay reachable until the call has returned.
+            // Otherwise the GC could finalize it during the call and release the native object while it is still in use.
+            GC.KeepAlive(pIUnknown);
+
+            return hResult;
         }
         public static HResult ExecQuery(
-            IntPtr pWbemServices,
+            IUnknown pWbemServices,
             string queryLanguage,
             string query,
             WbemClassObjectEnumeratorBehaviorOption behaviorOption,
             IntPtr ctx,
             out IntPtr pEnumerator)
         {
+            HResult hResult;
+
             if (Environment.Is64BitProcess)
-                return x64.ExecQuery(pWbemServices, queryLanguage, query, behaviorOption, ctx, out pEnumerator);
+                hResult = x64.ExecQuery((IntPtr)pWbemServices, queryLanguage, query, behaviorOption, ctx, out pEnumerator);
             else
-                return x86.ExecQuery(pWbemServices, queryLanguage, query, behaviorOption, ctx, out pEnumerator);
+                hResult = x86.ExecQuery((IntPtr)pWbemServices, queryLanguage, query, behaviorOption, ctx, out pEnumerator);
+
+            // Only the raw COM pointer was passed to native code, so pWbemServices must stay reachable until the call has returned.
+            // Otherwise the GC could finalize it during the call and release the native object while it is still in use.
+            GC.KeepAlive(pWbemServices);
+
+            return hResult;
         }
         public static HResult ExecNotificationQueryAsync(
-            IntPtr pWbemServices,
+            IUnknown pWbemServices,
             string queryLanguage,
             string query,
             IntPtr ctx,
-            IntPtr pEventSinkProxy)
+            IUnknown pEventSinkProxy)
         {
+            HResult hResult;
+
             if (Environment.Is64BitProcess)
-                return x64.ExecNotificationQueryAsync(pWbemServices, queryLanguage, query, ctx, pEventSinkProxy);
+                hResult = x64.ExecNotificationQueryAsync((IntPtr)pWbemServices, queryLanguage, query, ctx, (IntPtr)pEventSinkProxy);
             else
-                return x86.ExecNotificationQueryAsync(pWbemServices, queryLanguage, query, ctx, pEventSinkProxy);
+                hResult = x86.ExecNotificationQueryAsync((IntPtr)pWbemServices, queryLanguage, query, ctx, (IntPtr)pEventSinkProxy);
+
+            // Only the raw COM pointers were passed to native code, so pWbemServices and pEventSinkProxy must stay reachable until the call has returned.
+            // Otherwise the GC could finalize them during the call and release the native objects while they are still in use.
+            GC.KeepAlive(pWbemServices);
+            GC.KeepAlive(pEventSinkProxy);
+
+            return hResult;
         }
-        public static HResult CancelAsyncCall(IntPtr pWbemServices, IntPtr pEventSinkProxy)
+        public static HResult CancelAsyncCall(IUnknown pWbemServices, IUnknown pEventSinkProxy)
         {
+            HResult hResult;
+
             if (Environment.Is64BitProcess)
-                return x64.CancelAsyncCall(pWbemServices, pEventSinkProxy);
+                hResult = x64.CancelAsyncCall((IntPtr)pWbemServices, (IntPtr)pEventSinkProxy);
             else
-                return x86.CancelAsyncCall(pWbemServices, pEventSinkProxy);
+                hResult = x86.CancelAsyncCall((IntPtr)pWbemServices, (IntPtr)pEventSinkProxy);
+
+            // Only the raw COM pointers were passed to native code, so pWbemServices and pEventSinkProxy must stay reachable until the call has returned.
+            // Otherwise the GC could finalize them during the call and release the native objects while they are still in use.
+            GC.KeepAlive(pWbemServices);
+            GC.KeepAlive(pEventSinkProxy);
+
+            return hResult;
         }
 
-        public static HResult GetClass(IntPtr pWbemServices, string className, IntPtr ctx, out IntPtr pObject)
+        public static HResult GetClass(IUnknown pWbemServices, string className, IntPtr ctx, out IntPtr pObject)
         {
+            HResult hResult;
+
             if (Environment.Is64BitProcess)
-                return x64.GetClass(pWbemServices, className, ctx, out pObject);
+                hResult = x64.GetClass((IntPtr)pWbemServices, className, ctx, out pObject);
             else
-                return x86.GetClass(pWbemServices, className, ctx, out pObject);
+                hResult = x86.GetClass((IntPtr)pWbemServices, className, ctx, out pObject);
+
+            // Only the raw COM pointer was passed to native code, so pWbemServices must stay reachable until the call has returned.
+            // Otherwise the GC could finalize it during the call and release the native object while it is still in use.
+            GC.KeepAlive(pWbemServices);
+
+            return hResult;
         }
 
-        public static HResult ExecMethod(IntPtr pWbemServices, string classNameOrPath, string methodName, IntPtr ctx, IntPtr inParams, out IntPtr outParams)
+        public static HResult ExecMethod(IUnknown pWbemServices, string classNameOrPath, string methodName, IntPtr ctx, IUnknown inParams, out IntPtr outParams)
         {
+            HResult hResult;
+
+            IntPtr pInParams = inParams is null ? IntPtr.Zero : (IntPtr)inParams; /* inParams is null for methods without in-parameters. */
+
             if (Environment.Is64BitProcess)
-                return x64.ExecMethod(pWbemServices, classNameOrPath, methodName, ctx, inParams, out outParams);
+                hResult = x64.ExecMethod((IntPtr)pWbemServices, classNameOrPath, methodName, ctx, pInParams, out outParams);
             else
-                return x86.ExecMethod(pWbemServices, classNameOrPath, methodName, ctx, inParams, out outParams);
+                hResult = x86.ExecMethod((IntPtr)pWbemServices, classNameOrPath, methodName, ctx, pInParams, out outParams);
+
+            // Only the raw COM pointers were passed to native code, so pWbemServices and inParams must stay reachable until the call has returned.
+            // Otherwise the GC could finalize them during the call and release the native objects while they are still in use.
+            GC.KeepAlive(pWbemServices);
+            GC.KeepAlive(inParams);
+
+            return hResult;
         }
 
-        public static HResult DeleteInstance(IntPtr pWbemServices, string strObjectPath, IntPtr ctx)
+        public static HResult DeleteInstance(IUnknown pWbemServices, string strObjectPath, IntPtr ctx)
         {
+            HResult hResult;
+
             if (Environment.Is64BitProcess)
-                return x64.DeleteInstance(pWbemServices, strObjectPath, ctx);
+                hResult = x64.DeleteInstance((IntPtr)pWbemServices, strObjectPath, ctx);
             else
-                return x86.DeleteInstance(pWbemServices, strObjectPath, ctx);
+                hResult = x86.DeleteInstance((IntPtr)pWbemServices, strObjectPath, ctx);
+
+            // Only the raw COM pointer was passed to native code, so pWbemServices must stay reachable until the call has returned.
+            // Otherwise the GC could finalize it during the call and release the native object while it is still in use.
+            GC.KeepAlive(pWbemServices);
+
+            return hResult;
         }
 
-        public static HResult CreateEventSinkStub(IntPtr pUnsecApp, IntPtr pEventSink, Indicate indicateFunction, SetStatus setStatusFunction, out IntPtr eventSinkStub)
+        public static HResult CreateEventSinkStub(IUnknown pUnsecApp, IntPtr pEventSink, Indicate indicateFunction, SetStatus setStatusFunction, out IntPtr eventSinkStub)
         {
+            HResult hResult;
+
             if (Environment.Is64BitProcess)
-                return x64.CreateEventSinkStub(pUnsecApp, pEventSink, indicateFunction, setStatusFunction, out eventSinkStub);
+                hResult = x64.CreateEventSinkStub((IntPtr)pUnsecApp, pEventSink, indicateFunction, setStatusFunction, out eventSinkStub);
             else
-                return x86.CreateEventSinkStub(pUnsecApp, pEventSink, indicateFunction, setStatusFunction, out eventSinkStub);
+                hResult = x86.CreateEventSinkStub((IntPtr)pUnsecApp, pEventSink, indicateFunction, setStatusFunction, out eventSinkStub);
+
+            // Only the raw COM pointer was passed to native code, so pUnsecApp must stay reachable until the call has returned.
+            // Otherwise the GC could finalize it during the call and release the native object while it is still in use.
+            GC.KeepAlive(pUnsecApp);
+
+            return hResult;
         }
 
-        public static HResult Next(IntPtr pEnumerator, int timeout, out IntPtr pClassObject)
+        public static HResult Next(IUnknown pEnumerator, int timeout, out IntPtr pClassObject)
         {
+            HResult hResult;
+
             if (Environment.Is64BitProcess)
-                return x64.Next(pEnumerator, timeout, out pClassObject);
+                hResult = x64.Next((IntPtr)pEnumerator, timeout, out pClassObject);
             else
-                return x86.Next(pEnumerator, timeout, out pClassObject);
+                hResult = x86.Next((IntPtr)pEnumerator, timeout, out pClassObject);
+
+            // Only the raw COM pointer was passed to native code, so pEnumerator must stay reachable until the call has returned.
+            // Otherwise the GC could finalize it during the call and release the native object while it is still in use.
+            GC.KeepAlive(pEnumerator);
+
+            return hResult;
         }
 
-        public static HResult Reset(IntPtr pEnumerator)
+        public static HResult Reset(IUnknown pEnumerator)
         {
+            HResult hResult;
+
             if (Environment.Is64BitProcess)
-                return x64.Reset(pEnumerator);
+                hResult = x64.Reset((IntPtr)pEnumerator);
             else
-                return x86.Reset(pEnumerator);
+                hResult = x86.Reset((IntPtr)pEnumerator);
+
+            // Only the raw COM pointer was passed to native code, so pEnumerator must stay reachable until the call has returned.
+            // Otherwise the GC could finalize it during the call and release the native object while it is still in use.
+            GC.KeepAlive(pEnumerator);
+
+            return hResult;
         }
 
-        public static unsafe HResult Get(IntPtr pClassObject, string propertyName, VARIANT* value, out CimType valueType)
+        public static unsafe HResult Get(IUnknown pClassObject, string propertyName, VARIANT* value, out CimType valueType)
         {
+            HResult hResult;
+
             if (Environment.Is64BitProcess)
-                return x64.Get(pClassObject, propertyName, value, out valueType);
+                hResult = x64.Get((IntPtr)pClassObject, propertyName, value, out valueType);
             else
-                return x86.Get(pClassObject, propertyName, value, out valueType);
+                hResult = x86.Get((IntPtr)pClassObject, propertyName, value, out valueType);
+
+            // Only the raw COM pointer was passed to native code, so pClassObject must stay reachable until the call has returned.
+            // Otherwise the GC could finalize it during the call and release the native object while it is still in use.
+            GC.KeepAlive(pClassObject);
+
+            return hResult;
         }
 
-        public static HResult GetMethod(IntPtr pClassObject, string methodName, out IntPtr pInSignature, out IntPtr pOutSignature)
+        public static HResult GetMethod(IUnknown pClassObject, string methodName, out IntPtr pInSignature, out IntPtr pOutSignature)
         {
+            HResult hResult;
+
             if (Environment.Is64BitProcess)
-                return x64.GetMethod(pClassObject, methodName, out pInSignature, out pOutSignature);
+                hResult = x64.GetMethod((IntPtr)pClassObject, methodName, out pInSignature, out pOutSignature);
             else
-                return x86.GetMethod(pClassObject, methodName, out pInSignature, out pOutSignature);
+                hResult = x86.GetMethod((IntPtr)pClassObject, methodName, out pInSignature, out pOutSignature);
+
+            // Only the raw COM pointer was passed to native code, so pClassObject must stay reachable until the call has returned.
+            // Otherwise the GC could finalize it during the call and release the native object while it is still in use.
+            GC.KeepAlive(pClassObject);
+
+            return hResult;
         }
 
-        public static HResult SpawnInstance(IntPtr pClassObject, out IntPtr pNewInstance)
+        public static HResult SpawnInstance(IUnknown pClassObject, out IntPtr pNewInstance)
         {
+            HResult hResult;
+
             if (Environment.Is64BitProcess)
-                return x64.SpawnInstance(pClassObject, out pNewInstance);
+                hResult = x64.SpawnInstance((IntPtr)pClassObject, out pNewInstance);
             else
-                return x86.SpawnInstance(pClassObject, out pNewInstance);
+                hResult = x86.SpawnInstance((IntPtr)pClassObject, out pNewInstance);
+
+            // Only the raw COM pointer was passed to native code, so pClassObject must stay reachable until the call has returned.
+            // Otherwise the GC could finalize it during the call and release the native object while it is still in use.
+            GC.KeepAlive(pClassObject);
+
+            return hResult;
         }
 
-        public static unsafe HResult Put(IntPtr pClassObject, string wszName, VARIANT* pvar, CimType cimType)
+        public static unsafe HResult Put(IUnknown pClassObject, string wszName, VARIANT* pvar, CimType cimType)
         {
+            HResult hResult;
+
             if (Environment.Is64BitProcess)
-                return x64.Put(pClassObject, wszName, pvar, cimType);
+                hResult = x64.Put((IntPtr)pClassObject, wszName, pvar, cimType);
             else
-                return x86.Put(pClassObject, wszName, pvar, cimType);
+                hResult = x86.Put((IntPtr)pClassObject, wszName, pvar, cimType);
+
+            // Only the raw COM pointer was passed to native code, so pClassObject must stay reachable until the call has returned.
+            // Otherwise the GC could finalize it during the call and release the native object while it is still in use.
+            GC.KeepAlive(pClassObject);
+
+            return hResult;
         }
 
-        public static HResult PutInstance(IntPtr pWbemServices, IntPtr pInst, IntPtr ctx)
+        // Puts an embedded object. The object is passed inside a VARIANT and not as an IUnknown parameter, so it has to be kept alive here.
+        public static unsafe HResult Put(IUnknown pClassObject, string wszName, IUnknown value)
         {
-            if (Environment.Is64BitProcess)
-                return x64.PutInstance(pWbemServices, pInst, ctx);
-            else
-                return x86.PutInstance(pWbemServices, pInst, ctx);
+            VARIANT variant = new VARIANT() { vt = VARENUM.VT_UNKNOWN, Object = (IntPtr)value }; /* Put copies the object, so no reference is added or released here. */
+
+            HResult hResult = Put(pClassObject, wszName, &variant, CimType.None); /* Always CimType.None because this parameter is only for new properties. */
+
+            // Only the raw COM pointer of value is in the VARIANT, so value must stay reachable until Put has returned.
+            // Otherwise the GC could finalize it during the call and release the native object while Put is still copying it.
+            GC.KeepAlive(value);
+
+            return hResult;
         }
 
-        public static HResult GetType(IntPtr pClassObject, string propertyName, out CimType cimType)
+        public static HResult PutInstance(IUnknown pWbemServices, IUnknown pInst, IntPtr ctx)
         {
+            HResult hResult;
+
             if (Environment.Is64BitProcess)
-                return x64.GetType(pClassObject, propertyName, out cimType);
+                hResult = x64.PutInstance((IntPtr)pWbemServices, (IntPtr)pInst, ctx);
             else
-                return x86.GetType(pClassObject, propertyName, out cimType);
+                hResult = x86.PutInstance((IntPtr)pWbemServices, (IntPtr)pInst, ctx);
+
+            // Only the raw COM pointers were passed to native code, so pWbemServices and pInst must stay reachable until the call has returned.
+            // Otherwise the GC could finalize them during the call and release the native objects while they are still in use.
+            GC.KeepAlive(pWbemServices);
+            GC.KeepAlive(pInst);
+
+            return hResult;
         }
 
-        public static HResult GetNames(IntPtr pClassObject, out IntPtr pNames)
+        public static HResult GetType(IUnknown pClassObject, string propertyName, out CimType cimType)
         {
+            HResult hResult;
+
             if (Environment.Is64BitProcess)
-                return x64.GetNames(pClassObject, out pNames);
+                hResult = x64.GetType((IntPtr)pClassObject, propertyName, out cimType);
             else
-                return x86.GetNames(pClassObject, out pNames);
+                hResult = x86.GetType((IntPtr)pClassObject, propertyName, out cimType);
+
+            // Only the raw COM pointer was passed to native code, so pClassObject must stay reachable until the call has returned.
+            // Otherwise the GC could finalize it during the call and release the native object while it is still in use.
+            GC.KeepAlive(pClassObject);
+
+            return hResult;
+        }
+
+        public static HResult GetNames(IUnknown pClassObject, out IntPtr pNames)
+        {
+            HResult hResult;
+
+            if (Environment.Is64BitProcess)
+                hResult = x64.GetNames((IntPtr)pClassObject, out pNames);
+            else
+                hResult = x86.GetNames((IntPtr)pClassObject, out pNames);
+
+            // Only the raw COM pointer was passed to native code, so pClassObject must stay reachable until the call has returned.
+            // Otherwise the GC could finalize it during the call and release the native object while it is still in use.
+            GC.KeepAlive(pClassObject);
+
+            return hResult;
         }
 
         #endregion

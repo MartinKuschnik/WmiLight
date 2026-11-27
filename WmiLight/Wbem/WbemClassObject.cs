@@ -394,9 +394,7 @@ namespace WmiLight.Wbem
                 if (propertyValue.Disposed)
                     throw new ObjectDisposedException(nameof(propertyValue));
 
-                VARIANT value = new VARIANT() { vt = VARENUM.VT_UNKNOWN, Object = propertyValue }; /* Put copies the object, so no reference is added or released here. */
-
-                HResult hResult = NativeMethods.Put(this, propertyName, &value, CimType.None); /* Always CimType.None because this parameter is only for new properties. */
+                HResult hResult = NativeMethods.Put(this, propertyName, propertyValue);
 
                 if (hResult.Failed)
                     throw (Exception)hResult;

@@ -427,7 +427,7 @@
             if (this.isDisposed)
                 throw new ObjectDisposedException(nameof(WmiConnection));
 
-            return ExecuteMethod<object>(method.Class.Name, method.Name, IntPtr.Zero, out outParameters);
+            return ExecuteMethod<object>(method.Class.Name, method.Name, null, out outParameters);
         }
 
         #region Description
@@ -446,7 +446,7 @@
             if (this.isDisposed)
                 throw new ObjectDisposedException(nameof(WmiConnection));
 
-            return ExecuteMethod<TResult>(method.Class.Name, method.Name, IntPtr.Zero, out outParameters);
+            return ExecuteMethod<TResult>(method.Class.Name, method.Name, null, out outParameters);
         }
 
         #region Description
@@ -506,7 +506,7 @@
             if (this.isDisposed)
                 throw new ObjectDisposedException(nameof(WmiConnection));
 
-            return ExecuteMethod<object>(instance.Path, method.Name, IntPtr.Zero, out outParameters);
+            return ExecuteMethod<object>(instance.Path, method.Name, null, out outParameters);
         }
 
         #region Description
@@ -526,7 +526,7 @@
             if (this.isDisposed)
                 throw new ObjectDisposedException(nameof(WmiConnection));
 
-            return ExecuteMethod<TResult>(instance.Path, method.Name, IntPtr.Zero, out outParameters);
+            return ExecuteMethod<TResult>(instance.Path, method.Name, null, out outParameters);
         }
 
         #region Description
@@ -571,14 +571,14 @@
             return ExecuteMethod<TResult>(instance.Path, method.Name, inParameters, out outParameters);
         }
 
-        private TResult ExecuteMethod<TResult>(string classNameOrPath, string methodName, IntPtr inParameters, out WmiMethodParameters outParameters)
+        private TResult ExecuteMethod<TResult>(string classNameOrPath, string methodName, WmiMethodParameters inParameters, out WmiMethodParameters outParameters)
         {
             if (this.isDisposed)
                 throw new ObjectDisposedException(nameof(WmiConnection));
 
             this.Open();
 
-            this.wbemServices.ExecuteMethod(classNameOrPath, methodName, inParameters, out WbemClassObject wbemOutParams);
+            this.wbemServices.ExecuteMethod(classNameOrPath, methodName, inParameters?.WbemClassObject, out WbemClassObject wbemOutParams);
 
             if (wbemOutParams != null)
             {
