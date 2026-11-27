@@ -12,13 +12,20 @@
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private bool cancelled = false;
 
+        // The native EventSinkProxy stores the function pointers of these delegates and calls them for every event.
+        // The delegates must therefore stay alive as long as the native stub exists. Without the static fields,
+        // a new delegate would be created per call (C# 7.3 on net46/netstandard2.0), which the GC could collect.
+        private static readonly NativeMethods.Indicate IndicateCallback = WbemObjectSink.Indicate;
+
+        private static readonly NativeMethods.SetStatus SetStatusCallback = WbemObjectSink.SetStatus;
+
         private readonly IUnknown nativeStub;
 
         internal WbemObjectSink(WbemUnsecuredApartment pUnsecApp)
         {
             IntPtr pNativeStub;
 
-            HResult hResult = NativeMethods.CreateEventSinkStub(pUnsecApp, GCHandle.ToIntPtr(GCHandle.Alloc(this, GCHandleType.WeakTrackResurrection)), WbemObjectSink.Indicate, WbemObjectSink.SetStatus, out pNativeStub);
+            HResult hResult = NativeMethods.CreateEventSinkStub(pUnsecApp, GCHandle.ToIntPtr(GCHandle.Alloc(this, GCHandleType.WeakTrackResurrection)), WbemObjectSink.IndicateCallback, WbemObjectSink.SetStatusCallback, out pNativeStub);
 
             if (hResult.Failed)
                 throw (Exception)hResult;
