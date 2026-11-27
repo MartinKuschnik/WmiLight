@@ -82,12 +82,19 @@ namespace WmiLight.Wbem
                 }
             }
 
-            hResult = NativeMethods.SetProxy(pEnumerator, userName, password, domain, impersonate, authLevel);
+            // Wrap the pointer before calling SetProxy, so that it is released if SetProxy fails.
+            WbemClassObjectEnumerator enumerator = new WbemClassObjectEnumerator(pEnumerator);
+
+            hResult = NativeMethods.SetProxy(enumerator, userName, password, domain, impersonate, authLevel);
 
             if (hResult.Failed)
-                throw (Exception)hResult;
+            {
+                enumerator.Dispose();
 
-            return new WbemClassObjectEnumerator(pEnumerator);
+                throw (Exception)hResult;
+            }
+
+            return enumerator;
         }
 
         internal void PutInstance(WbemClassObject wbemClassObject, IntPtr ctx)
