@@ -14,7 +14,7 @@
 
         private readonly IUnknown nativeStub;
 
-        internal WbemObjectSink(IntPtr pUnsecApp)
+        internal WbemObjectSink(WbemUnsecuredApartment pUnsecApp)
         {
             IntPtr pNativeStub;
 

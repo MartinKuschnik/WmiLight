@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using WmiLight.Wbem;
 
 namespace WmiLight
@@ -11,13 +10,9 @@ namespace WmiLight
     #endregion
     public class WmiMethodParameters : WmiObject
     {
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private WbemClassObject signatur;
-
         internal WmiMethodParameters(WbemServices wbemServices, WbemClassObject signatur)
             :base(wbemServices, signatur)
         {
-            this.signatur = signatur ?? throw new ArgumentNullException(nameof(signatur));
         }
 
         /// <inheritdoc />
@@ -31,8 +26,14 @@ namespace WmiLight
         /// Implicit conversion from <see cref="WmiMethodParameters"/> to <see cref="IntPtr"/>.
         /// </summary>
         /// <param name="parameters">The <see cref="WmiMethodParameters"/> value to convert to <see cref="IntPtr"/>.</param>
-        /// <returns>The <see cref="IntPtr"/> value as <see cref="WmiMethodParameters"/>.</returns>
+        /// <returns>The raw COM pointer of the <see cref="WmiMethodParameters"/>.</returns>
+        /// <remarks>
+        /// Only the raw COM pointer is returned. It does not keep the <see cref="WmiMethodParameters"/> alive,
+        /// so the GC may finalize the object and release the native object while the pointer is still in use.
+        /// The caller must keep the <see cref="WmiMethodParameters"/> reachable for as long as the pointer is used (e.g. with <see cref="GC.KeepAlive(object)"/>).
+        /// </remarks>
         #endregion
-        public static implicit operator IntPtr(WmiMethodParameters parameters) => parameters.signatur;
+        [Obsolete("Only the raw COM pointer is returned, which does not keep the WmiMethodParameters alive. The caller must keep the object reachable (e.g. with GC.KeepAlive) for as long as the pointer is used.")]
+        public static implicit operator IntPtr(WmiMethodParameters parameters) => (IntPtr)parameters.WbemClassObject;
     }
 }
